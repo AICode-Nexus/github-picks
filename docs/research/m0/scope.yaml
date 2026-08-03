@@ -1,0 +1,61 @@
+timezone: Asia/Shanghai
+minimumDays: 7
+minimumDirections: 5
+minimumRepositories: 30
+capabilityThreshold: 1.5
+thinIntegrationMinimum: 5
+buildGapMinimum: 5
+requiredDimensions:
+  - multi_source_evidence
+  - cohort_comparability
+  - activity_and_organization
+  - anti_gaming_and_replay
+  - chinese_decision_analysis
+  - obsidian_ownership
+  - restricted_agent
+products:
+  - { id: github-trending, name: GitHub Trending, url: "https://github.com/trending" }
+  - { id: oss-insight, name: OSS Insight, url: "https://ossinsight.io/" }
+  - { id: trending-repos, name: Trending Repos, url: "https://trending-repos.com/" }
+  - { id: trendshift, name: Trendshift, url: "https://trendshift.io/" }
+  - { id: pickgithub, name: PickGithub, url: "https://pickgithub.com/" }
+  - { id: gittrend, name: GitTrend, url: "https://gittrend.io/" }
+  - { id: hublens, name: HubLens, url: "https://hublens.dev/en/" }
+  - { id: github-cn, name: GitHub 中文社区排行榜, url: "https://github-cn.com/ranking" }
+directions:
+  - { id: ai-agent, name: AI Coding 与 Agent }
+  - { id: data-ml, name: 数据与机器学习工程 }
+  - { id: app-platform, name: 前端、后端与跨端 }
+  - { id: infra-devtools, name: 云原生、可观测与开发者工具 }
+  - { id: security-supply-chain, name: 安全与软件供应链 }
+repositories:
+  - { slug: openai/codex, direction: ai-agent }
+  - { slug: microsoft/autogen, direction: ai-agent }
+  - { slug: langchain-ai/langgraph, direction: ai-agent }
+  - { slug: continuedev/continue, direction: ai-agent }
+  - { slug: Aider-AI/aider, direction: ai-agent }
+  - { slug: modelcontextprotocol/servers, direction: ai-agent }
+  - { slug: vllm-project/vllm, direction: data-ml }
+  - { slug: huggingface/transformers, direction: data-ml }
+  - { slug: mlflow/mlflow, direction: data-ml }
+  - { slug: ray-project/ray, direction: data-ml }
+  - { slug: pytorch/pytorch, direction: data-ml }
+  - { slug: dlt-hub/dlt, direction: data-ml }
+  - { slug: vercel/next.js, direction: app-platform }
+  - { slug: vuejs/core, direction: app-platform }
+  - { slug: fastify/fastify, direction: app-platform }
+  - { slug: denoland/deno, direction: app-platform }
+  - { slug: oven-sh/bun, direction: app-platform }
+  - { slug: tauri-apps/tauri, direction: app-platform }
+  - { slug: kubernetes/kubernetes, direction: infra-devtools }
+  - { slug: grafana/grafana, direction: infra-devtools }
+  - { slug: open-telemetry/opentelemetry-collector, direction: infra-devtools }
+  - { slug: dagger/dagger, direction: infra-devtools }
+  - { slug: nektos/act, direction: infra-devtools }
+  - { slug: astral-sh/uv, direction: infra-devtools }
+  - { slug: ossf/scorecard, direction: security-supply-chain }
+  - { slug: google/osv-scanner, direction: security-supply-chain }
+  - { slug: anchore/syft, direction: security-supply-chain }
+  - { slug: sigstore/cosign, direction: security-supply-chain }
+  - { slug: aquasecurity/trivy, direction: security-supply-chain }
+  - { slug: zaproxy/zaproxy, direction: security-supply-chain }
