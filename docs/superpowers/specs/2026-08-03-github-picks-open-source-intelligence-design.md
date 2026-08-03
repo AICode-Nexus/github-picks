@@ -1,7 +1,7 @@
 # GitHub Picks：中文开源情报与决策系统设计规格
 
 - 日期：2026-08-03
-- 状态：汇总修订，待用户复核
+- 状态：用户已确认，进入 M0/M1 实施规划
 - 产品主名称：GitHub Picks
 - 中文定位：GitHub 精选
 - 产品副标题：每日发现真正值得关注的开源项目
@@ -2313,4 +2313,9 @@ Agent 到 M5 才开放，分三种入口：
 
 ### 34.5 下一份文档
 
-用户确认本总规格完整后，再为 **M0 替代验证 + M1 信源与证据基础** 编写第一份实施计划。不会一次性把 M1 至 M5 混成一个无法验收的大开发任务。
+用户已确认本总规格完整，首轮实施被拆成两个可独立验收的计划：
+
+1. `docs/superpowers/plans/2026-08-03-github-picks-m0-validation.md`：先连续七天验证八个现有产品，输出 `USE_EXISTING`、`THIN_INTEGRATION`、`BUILD` 或 `INSUFFICIENT_EVIDENCE`。
+2. `docs/superpowers/plans/2026-08-03-github-picks-m1-evidence-foundation.md`：只有 M0 机器生成结果为 `BUILD` 才能执行，建设十三个信源、不可变证据、实体解析、调度、健康与回放。
+
+M2 评分与反作弊、M3 中文分析和网站、M4 Obsidian、M5 Agent 继续按里程碑单独设计和验收，不与 M0/M1 混为一次开发。
