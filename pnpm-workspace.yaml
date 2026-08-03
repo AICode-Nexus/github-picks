@@ -1,0 +1,6 @@
+packages:
+  - "packages/*"
+  - "workers/*"
+  - "tools/*"
+allowBuilds:
+  esbuild: true
