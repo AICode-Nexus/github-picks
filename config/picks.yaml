@@ -1,0 +1,118 @@
+version: v0.1.0
+timezone: Asia/Shanghai
+directions:
+  - id: ai-agent
+    name: AI Coding 与 Agent
+    query: topic:ai-agent OR topic:llm stars:>20 archived:false
+  - id: data-ml
+    name: 数据与机器学习工程
+    query: topic:machine-learning OR topic:data-engineering stars:>20 archived:false
+  - id: app-platform
+    name: 前端、后端与跨端
+    query: topic:web-framework OR topic:backend stars:>20 archived:false
+  - id: infra-devtools
+    name: 云原生、可观测与开发者工具
+    query: topic:devtools OR topic:cloud-native stars:>20 archived:false
+  - id: security-supply-chain
+    name: 安全与软件供应链
+    query: topic:security OR topic:supply-chain stars:>20 archived:false
+sources:
+  - sourceId: github-rest
+    name: GitHub REST API
+    tier: S
+    purpose: [fact]
+    independenceGroup: github-public-data
+    evidenceUrl: https://docs.github.com/en/rest
+  - sourceId: github-search
+    name: GitHub Repository Search
+    tier: S
+    purpose: [discovery, fact]
+    independenceGroup: github-public-data
+    evidenceUrl: https://docs.github.com/en/rest/search/search
+  - sourceId: github-trending
+    name: GitHub Trending
+    tier: B
+    purpose: [discovery]
+    independenceGroup: github-public-data
+    evidenceUrl: https://github.com/trending
+  - sourceId: gittrend
+    name: GitTrend
+    tier: B
+    purpose: [discovery, cross_validation]
+    independenceGroup: github-public-data
+    evidenceUrl: https://gittrend.io/about
+  - sourceId: hublens
+    name: HubLens
+    tier: C
+    purpose: [discovery, cross_validation]
+    independenceGroup: hublens-aggregator
+    evidenceUrl: https://hublens.dev/en/api/
+  - sourceId: hacker-news
+    name: Hacker News via Algolia
+    tier: B
+    purpose: [discovery, cross_validation]
+    independenceGroup: hacker-news-community
+    evidenceUrl: https://hn.algolia.com/api
+  - sourceId: openssf-scorecard
+    name: OpenSSF Scorecard
+    tier: A
+    purpose: [risk, fact]
+    independenceGroup: openssf-security
+    evidenceUrl: https://securityscorecards.dev/
+  - sourceId: osv
+    name: OSV
+    tier: A
+    purpose: [risk, fact]
+    independenceGroup: osv-vulnerability
+    evidenceUrl: https://osv.dev/docs/
+  - sourceId: deps-dev
+    name: deps.dev
+    tier: A
+    purpose: [fact, cross_validation]
+    independenceGroup: deps-dev
+    evidenceUrl: https://docs.deps.dev/api/v3/
+  - sourceId: npm
+    name: npm Registry
+    tier: S
+    purpose: [fact]
+    independenceGroup: npm-registry
+    evidenceUrl: https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md
+  - sourceId: pypi
+    name: Python Package Index
+    tier: S
+    purpose: [fact]
+    independenceGroup: pypi-registry
+    evidenceUrl: https://docs.pypi.org/api/json/
+  - sourceId: crates-io
+    name: crates.io
+    tier: S
+    purpose: [fact]
+    independenceGroup: crates-registry
+    evidenceUrl: https://crates.io/data-access
+weights:
+  utility: 18
+  activity: 18
+  organization: 15
+  engineering: 14
+  adoption: 10
+  security: 10
+  momentum: 10
+  innovation: 5
+features:
+  adoption:
+    starStockWeight: 0.15
+  momentum:
+    starVelocityWeight: 0.30
+limits:
+  candidateLimit: 60
+  enrichmentLimit: 20
+  perDirectionMinimum: 3
+  overallLimit: 20
+  directionLimit: 10
+  organizationLimit: 2
+  enrichmentConcurrency: 2
+ranking:
+  ordinaryMinimumConfidence: 0.55
+  overallMinimumConfidence: 0.65
+  hiddenGemMaximumStars: 5000
+  newProjectMaximumAgeDays: 365
