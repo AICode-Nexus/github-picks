@@ -298,7 +298,7 @@ Expected: enrichment and all existing tests pass.
 - Consumes: `RepositorySnapshot`, candidate signals and `PicksConfig`.
 - Produces: `scoreRepository()`, `buildRankings()`, `analyzeRepository()`.
 
-- [ ] **Step 1: Write failing scoring invariant tests**
+- [x] **Step 1: Write failing scoring invariant tests**
 
 Tests must include these behavioral proofs:
 
@@ -316,13 +316,13 @@ expect(scoreRepository(missingScorecardRepo, config).riskPenalty).toBe(0);
 expect(scoreRepository(noLicenseRepo, config).riskPenalty).toBe(6);
 ```
 
-- [ ] **Step 2: Run scoring tests and verify RED**
+- [x] **Step 2: Run scoring tests and verify RED**
 
 Run: `pnpm --filter @github-picks/core test -- scoring.test.ts`
 
 Expected: FAIL because scoring functions do not exist.
 
-- [ ] **Step 3: Implement deterministic feature scoring**
+- [x] **Step 3: Implement deterministic feature scoring**
 
 Use bounded `0..100` feature transforms and retain every feature value plus evidence IDs. Unknown features use prior 50 and reduce confidence. The first scoring version must:
 
@@ -344,15 +344,15 @@ publishedScore = clamp(50 + confidence * (baseScore - 50) - riskPenalty, 0, 100)
 
 Round only the public values to one decimal. Preserve raw precision internally.
 
-- [ ] **Step 4: Write failing ranking and Chinese-analysis tests**
+- [x] **Step 4: Write failing ranking and Chinese-analysis tests**
 
 Prove that archived/quarantined items are absent from normal lists, one organization contributes at most two repositories to the overall list, all five populated directions get a direction list, and Chinese analysis contains “值得关注”“适合”“风险”“下一步” plus evidence URLs rather than unsupported superlatives.
 
-- [ ] **Step 5: Implement rankings and deterministic analysis**
+- [x] **Step 5: Implement rankings and deterministic analysis**
 
 Produce `overall`、`rising`、`newProjects`、`hiddenGems`、`active` and `byDirection`. Use independent sort formulas from the main specification, stable tie-breaking by lower-case full name, confidence thresholds, organization diversity and direction quotas. `analyzeRepository()` must name the top two score drivers, state missing evidence, list concrete risk findings and recommend `试用`、`对比`、`观察` or `暂缓` based on eligibility, confidence and risk.
 
-- [ ] **Step 6: Run tests, format, verify and commit**
+- [x] **Step 6: Run tests, format, verify and commit**
 
 Run:
 
