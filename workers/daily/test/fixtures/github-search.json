@@ -1,0 +1,17 @@
+{
+  "total_count": 2,
+  "items": [
+    {
+      "full_name": "openai/codex",
+      "html_url": "https://github.com/openai/codex",
+      "stargazers_count": 50000,
+      "score": 1
+    },
+    {
+      "full_name": "Aider-AI/aider",
+      "html_url": "https://github.com/Aider-AI/aider",
+      "stargazers_count": 42000,
+      "score": 0.9
+    }
+  ]
+}

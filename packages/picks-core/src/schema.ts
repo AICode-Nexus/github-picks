@@ -316,6 +316,7 @@ export const SourceHealthSchema = z
     message: z.string().nullable(),
   })
   .strict();
+export type SourceHealth = z.infer<typeof SourceHealthSchema>;
 
 export const RankingsSchema = z
   .object({

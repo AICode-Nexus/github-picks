@@ -173,7 +173,7 @@ Expected: focused test and full check pass; commit contains the plan, explicit d
 - Consumes: `CandidateSignalSchema`, `PicksConfig` and source metadata from Task 1.
 - Produces: five `DiscoveryAdapter` implementations, `discoverCandidates()`, `normalizeRepositoryId()`, `FileRawStore`.
 
-- [ ] **Step 1: Write failing parser, deduplication and raw-store tests**
+- [x] **Step 1: Write failing parser, deduplication and raw-store tests**
 
 Tests must prove that:
 
@@ -189,17 +189,17 @@ expect(first.objectRef).toBe(second.objectRef);
 
 The last assertion stores identical raw bytes twice and proves content-addressed idempotency.
 
-- [ ] **Step 2: Run focused tests and verify RED**
+- [x] **Step 2: Run focused tests and verify RED**
 
 Run: `pnpm --filter @github-picks/daily test -- discovery.test.ts raw-store.test.ts`
 
 Expected: FAIL because the worker package and adapters do not exist.
 
-- [ ] **Step 3: Implement polite HTTP and raw snapshots**
+- [x] **Step 3: Implement polite HTTP and raw snapshots**
 
 `requestArtifact()` must use `AbortSignal.timeout(15_000)`, `github-picks/0.1 (+https://github.com/AICode-Nexus/github-picks)` as User-Agent, two retries for 429/5xx with bounded jitter, and return only allow-listed response metadata. `FileRawStore.put()` must compute SHA-256 over bytes and write `raw/<sourceId>/<sha256>.bin` plus a JSON metadata sidecar using exclusive creation; an existing object is reused and never overwritten.
 
-- [ ] **Step 4: Implement all five discovery adapters and merge policy**
+- [x] **Step 4: Implement all five discovery adapters and merge policy**
 
 - GitHub Trending parses repository links from `article.Box-row`.
 - GitHub Search runs one configured query per direction and assigns the query direction.
@@ -209,7 +209,7 @@ Expected: FAIL because the worker package and adapters do not exist.
 - `discoverCandidates()` uses lower-case `owner/name` only as a temporary dedupe key, merges signals without treating GitHub-derived products as independent sources, keeps best source rank, enforces five-direction seeding and returns at most `candidateLimit` items.
 - A failed adapter becomes `degraded` with its error class; other adapters continue.
 
-- [ ] **Step 5: Run tests, format, verify and commit**
+- [x] **Step 5: Run tests, format, verify and commit**
 
 Run:
 
