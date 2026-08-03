@@ -241,17 +241,17 @@ Expected: deterministic fixture parsing, dedupe and immutable-store tests pass.
 - Consumes: merged candidate signals, `requestArtifact()` and `FileRawStore`.
 - Produces: `GitHubEnricher.enrich(fullName, context)`, `ScorecardEnricher.enrich(fullName, context)`, `enrichCandidate()`.
 
-- [ ] **Step 1: Write failing enrichment tests**
+- [x] **Step 1: Write failing enrichment tests**
 
 Tests must prove the output carries the immutable GitHub `node_id`, repository alias, owner type, timestamps, license, topics, counts, archived state and event-window features. Event parsing must produce unique active days, unique human actors, Push/PullRequest/Issues/Release counts and ignore actors ending in `[bot]`. A missing Scorecard response must add `scorecard` to `missingFields` without setting its score to zero.
 
-- [ ] **Step 2: Run focused test and verify RED**
+- [x] **Step 2: Run focused test and verify RED**
 
 Run: `pnpm --filter @github-picks/daily test -- enrichment.test.ts`
 
 Expected: FAIL because enrichment modules do not exist.
 
-- [ ] **Step 3: Implement GitHub REST enrichment**
+- [x] **Step 3: Implement GitHub REST enrichment**
 
 For each selected candidate fetch exactly:
 
@@ -262,11 +262,11 @@ GET https://api.github.com/repos/{owner}/{repo}/events?per_page=100
 
 Use `application/vnd.github+json`, API version `2022-11-28`, optional Bearer auth, and do not log the token. Derive event features for the 7- and 30-day windows relative to the requested report date. Use `node_id` as permanent identity; preserve current `full_name` as an alias. A 404 marks the candidate invalid; 403/429 degrades the candidate and lowers confidence instead of inventing facts.
 
-- [ ] **Step 4: Implement OpenSSF Scorecard enrichment**
+- [x] **Step 4: Implement OpenSSF Scorecard enrichment**
 
 Fetch `https://api.securityscorecards.dev/projects/github.com/{owner}/{repo}` for candidates selected for full enrichment. Preserve aggregate score, check names/scores and date as evidence. A 404, timeout or rate limit becomes `missingFields: ["scorecard"]`; it is not a negative security finding.
 
-- [ ] **Step 5: Run tests, format, verify and commit**
+- [x] **Step 5: Run tests, format, verify and commit**
 
 Run:
 

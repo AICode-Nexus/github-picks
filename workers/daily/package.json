@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@github-picks/core": "workspace:*",
-    "cheerio": "1.2.0"
+    "cheerio": "1.2.0",
+    "zod": "4.4.3"
   }
 }

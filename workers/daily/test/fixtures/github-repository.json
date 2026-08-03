@@ -1,0 +1,21 @@
+{
+  "id": 123456,
+  "node_id": "R_kgDOExample",
+  "full_name": "openai/codex",
+  "html_url": "https://github.com/openai/codex",
+  "owner": { "login": "openai", "type": "Organization" },
+  "description": "Lightweight coding agent that runs in your terminal",
+  "homepage": "https://developers.openai.com/codex",
+  "language": "Rust",
+  "topics": ["ai", "coding-agent", "rust"],
+  "created_at": "2025-04-16T12:00:00Z",
+  "updated_at": "2026-08-03T14:00:00Z",
+  "pushed_at": "2026-08-03T13:45:00Z",
+  "default_branch": "main",
+  "stargazers_count": 50000,
+  "forks_count": 6200,
+  "subscribers_count": 420,
+  "open_issues_count": 310,
+  "archived": false,
+  "license": { "spdx_id": "Apache-2.0" }
+}

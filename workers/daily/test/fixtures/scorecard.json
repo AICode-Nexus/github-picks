@@ -1,0 +1,10 @@
+{
+  "date": "2026-08-03",
+  "repo": { "name": "github.com/openai/codex", "commit": "abc123" },
+  "score": 7.8,
+  "checks": [
+    { "name": "Maintained", "score": 10 },
+    { "name": "Code-Review", "score": 8 },
+    { "name": "Security-Policy", "score": 5 }
+  ]
+}
