@@ -1,0 +1,431 @@
+{
+  "version": 1,
+  "observedAt": "2026-08-03T15:30:00.000Z",
+  "discoveredCount": 12,
+  "sourceHealth": [
+    {
+      "sourceId": "gittrend",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": null
+    },
+    {
+      "sourceId": "github-rest",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": null
+    },
+    {
+      "sourceId": "hublens",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": "回放样本显示公开数据超过 48 小时"
+    },
+    {
+      "sourceId": "openssf-scorecard",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": "部分项目没有可用 Scorecard"
+    }
+  ],
+  "snapshots": [
+    {
+      "nodeId": "R_replay_ai_agent",
+      "fullName": "openai/codex",
+      "url": "https://github.com/openai/codex",
+      "ownerLogin": "openai",
+      "ownerType": "Organization",
+      "description": "Lightweight coding agent that runs in your terminal",
+      "homepage": "https://developers.openai.com/codex",
+      "language": "Rust",
+      "topics": ["ai", "coding-agent", "rust"],
+      "createdAt": "2025-04-16T12:00:00.000Z",
+      "updatedAt": "2026-08-03T14:00:00.000Z",
+      "pushedAt": "2026-08-03T13:45:00.000Z",
+      "defaultBranch": "main",
+      "stars": 50000,
+      "forks": 6200,
+      "watchers": 420,
+      "openIssues": 310,
+      "archived": false,
+      "licenseSpdx": "Apache-2.0",
+      "direction": "ai-agent",
+      "eventFeatures": {
+        "activeDays7d": 4,
+        "activeDays30d": 18,
+        "humanActors30d": 12,
+        "pushes30d": 30,
+        "pullRequests30d": 14,
+        "issues30d": 10,
+        "releases30d": 2
+      },
+      "scorecard": {
+        "score": 7.8,
+        "date": "2026-08-03",
+        "checks": [
+          { "name": "Maintained", "score": 10 },
+          { "name": "Code-Review", "score": 8 },
+          { "name": "Security-Policy", "score": 5 }
+        ]
+      },
+      "candidateSignals": [
+        {
+          "fullName": "openai/codex",
+          "sourceId": "gittrend",
+          "sourceTier": "B",
+          "independenceGroup": "github-public-data",
+          "direction": "ai-agent",
+          "evidenceUrl": "https://gittrend.io/api/trending?limit=50",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "rank": 3,
+          "sourceScore": 95,
+          "stale": false,
+          "summaryZh": null,
+          "metrics": {
+            "starVelocity": 620,
+            "trendingScore": 95,
+            "discussionPoints": null,
+            "discussionComments": null
+          },
+          "rawObjectRef": null
+        },
+        {
+          "fullName": "openai/codex",
+          "sourceId": "hacker-news",
+          "sourceTier": "B",
+          "independenceGroup": "hacker-news-community",
+          "direction": null,
+          "evidenceUrl": "https://news.ycombinator.com/item?id=1",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "rank": 8,
+          "sourceScore": 42,
+          "stale": false,
+          "summaryZh": null,
+          "metrics": {
+            "starVelocity": null,
+            "trendingScore": null,
+            "discussionPoints": 42,
+            "discussionComments": 16
+          },
+          "rawObjectRef": null
+        }
+      ],
+      "evidence": [
+        {
+          "id": "github-rest:repository:replay-ai",
+          "sourceId": "github-rest",
+          "sourceTier": "S",
+          "independenceGroup": "github-public-data",
+          "evidenceUrl": "https://github.com/openai/codex",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "field": "repository",
+          "value": { "archived": false, "licenseSpdx": "Apache-2.0" },
+          "rawObjectRef": null
+        },
+        {
+          "id": "openssf-scorecard:score:replay-ai",
+          "sourceId": "openssf-scorecard",
+          "sourceTier": "A",
+          "independenceGroup": "openssf-security",
+          "evidenceUrl": "https://api.securityscorecards.dev/projects/github.com/openai/codex",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "field": "scorecard",
+          "value": { "score": 7.8 },
+          "rawObjectRef": null
+        }
+      ],
+      "missingFields": []
+    },
+    {
+      "nodeId": "R_replay_data_ml",
+      "fullName": "dlt-hub/dlt",
+      "url": "https://github.com/dlt-hub/dlt",
+      "ownerLogin": "dlt-hub",
+      "ownerType": "Organization",
+      "description": "Open source Python library for loading data into data platforms",
+      "homepage": "https://dlthub.com",
+      "language": "Python",
+      "topics": ["data-engineering", "etl", "python"],
+      "createdAt": "2022-07-01T00:00:00.000Z",
+      "updatedAt": "2026-08-03T12:00:00.000Z",
+      "pushedAt": "2026-08-03T11:00:00.000Z",
+      "defaultBranch": "devel",
+      "stars": 25000,
+      "forks": 1800,
+      "watchers": 120,
+      "openIssues": 190,
+      "archived": false,
+      "licenseSpdx": "Apache-2.0",
+      "direction": "data-ml",
+      "eventFeatures": {
+        "activeDays7d": 5,
+        "activeDays30d": 16,
+        "humanActors30d": 10,
+        "pushes30d": 28,
+        "pullRequests30d": 12,
+        "issues30d": 8,
+        "releases30d": 1
+      },
+      "scorecard": null,
+      "candidateSignals": [
+        {
+          "fullName": "dlt-hub/dlt",
+          "sourceId": "gittrend",
+          "sourceTier": "B",
+          "independenceGroup": "github-public-data",
+          "direction": "data-ml",
+          "evidenceUrl": "https://gittrend.io/api/trending?limit=50",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "rank": 11,
+          "sourceScore": 82,
+          "stale": false,
+          "summaryZh": null,
+          "metrics": {
+            "starVelocity": 120,
+            "trendingScore": 82,
+            "discussionPoints": null,
+            "discussionComments": null
+          },
+          "rawObjectRef": null
+        }
+      ],
+      "evidence": [
+        {
+          "id": "github-rest:repository:replay-data",
+          "sourceId": "github-rest",
+          "sourceTier": "S",
+          "independenceGroup": "github-public-data",
+          "evidenceUrl": "https://github.com/dlt-hub/dlt",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "field": "repository",
+          "value": { "archived": false, "licenseSpdx": "Apache-2.0" },
+          "rawObjectRef": null
+        }
+      ],
+      "missingFields": ["scorecard"]
+    },
+    {
+      "nodeId": "R_replay_app_platform",
+      "fullName": "fastify/fastify",
+      "url": "https://github.com/fastify/fastify",
+      "ownerLogin": "fastify",
+      "ownerType": "Organization",
+      "description": "Fast and low overhead web framework for Node.js",
+      "homepage": "https://fastify.dev",
+      "language": "JavaScript",
+      "topics": ["backend", "framework", "nodejs"],
+      "createdAt": "2016-09-27T00:00:00.000Z",
+      "updatedAt": "2026-08-03T10:00:00.000Z",
+      "pushedAt": "2026-08-02T20:00:00.000Z",
+      "defaultBranch": "main",
+      "stars": 35000,
+      "forks": 2500,
+      "watchers": 180,
+      "openIssues": 140,
+      "archived": false,
+      "licenseSpdx": "MIT",
+      "direction": "app-platform",
+      "eventFeatures": {
+        "activeDays7d": 4,
+        "activeDays30d": 14,
+        "humanActors30d": 14,
+        "pushes30d": 20,
+        "pullRequests30d": 18,
+        "issues30d": 12,
+        "releases30d": 2
+      },
+      "scorecard": null,
+      "candidateSignals": [
+        {
+          "fullName": "fastify/fastify",
+          "sourceId": "github-search",
+          "sourceTier": "S",
+          "independenceGroup": "github-public-data",
+          "direction": "app-platform",
+          "evidenceUrl": "https://github.com/fastify/fastify",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "rank": 4,
+          "sourceScore": 1,
+          "stale": false,
+          "summaryZh": null,
+          "metrics": {
+            "starVelocity": null,
+            "trendingScore": null,
+            "discussionPoints": null,
+            "discussionComments": null
+          },
+          "rawObjectRef": null
+        }
+      ],
+      "evidence": [
+        {
+          "id": "github-rest:repository:replay-app",
+          "sourceId": "github-rest",
+          "sourceTier": "S",
+          "independenceGroup": "github-public-data",
+          "evidenceUrl": "https://github.com/fastify/fastify",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "field": "repository",
+          "value": { "archived": false, "licenseSpdx": "MIT" },
+          "rawObjectRef": null
+        }
+      ],
+      "missingFields": ["scorecard"]
+    },
+    {
+      "nodeId": "R_replay_infra_devtools",
+      "fullName": "astral-sh/uv",
+      "url": "https://github.com/astral-sh/uv",
+      "ownerLogin": "astral-sh",
+      "ownerType": "Organization",
+      "description": "An extremely fast Python package and project manager written in Rust",
+      "homepage": "https://docs.astral.sh/uv/",
+      "language": "Rust",
+      "topics": ["developer-tools", "package-manager", "python", "rust"],
+      "createdAt": "2023-10-03T00:00:00.000Z",
+      "updatedAt": "2026-08-03T14:10:00.000Z",
+      "pushedAt": "2026-08-03T14:00:00.000Z",
+      "defaultBranch": "main",
+      "stars": 70000,
+      "forks": 2100,
+      "watchers": 260,
+      "openIssues": 480,
+      "archived": false,
+      "licenseSpdx": "Apache-2.0",
+      "direction": "infra-devtools",
+      "eventFeatures": {
+        "activeDays7d": 7,
+        "activeDays30d": 24,
+        "humanActors30d": 18,
+        "pushes30d": 46,
+        "pullRequests30d": 22,
+        "issues30d": 20,
+        "releases30d": 4
+      },
+      "scorecard": {
+        "score": 8.6,
+        "date": "2026-08-03",
+        "checks": [
+          { "name": "Maintained", "score": 10 },
+          { "name": "Code-Review", "score": 9 },
+          { "name": "Security-Policy", "score": 7 }
+        ]
+      },
+      "candidateSignals": [
+        {
+          "fullName": "astral-sh/uv",
+          "sourceId": "gittrend",
+          "sourceTier": "B",
+          "independenceGroup": "github-public-data",
+          "direction": "infra-devtools",
+          "evidenceUrl": "https://gittrend.io/api/trending?limit=50",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "rank": 5,
+          "sourceScore": 92,
+          "stale": false,
+          "summaryZh": null,
+          "metrics": {
+            "starVelocity": 410,
+            "trendingScore": 92,
+            "discussionPoints": null,
+            "discussionComments": null
+          },
+          "rawObjectRef": null
+        }
+      ],
+      "evidence": [
+        {
+          "id": "github-rest:repository:replay-infra",
+          "sourceId": "github-rest",
+          "sourceTier": "S",
+          "independenceGroup": "github-public-data",
+          "evidenceUrl": "https://github.com/astral-sh/uv",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "field": "repository",
+          "value": { "archived": false, "licenseSpdx": "Apache-2.0" },
+          "rawObjectRef": null
+        },
+        {
+          "id": "openssf-scorecard:score:replay-infra",
+          "sourceId": "openssf-scorecard",
+          "sourceTier": "A",
+          "independenceGroup": "openssf-security",
+          "evidenceUrl": "https://api.securityscorecards.dev/projects/github.com/astral-sh/uv",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "field": "scorecard",
+          "value": { "score": 8.6 },
+          "rawObjectRef": null
+        }
+      ],
+      "missingFields": []
+    },
+    {
+      "nodeId": "R_replay_security",
+      "fullName": "ossf/scorecard",
+      "url": "https://github.com/ossf/scorecard",
+      "ownerLogin": "ossf",
+      "ownerType": "Organization",
+      "description": "OpenSSF Scorecard evaluates security health metrics for open source projects",
+      "homepage": "https://securityscorecards.dev",
+      "language": "Go",
+      "topics": ["security", "supply-chain", "openssf"],
+      "createdAt": "2020-10-29T00:00:00.000Z",
+      "updatedAt": "2026-08-03T09:00:00.000Z",
+      "pushedAt": "2026-08-02T18:00:00.000Z",
+      "defaultBranch": "main",
+      "stars": 5000,
+      "forks": 700,
+      "watchers": 90,
+      "openIssues": 190,
+      "archived": false,
+      "licenseSpdx": "Apache-2.0",
+      "direction": "security-supply-chain",
+      "eventFeatures": {
+        "activeDays7d": 3,
+        "activeDays30d": 12,
+        "humanActors30d": 9,
+        "pushes30d": 18,
+        "pullRequests30d": 12,
+        "issues30d": 9,
+        "releases30d": 1
+      },
+      "scorecard": null,
+      "candidateSignals": [
+        {
+          "fullName": "ossf/scorecard",
+          "sourceId": "github-search",
+          "sourceTier": "S",
+          "independenceGroup": "github-public-data",
+          "direction": "security-supply-chain",
+          "evidenceUrl": "https://github.com/ossf/scorecard",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "rank": 2,
+          "sourceScore": 1,
+          "stale": false,
+          "summaryZh": null,
+          "metrics": {
+            "starVelocity": null,
+            "trendingScore": null,
+            "discussionPoints": null,
+            "discussionComments": null
+          },
+          "rawObjectRef": null
+        }
+      ],
+      "evidence": [
+        {
+          "id": "github-rest:repository:replay-security",
+          "sourceId": "github-rest",
+          "sourceTier": "S",
+          "independenceGroup": "github-public-data",
+          "evidenceUrl": "https://github.com/ossf/scorecard",
+          "observedAt": "2026-08-03T15:30:00.000Z",
+          "field": "repository",
+          "value": { "archived": false, "licenseSpdx": "Apache-2.0" },
+          "rawObjectRef": null
+        }
+      ],
+      "missingFields": ["scorecard"]
+    }
+  ]
+}

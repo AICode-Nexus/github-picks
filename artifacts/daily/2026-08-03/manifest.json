@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "date": "2026-08-03",
+  "mode": "replay",
+  "generatedAt": "2026-08-03T15:30:00.000Z",
+  "scoreVersion": "v0.1.0",
+  "configHash": "17063093a8becbd1fad8530df6802e8bb5d9a9cb30f232b34746e3126994c5d7",
+  "counts": {
+    "discovered": 12,
+    "enriched": 5,
+    "published": 5
+  },
+  "sourceHealth": [
+    {
+      "sourceId": "gittrend",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": null
+    },
+    {
+      "sourceId": "github-rest",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": null
+    },
+    {
+      "sourceId": "hublens",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": "回放样本显示公开数据超过 48 小时"
+    },
+    {
+      "sourceId": "openssf-scorecard",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": "部分项目没有可用 Scorecard"
+    }
+  ],
+  "rawObjectRefs": [],
+  "repositories": [
+    "openai/codex",
+    "dlt-hub/dlt",
+    "fastify/fastify",
+    "astral-sh/uv",
+    "ossf/scorecard"
+  ]
+}

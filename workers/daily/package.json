@@ -6,11 +6,15 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run --dir test"
+    "test": "vitest run --dir test",
+    "start": "tsx src/cli.ts"
   },
   "dependencies": {
     "@github-picks/core": "workspace:*",
     "cheerio": "1.2.0",
     "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "tsx": "4.23.5"
   }
 }

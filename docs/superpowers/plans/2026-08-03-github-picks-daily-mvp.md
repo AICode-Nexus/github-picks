@@ -387,17 +387,17 @@ Expected: all invariants, ranking rules and Chinese-analysis tests pass.
 - Consumes: discovery, enrichment, scoring, ranking, analysis and raw storage.
 - Produces: `runDailyPipeline()` and root command `pnpm picks:daily`.
 
-- [ ] **Step 1: Write failing report and pipeline tests**
+- [x] **Step 1: Write failing report and pipeline tests**
 
 The fixture replay must generate a schema-valid `DailyReport` containing five directions, at least one degraded source, score/evidence references and Chinese analysis. Markdown must begin with `# GitHub Picks Daily · YYYY-MM-DD`, state that the score is experimental, include source health, all non-empty lists, risk/confidence labels and evidence links.
 
-- [ ] **Step 2: Run focused tests and verify RED**
+- [x] **Step 2: Run focused tests and verify RED**
 
 Run: `pnpm --filter @github-picks/daily test -- pipeline.test.ts && pnpm --filter @github-picks/core test -- report.test.ts`
 
 Expected: FAIL because pipeline and report rendering do not exist.
 
-- [ ] **Step 3: Implement replayable pipeline and atomic artifacts**
+- [x] **Step 3: Implement replayable pipeline and atomic artifacts**
 
 `runDailyPipeline()` accepts `mode: "live" | "replay"`, report date, config path, output directory, raw directory, optional GitHub token and injected adapters for tests. It must:
 
@@ -411,7 +411,7 @@ Expected: FAIL because pipeline and report rendering do not exist.
 
 Replay mode reads fixture responses and performs zero network calls.
 
-- [ ] **Step 4: Implement CLI and root command**
+- [x] **Step 4: Implement CLI and root command**
 
 Supported arguments:
 
@@ -422,7 +422,7 @@ pnpm picks:daily --date 2026-08-03 --mode replay
 
 The default date is today in `Asia/Shanghai`, default mode is `live`, default output is `artifacts/daily/<date>`, and paths resolve from the repository root even though pnpm changes package working directory. Exit `0` on a valid report, `1` on invalid arguments or fatal pipeline failure. Print only date, candidate/enriched/published counts, degraded sources and artifact paths.
 
-- [ ] **Step 5: Run tests, format, verify and commit**
+- [x] **Step 5: Run tests, format, verify and commit**
 
 Run:
 

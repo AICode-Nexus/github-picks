@@ -13,7 +13,7 @@ export interface DiscoveryContext {
   observedAt: string;
   rawStore: RawStore;
   githubToken: string | null;
-  fetchImpl?: typeof fetch;
+  fetchImpl?: typeof fetch | undefined;
 }
 
 export interface DiscoveryAdapter {

@@ -333,6 +333,7 @@ export type Rankings = z.infer<typeof RankingsSchema>;
 export const DailyReportSchema = z
   .object({
     date: z.iso.date(),
+    mode: z.enum(["live", "replay"]),
     timezone: z.literal("Asia/Shanghai"),
     generatedAt: z.iso.datetime(),
     scoreVersion: z.string().regex(/^v\d+\.\d+\.\d+$/),
