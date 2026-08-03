@@ -1,0 +1,42 @@
+date: "2026-08-03"
+product: trending-repos
+directions: [ai-agent, data-ml, app-platform, infra-devtools, security-supply-chain]
+repositories:
+  - openai/codex
+  - microsoft/autogen
+  - langchain-ai/langgraph
+  - continuedev/continue
+  - Aider-AI/aider
+  - modelcontextprotocol/servers
+  - vllm-project/vllm
+  - huggingface/transformers
+  - mlflow/mlflow
+  - ray-project/ray
+  - pytorch/pytorch
+  - dlt-hub/dlt
+  - vercel/next.js
+  - vuejs/core
+  - fastify/fastify
+  - denoland/deno
+  - oven-sh/bun
+  - tauri-apps/tauri
+  - kubernetes/kubernetes
+  - grafana/grafana
+  - open-telemetry/opentelemetry-collector
+  - dagger/dagger
+  - nektos/act
+  - astral-sh/uv
+  - ossf/scorecard
+  - google/osv-scanner
+  - anchore/syft
+  - sigstore/cosign
+  - aquasecurity/trivy
+  - zaproxy/zaproxy
+capabilities:
+  multi_source_evidence: { score: 0, evidenceUrl: "https://trending-repos.com/about", note: "公开方法只说明通过 GitHub Search API 和 GitHub 参与度快照采集，没有跨组证据。" }
+  cohort_comparability: { score: 2, evidenceUrl: "https://trending-repos.com/about", note: "公开公式采用星标与复刻速度的 EMA，并按周期调参、按仓库年龄衰减新鲜度奖励。" }
+  activity_and_organization: { score: 1, evidenceUrl: "https://trending-repos.com/about", note: "每四小时计算 Star 与 Fork 速度，能够反映高频活动，但没有组织或维护者信誉权重。" }
+  anti_gaming_and_replay: { score: 1, evidenceUrl: "https://trending-repos.com/repositories/openai/codex", note: "公开公式、日周月排名和历史峰值可回看，但没有刷星上限、异常隔离与原始快照下载。" }
+  chinese_decision_analysis: { score: 0, evidenceUrl: "https://trending-repos.com/repositories/openai/codex", note: "项目页为英文指标卡，没有中文的适用人群、采用成本、风险和行动建议。" }
+  obsidian_ownership: { score: 0, evidenceUrl: "https://trending-repos.com/repositories/openai/codex", note: "只提供 README 徽章和图表嵌入，没有 Obsidian 增量同步与用户批注保护。" }
+  restricted_agent: { score: 0, evidenceUrl: "https://trending-repos.com/about", note: "公开页没有发现可供 Agent 按个人方向查询的 API、MCP 或明确权限边界。" }

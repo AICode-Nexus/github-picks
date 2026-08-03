@@ -1,0 +1,42 @@
+date: "2026-08-03"
+product: github-cn
+directions: [ai-agent, data-ml, app-platform, infra-devtools, security-supply-chain]
+repositories:
+  - openai/codex
+  - microsoft/autogen
+  - langchain-ai/langgraph
+  - continuedev/continue
+  - Aider-AI/aider
+  - modelcontextprotocol/servers
+  - vllm-project/vllm
+  - huggingface/transformers
+  - mlflow/mlflow
+  - ray-project/ray
+  - pytorch/pytorch
+  - dlt-hub/dlt
+  - vercel/next.js
+  - vuejs/core
+  - fastify/fastify
+  - denoland/deno
+  - oven-sh/bun
+  - tauri-apps/tauri
+  - kubernetes/kubernetes
+  - grafana/grafana
+  - open-telemetry/opentelemetry-collector
+  - dagger/dagger
+  - nektos/act
+  - astral-sh/uv
+  - ossf/scorecard
+  - google/osv-scanner
+  - anchore/syft
+  - sigstore/cosign
+  - aquasecurity/trivy
+  - zaproxy/zaproxy
+capabilities:
+  multi_source_evidence: { score: 0, evidenceUrl: "https://github-cn.com/about", note: "关于页说明所有项目内容源自 GitHub 官方 API，没有包、安全或独立社区跨组证据。" }
+  cohort_comparability: { score: 1, evidenceUrl: "https://github-cn.com/ranking", note: "可按 Star、Fork、更新时间、活跃状态和许可证筛选，但没有公开年龄与规模校准公式。" }
+  activity_and_organization: { score: 1, evidenceUrl: "https://github-cn.com/trends", note: "趋势说明考虑 Star 增长、Fork、Issue、PR 与讨论热度，但没有组织或维护者信誉权重。" }
+  anti_gaming_and_replay: { score: 1, evidenceUrl: "https://github-cn.com/ranking", note: "榜单声明会清洗去噪并排除恶意刷榜与废弃仓库，但没有阈值、评分版本和历史回放。" }
+  chinese_decision_analysis: { score: 1, evidenceUrl: "https://github-cn.com/repo/openai/codex", note: "全站提供中文摘要和选品定位，但固定仓库 openai/codex 今日返回未找到，深度覆盖不完整。" }
+  obsidian_ownership: { score: 0, evidenceUrl: "https://github-cn.com/about", note: "未找到 Markdown 导出、Obsidian 增量同步或用户个人批注所有权保护。" }
+  restricted_agent: { score: 0, evidenceUrl: "https://github-cn.com/about", note: "今日公开页面未提供面向 Agent 的 API、MCP、个人方向过滤或审计权限边界。" }

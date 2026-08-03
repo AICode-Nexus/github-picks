@@ -1,0 +1,42 @@
+date: "2026-08-03"
+product: gittrend
+directions: [ai-agent, data-ml, app-platform, infra-devtools, security-supply-chain]
+repositories:
+  - openai/codex
+  - microsoft/autogen
+  - langchain-ai/langgraph
+  - continuedev/continue
+  - Aider-AI/aider
+  - modelcontextprotocol/servers
+  - vllm-project/vllm
+  - huggingface/transformers
+  - mlflow/mlflow
+  - ray-project/ray
+  - pytorch/pytorch
+  - dlt-hub/dlt
+  - vercel/next.js
+  - vuejs/core
+  - fastify/fastify
+  - denoland/deno
+  - oven-sh/bun
+  - tauri-apps/tauri
+  - kubernetes/kubernetes
+  - grafana/grafana
+  - open-telemetry/opentelemetry-collector
+  - dagger/dagger
+  - nektos/act
+  - astral-sh/uv
+  - ossf/scorecard
+  - google/osv-scanner
+  - anchore/syft
+  - sigstore/cosign
+  - aquasecurity/trivy
+  - zaproxy/zaproxy
+capabilities:
+  multi_source_evidence: { score: 0, evidenceUrl: "https://gittrend.io/about", note: "关于页明确数据来自 GitHub，未展示包、安全、依赖或独立社区的跨组证据。" }
+  cohort_comparability: { score: 2, evidenceUrl: "https://gittrend.io/about", note: "按五十七个主题与二十种语言分榜，并为半年内新仓和两千 Star 以下小仓建立独立 cohort。" }
+  activity_and_organization: { score: 1, evidenceUrl: "https://gittrend.io/trending/ai-agent", note: "榜单使用相对规模的速度加权 Star 增长并有开发者榜，但没有维护者或组织信誉独立权重。" }
+  anti_gaming_and_replay: { score: 1, evidenceUrl: "https://gittrend.io/about", note: "提供历史排名、永久周月摘要并承诺不付费买榜，但未公开刷星上限和异常隔离算法。" }
+  chinese_decision_analysis: { score: 0, evidenceUrl: "https://gittrend.io/about", note: "公开页为英文摘要和指标，没有中文的适用对象、风险、采用成本及行动建议。" }
+  obsidian_ownership: { score: 0, evidenceUrl: "https://gittrend.io/about", note: "开放数据与历史查询可用，但未提供 Obsidian 增量同步和用户批注保护。" }
+  restricted_agent: { score: 2, evidenceUrl: "https://gittrend.io/api/trending?limit=1", note: "免费公开 API 可返回公共趋势分，并可按主题语言筛选；CC0 数据与无账户权限范围清晰。" }

@@ -1,0 +1,42 @@
+date: "2026-08-03"
+product: hublens
+directions: [ai-agent, data-ml, app-platform, infra-devtools, security-supply-chain]
+repositories:
+  - openai/codex
+  - microsoft/autogen
+  - langchain-ai/langgraph
+  - continuedev/continue
+  - Aider-AI/aider
+  - modelcontextprotocol/servers
+  - vllm-project/vllm
+  - huggingface/transformers
+  - mlflow/mlflow
+  - ray-project/ray
+  - pytorch/pytorch
+  - dlt-hub/dlt
+  - vercel/next.js
+  - vuejs/core
+  - fastify/fastify
+  - denoland/deno
+  - oven-sh/bun
+  - tauri-apps/tauri
+  - kubernetes/kubernetes
+  - grafana/grafana
+  - open-telemetry/opentelemetry-collector
+  - dagger/dagger
+  - nektos/act
+  - astral-sh/uv
+  - ossf/scorecard
+  - google/osv-scanner
+  - anchore/syft
+  - sigstore/cosign
+  - aquasecurity/trivy
+  - zaproxy/zaproxy
+capabilities:
+  multi_source_evidence: { score: 2, evidenceUrl: "https://hublens.dev/en/api/", note: "公开 API 可按 GitHub 与 Hacker News 来源筛选，并返回仓库链接、来源与生成时间。" }
+  cohort_comparability: { score: 1, evidenceUrl: "https://hublens.dev/en/", note: "按类别建立独立榜并支持类别内排名，但未按仓库年龄、规模或生命周期归一化。" }
+  activity_and_organization: { score: 1, evidenceUrl: "https://hublens.dev/en/", note: "说明使用 Star 速度异常和贡献者比较；今日 API 首条项目仍更新于五月，且无组织信誉权重。" }
+  anti_gaming_and_replay: { score: 1, evidenceUrl: "https://hublens.dev/en/api/", note: "提供归档查询、生成时间和异常速度描述，但没有公开评分公式、刷星上限或隔离规则。" }
+  chinese_decision_analysis: { score: 1, evidenceUrl: "https://hublens.dev/en/api/", note: "API 返回中英文标题与摘要，但内容仍是项目概述，没有采用成本、风险与下一步决策。" }
+  obsidian_ownership: { score: 0, evidenceUrl: "https://hublens.dev/en/", note: "输出为 HTML 与 JSON，未找到 Obsidian 增量同步、Markdown 笔记及批注保护协议。" }
+  restricted_agent: { score: 2, evidenceUrl: "https://hublens.dev/en/api/", note: "公开 REST API 与 MCP 提供趋势、归档和文章工具，类别筛选、限流与免密权限边界明确。" }

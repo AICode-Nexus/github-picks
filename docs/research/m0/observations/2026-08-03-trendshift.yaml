@@ -1,0 +1,42 @@
+date: "2026-08-03"
+product: trendshift
+directions: [ai-agent, data-ml, app-platform, infra-devtools, security-supply-chain]
+repositories:
+  - openai/codex
+  - microsoft/autogen
+  - langchain-ai/langgraph
+  - continuedev/continue
+  - Aider-AI/aider
+  - modelcontextprotocol/servers
+  - vllm-project/vllm
+  - huggingface/transformers
+  - mlflow/mlflow
+  - ray-project/ray
+  - pytorch/pytorch
+  - dlt-hub/dlt
+  - vercel/next.js
+  - vuejs/core
+  - fastify/fastify
+  - denoland/deno
+  - oven-sh/bun
+  - tauri-apps/tauri
+  - kubernetes/kubernetes
+  - grafana/grafana
+  - open-telemetry/opentelemetry-collector
+  - dagger/dagger
+  - nektos/act
+  - astral-sh/uv
+  - ossf/scorecard
+  - google/osv-scanner
+  - anchore/syft
+  - sigstore/cosign
+  - aquasecurity/trivy
+  - zaproxy/zaproxy
+capabilities:
+  multi_source_evidence: { score: 2, evidenceUrl: "https://trendshift.io/repositories/99983", note: "仓库页同时展示 GitHub 活动与来自 X 的具体社会讨论链接，形成跨组公开证据。" }
+  cohort_comparability: { score: 1, evidenceUrl: "https://trendshift.io/insights", note: "提供主题、语言以及日周月年窗口和集中度分析，但未公开年龄或规模归一化公式。" }
+  activity_and_organization: { score: 1, evidenceUrl: "https://trendshift.io/repositories/99983", note: "展示 Star、Fork、合并 PR、Issue 和贡献者活动，但没有组织信誉与维护者质量的独立权重。" }
+  anti_gaming_and_replay: { score: 1, evidenceUrl: "https://trendshift.io/signal", note: "付费 Signal API 可查询历史日周月年榜和参与度突增，但没有公开反作弊公式与异常隔离阈值。" }
+  chinese_decision_analysis: { score: 0, evidenceUrl: "https://trendshift.io/", note: "产品界面和洞察主要为英文，没有中文选型结论、风险、成本和下一步建议。" }
+  obsidian_ownership: { score: 0, evidenceUrl: "https://trendshift.io/", note: "未找到 Markdown 导出、Obsidian 增量同步或保护个人批注所有权的功能。" }
+  restricted_agent: { score: 1, evidenceUrl: "https://trendshift.io/signal", note: "Signal API 可供程序查询并使用密钥鉴权，但需付费且禁止原始数据再分发，也无个人策略权限模型。" }

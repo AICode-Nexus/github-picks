@@ -1,0 +1,42 @@
+date: "2026-08-03"
+product: github-trending
+directions: [ai-agent, data-ml, app-platform, infra-devtools, security-supply-chain]
+repositories:
+  - openai/codex
+  - microsoft/autogen
+  - langchain-ai/langgraph
+  - continuedev/continue
+  - Aider-AI/aider
+  - modelcontextprotocol/servers
+  - vllm-project/vllm
+  - huggingface/transformers
+  - mlflow/mlflow
+  - ray-project/ray
+  - pytorch/pytorch
+  - dlt-hub/dlt
+  - vercel/next.js
+  - vuejs/core
+  - fastify/fastify
+  - denoland/deno
+  - oven-sh/bun
+  - tauri-apps/tauri
+  - kubernetes/kubernetes
+  - grafana/grafana
+  - open-telemetry/opentelemetry-collector
+  - dagger/dagger
+  - nektos/act
+  - astral-sh/uv
+  - ossf/scorecard
+  - google/osv-scanner
+  - anchore/syft
+  - sigstore/cosign
+  - aquasecurity/trivy
+  - zaproxy/zaproxy
+capabilities:
+  multi_source_evidence: { score: 0, evidenceUrl: "https://github.com/trending", note: "今日公开页只展示 GitHub 站内仓库与开发者趋势，没有包、安全或独立社区证据。" }
+  cohort_comparability: { score: 1, evidenceUrl: "https://github.com/trending", note: "支持编程语言和自然语言筛选，但没有按仓库年龄、规模或生命周期进行校准。" }
+  activity_and_organization: { score: 1, evidenceUrl: "https://github.com/trending", note: "日榜体现近期关注变化并可查看开发者榜，但组织信誉和维护者信号没有独立公开权重。" }
+  anti_gaming_and_replay: { score: 0, evidenceUrl: "https://github.com/trending", note: "今日页没有公开排名公式、异常隔离规则或可按历史日期回放的榜单快照。" }
+  chinese_decision_analysis: { score: 0, evidenceUrl: "https://github.com/trending", note: "页面没有中文选型结论，也不回答适用对象、采用成本、风险和下一步行动。" }
+  obsidian_ownership: { score: 0, evidenceUrl: "https://github.com/trending", note: "页面没有 Markdown 导出、Obsidian 增量同步或用户批注所有权保护能力。" }
+  restricted_agent: { score: 0, evidenceUrl: "https://github.com/trending", note: "未找到面向 Trending 榜单的公开 API 或受限 Agent 接口，通用 GitHub API 不能直接回放该榜。" }
