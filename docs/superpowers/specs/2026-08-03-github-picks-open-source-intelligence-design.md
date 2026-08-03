@@ -1,15 +1,16 @@
-# 源择：中文开源情报与决策系统设计规格
+# GitHub Picks：中文开源情报与决策系统设计规格
 
 - 日期：2026-08-03
 - 状态：已确认设计
-- 产品主名称：源择
-- 英文工作名：Yuanze
-- 产品口号：让开源选择有据可依
+- 产品主名称：GitHub Picks
+- 中文定位：GitHub 精选
+- 产品副标题：每日发现真正值得关注的开源项目
+- 独立声明：GitHub Picks 是独立、非官方项目，与 GitHub, Inc. 不存在隶属或合作关系
 - 当前边界：先完成信源、分析、榜单和网站，再接入 Obsidian，最后开放个性化 Agent；邮件等主动推送不在首期
 
 ## 1. 产品定义
 
-源择不是“每日 Star 排行榜”，而是一套面向中文技术用户的开源情报与决策系统。
+GitHub Picks 不是“每日 Star 排行榜”，而是一套面向中文技术用户的 GitHub 开源情报与决策系统。
 
 它持续采集多个独立信源，把仓库、组织、维护者、版本、社区、依赖与安全事件连接成可追溯的证据图谱；在项目类型和生命周期可比的前提下，进行多维评分、反作弊、榜单生成与中文分析，帮助用户回答：
 
@@ -47,24 +48,28 @@
 
 ## 2. 品牌与命名体系
 
-“源择”有两层含义：
+GitHub Picks 采用与 GitHub Trending 相同的直白功能型命名结构：
 
-- “源”代表开源、信源和可追溯来源。
-- “择”代表选择、判断和决策。
-
-“源择”与“原则”同音，能够承载本产品最重要的品牌承诺：不追逐虚高数字，用透明原则选择开源项目。
+- GitHub 表明首期核心项目来源和用户认知入口。
+- Picks 表明结果不是原始热度流，而是经过多信源证据、评分、风险检查和中文分析后的精选。
 
 产品功能统一使用以下名称：
 
-- 源择日报：每日中文情报总览。
-- 源择榜：综合榜、新锐榜、稳健榜等榜单。
-- 源择档案：仓库、组织和赛道的长期档案。
-- 源择对比：同类项目横向比较。
-- 源择观察：用户关注列表和变化提醒。
-- 源择 Obsidian：个人知识库同步插件。
-- 源择 Agent：后续个性化开源顾问。
+- GitHub Picks Daily：每日中文情报总览。
+- GitHub Picks Rankings：综合榜、新锐榜、稳健榜等榜单。
+- GitHub Picks Profiles：仓库、组织和赛道的长期档案。
+- GitHub Picks Compare：同类项目横向比较。
+- GitHub Picks Watchlist：用户关注列表和变化提醒。
+- GitHub Picks for Obsidian：个人知识库同步插件。
+- GitHub Picks Agent：后续个性化开源顾问。
 
-英文技术标识暂用 Yuanze，域名、商标和社区插件名称在公开发布前进行专项核验，不在本规格中假定可用。
+技术标识统一使用 github-picks，Obsidian 属性使用 github_picks_ 前缀。
+
+由于名称包含 GitHub，所有公开页面、插件 README、About 页面和仓库说明必须显著展示：
+
+> GitHub Picks is an independent, unofficial project and is not affiliated with GitHub, Inc.
+
+产品不得使用 GitHub 官方 Logo、Octocat 或容易造成官方隶属误解的视觉设计。正式公开发布前仍需完成名称、域名和商标使用专项核验。
 
 ## 3. 设计原则
 
@@ -98,7 +103,7 @@
 
 ### 3.8 开放格式和用户所有权
 
-网站提供版本化 API 和标准 Markdown。Obsidian 笔记即使离开源择仍能完整阅读，用户批注永不被系统覆盖。
+网站提供版本化 API 和标准 Markdown。Obsidian 笔记即使离开 GitHub Picks 仍能完整阅读，用户批注永不被系统覆盖。
 
 ## 4. 总体分层
 
@@ -650,7 +655,7 @@ API 响应包含 data_version、score_version、analysis_version、generated_at 
 ### 13.2 Vault 结构
 
 ~~~text
-GitHub 开源情报/
+GitHub Picks/
 ├── 每日情报/
 ├── 项目/
 ├── 组织/
@@ -664,24 +669,24 @@ GitHub 开源情报/
 
 ### 13.3 Properties
 
-系统属性统一使用 yuanze_ 前缀：
+系统属性统一使用 github_picks_ 前缀：
 
 ~~~yaml
 ---
-yuanze_id: "github:repo:R_xxxxx"
-yuanze_repo: "owner/repository"
-yuanze_entity_type: "repository"
-yuanze_value_score: 86.4
-yuanze_momentum_score: 82
-yuanze_activity_score: 91
-yuanze_organization_score: 88
-yuanze_risk_level: "low"
-yuanze_confidence: 0.93
-yuanze_categories:
+github_picks_id: "github:repo:R_xxxxx"
+github_picks_repo: "owner/repository"
+github_picks_entity_type: "repository"
+github_picks_value_score: 86.4
+github_picks_momentum_score: 82
+github_picks_activity_score: 91
+github_picks_organization_score: 88
+github_picks_risk_level: "low"
+github_picks_confidence: 0.93
+github_picks_categories:
   - "AI Agent"
   - "Developer Tools"
-yuanze_analysis_version: "score-v1"
-yuanze_source_updated_at: "2026-08-03T08:00:00+08:00"
+github_picks_analysis_version: "score-v1"
+github_picks_source_updated_at: "2026-08-03T08:00:00+08:00"
 ---
 ~~~
 
@@ -701,9 +706,9 @@ Markdown 和双链是主数据表现；Bases 只是增强视图，保证旧版�
 自动内容只存在于管理区：
 
 ~~~markdown
-<!-- yuanze:managed:start checksum="..." -->
+<!-- github-picks:managed:start checksum="..." -->
 系统生成内容
-<!-- yuanze:managed:end -->
+<!-- github-picks:managed:end -->
 
 ## 我的判断
 
@@ -712,7 +717,7 @@ Markdown 和双链是主数据表现；Bases 只是增强视图，保证旧版�
 
 同步规则：
 
-- yuanze_id 是实体身份，文件名不是身份。
+- github_picks_id 是实体身份，文件名不是身份。
 - 使用 cursor、entity_version、content_hash 和 ETag 增量同步。
 - 相同版本重复同步不写文件。
 - 仓库改名时更新路径和 aliases，保持实体和双链连续。
@@ -742,13 +747,13 @@ manifest 只返回变化清单、版本、哈希、目标建议路径和 tombsto
 - 网站“一键保存到 Obsidian”。
 - 生成本地总览 Base。
 - 显示最近同步、失败原因和待解决冲突。
-- 命令面板快速搜索源择项目。
+- 命令面板快速搜索 GitHub Picks 项目。
 - 桌面和移动端使用相同核心逻辑。
 
 ### 13.8 隐私和安全
 
 - 只读平台令牌通过 Obsidian SecretStorage 保存。
-- 插件默认只操作用户指定的源择目录。
+- 插件默认只操作用户指定的 GitHub Picks 目录。
 - 默认不扫描或上传 Vault 其他内容。
 - 默认无客户端遥测。
 - 日志不得包含令牌、完整私人路径和用户笔记内容。
@@ -1107,7 +1112,7 @@ discovered
 - 第三方 Trending 产品提供榜单，但评分、数据授权和个性化边界各不相同。
 - 中文推荐站多为编辑精选或 Star 聚合，难以提供证据链、反作弊和可回放评分。
 
-如果需求只是“每天看热门仓库”，直接使用现有网站更省成本；源择值得建设的前提是坚持完成以下差异：
+如果需求只是“每天看热门仓库”，直接使用现有网站更省成本；GitHub Picks 值得建设的前提是坚持完成以下差异：
 
 1. 多信源证据，而非单一 Trending。
 2. 类型和生命周期校准，而非全站统一按 Star 排序。
@@ -1133,7 +1138,7 @@ discovered
 
 这些项目不改变产品架构，但在公开发布前必须完成：
 
-- “源择/Yuanze”的商标、域名和社区插件名称专项核验。
+- “GitHub Picks”的名称、域名、GitHub 商标使用和社区插件名称专项核验。
 - GitHub API Token、配额和合规使用方案。
 - 第三方信源缓存、引用和再分发条款复核。
 - 首期正式支持的语言包注册表清单。
@@ -1150,6 +1155,7 @@ discovered
 
 - [GitHub REST API rate limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)
 - [GitHub GraphQL API rate limits](https://docs.github.com/en/graphql/overview/rate-limits-and-node-limits-for-the-graphql-api)
+- [GitHub Trademark Policy](https://docs.github.com/en/site-policy/content-removal-policies/github-trademark-policy)
 - [GitHub Trending](https://github.com/trending)
 - [GH Archive](https://www.gharchive.org/)
 - [OpenSSF Scorecard](https://securityscorecards.dev/)
@@ -1169,4 +1175,4 @@ discovered
 - [OSS Insight](https://ossinsight.io/)
 - [Trendshift](https://trendshift.io/)
 
-这些链接用于能力与边界参考，不代表源择可以复制或再分发第三方数据。
+这些链接用于能力与边界参考，不代表 GitHub Picks 可以复制或再分发第三方数据。
