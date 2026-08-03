@@ -477,7 +477,7 @@ Run an acceptance script or inline Node check that parses `report.json` through 
 
 The runbook must document no-token and token modes, source endpoints, rate-limit behavior, raw snapshot layout, replay command, atomic-write recovery, rerun idempotency and the fact that HubLens stale data is discovery-only. README must identify this as an independent unofficial project and show the three commands: install, replay demo, live daily run.
 
-- [ ] **Step 4: Run final verification and commit**
+- [x] **Step 4: Run final verification and commit**
 
 Run:
 
@@ -493,7 +493,7 @@ git commit -m "research: publish first GitHub Picks daily report"
 
 Expected: all tests pass uncached, replay is deterministic, worktree is clean after commit.
 
-- [ ] **Step 5: Push the implementation branch**
+- [x] **Step 5: Push the implementation branch**
 
 Run: `git push -u origin codex/github-picks-mvp`
 
