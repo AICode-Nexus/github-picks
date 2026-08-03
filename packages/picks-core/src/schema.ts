@@ -26,6 +26,13 @@ export const DirectionDefinitionSchema = z
   })
   .strict();
 
+export const SeedRepositoryDefinitionSchema = z
+  .object({
+    fullName: z.string().regex(/^[^/\s]+\/[^/\s]+$/),
+    direction: DirectionIdSchema,
+  })
+  .strict();
+
 export const SourceDefinitionSchema = z
   .object({
     sourceId: z.string().regex(/^[a-z0-9-]+$/),
@@ -64,6 +71,7 @@ export const PicksConfigSchema = z
     version: z.string().regex(/^v\d+\.\d+\.\d+$/),
     timezone: z.literal("Asia/Shanghai"),
     directions: z.array(DirectionDefinitionSchema).length(5),
+    seedRepositories: z.array(SeedRepositoryDefinitionSchema).min(1),
     sources: z.array(SourceDefinitionSchema).min(7),
     weights: DimensionWeightsSchema,
     features: z
@@ -114,6 +122,40 @@ export const PicksConfigSchema = z
         code: "custom",
         path: ["directions"],
         message: "direction IDs must be unique",
+      });
+    }
+    const seedRepositoryIds = new Set(
+      config.seedRepositories.map((repository) =>
+        repository.fullName.toLowerCase(),
+      ),
+    );
+    if (seedRepositoryIds.size !== config.seedRepositories.length) {
+      context.addIssue({
+        code: "custom",
+        path: ["seedRepositories"],
+        message: "seed repository IDs must be unique",
+      });
+    }
+    for (const direction of config.directions) {
+      const seedCount = config.seedRepositories.filter(
+        (repository) => repository.direction === direction.id,
+      ).length;
+      if (seedCount < config.limits.perDirectionMinimum) {
+        context.addIssue({
+          code: "custom",
+          path: ["seedRepositories"],
+          message: "each direction must have enough seed repositories",
+        });
+      }
+    }
+    if (
+      config.limits.candidateLimit <
+      config.directions.length * config.limits.perDirectionMinimum
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["limits", "candidateLimit"],
+        message: "candidate limit must fit direction minimums",
       });
     }
   });

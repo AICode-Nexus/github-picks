@@ -62,5 +62,6 @@ describe("daily Markdown report", () => {
     expect(markdown).toContain("置信度：中");
     expect(markdown).toContain("风险扣分：6");
     expect(markdown).toContain("https://github.com/example/project");
+    expect(markdown).toMatch(/[^\n]\n$/);
   });
 });

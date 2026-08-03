@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { discoverCandidates, mergeCandidateSignals } from "../src/discovery.js";
 import { FileRawStore } from "../src/raw-store.js";
 import { normalizeRepositoryId } from "../src/repository-id.js";
+import { ConfiguredSeedAdapter } from "../src/sources/configured-seed.js";
 import { parseGitHubSearch } from "../src/sources/github-search.js";
 import { parseGitHubTrending } from "../src/sources/github-trending.js";
 import { parseGitTrend } from "../src/sources/gittrend.js";
@@ -81,6 +82,76 @@ describe("candidate discovery", () => {
     ).toEqual(new Set(["github-public-data", "hublens-aggregator"]));
   });
 
+  it("uses configured seeds as a non-independent five-direction fallback", async () => {
+    const config = await loadPicksConfig("../../config/picks.yaml");
+    const rawStore = new FileRawStore("/tmp/github-picks-discovery-test-seeds");
+    const signals = await new ConfiguredSeedAdapter().discover({
+      config,
+      observedAt,
+      rawStore,
+      githubToken: null,
+    });
+
+    expect(signals).toHaveLength(15);
+    for (const direction of config.directions) {
+      expect(
+        signals.filter((signal) => signal.direction === direction.id),
+      ).toHaveLength(3);
+    }
+    expect(new Set(signals.map((signal) => signal.independenceGroup))).toEqual(
+      new Set(["github-public-data"]),
+    );
+    expect(signals.every((signal) => signal.rank === null)).toBe(true);
+  });
+
+  it("retains every direction when candidate capacity is crowded", async () => {
+    const config = await loadPicksConfig("../../config/picks.yaml");
+    const rawStore = new FileRawStore(
+      "/tmp/github-picks-discovery-test-direction-cap",
+    );
+    const seedSignals = await new ConfiguredSeedAdapter().discover({
+      config,
+      observedAt,
+      rawStore,
+      githubToken: null,
+    });
+    const template = seedSignals.find(
+      (signal) => signal.direction === "app-platform",
+    );
+    if (template === undefined) throw new Error("app seed must exist");
+    const crowdedSignals = Array.from({ length: 10 }, (_, index) => ({
+      ...template,
+      fullName: `crowded-${index}/app`,
+      rank: 1,
+      metrics: { ...template.metrics, starVelocity: 1_000 },
+    }));
+
+    const candidates = mergeCandidateSignals(
+      [...seedSignals, ...crowdedSignals],
+      {
+        ...config,
+        limits: {
+          ...config.limits,
+          candidateLimit: 5,
+          perDirectionMinimum: 1,
+        },
+      },
+    );
+
+    expect(candidates).toHaveLength(5);
+    expect(
+      new Set(candidates.map((candidate) => candidate.primaryDirection)),
+    ).toEqual(
+      new Set([
+        "ai-agent",
+        "data-ml",
+        "app-platform",
+        "infra-devtools",
+        "security-supply-chain",
+      ]),
+    );
+  });
+
   it("continues with healthy sources while reporting a failed source as degraded", async () => {
     const config = await loadPicksConfig("../../config/picks.yaml");
     const rawStore = new FileRawStore("/tmp/github-picks-discovery-test");
@@ -113,6 +184,37 @@ describe("candidate discovery", () => {
         message: "TypeError",
       },
     ]);
+  });
+
+  it("reports a source with only stale signals as degraded", async () => {
+    const config = await loadPicksConfig("../../config/picks.yaml");
+    const rawStore = new FileRawStore("/tmp/github-picks-discovery-test-stale");
+    const staleSignal = parseHubLens(
+      JSON.parse(await fixture("hublens.json")),
+      observedAt,
+    )[0];
+    const freshSignal = parseGitTrend(
+      JSON.parse(await fixture("gittrend.json")),
+      observedAt,
+    )[0];
+    if (staleSignal === undefined || freshSignal === undefined) {
+      throw new Error("fixtures must contain signals");
+    }
+
+    const result = await discoverCandidates(
+      [
+        { sourceId: "hublens", discover: async () => [staleSignal] },
+        { sourceId: "gittrend", discover: async () => [freshSignal] },
+      ],
+      { config, observedAt, rawStore, githubToken: null },
+    );
+
+    expect(result.sourceHealth[0]).toEqual({
+      sourceId: "hublens",
+      status: "degraded",
+      observedAt,
+      message: "全部候选信号超过新鲜度阈值",
+    });
   });
 
   it("fails only when every discovery source is unavailable", async () => {

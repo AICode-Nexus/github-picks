@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "date": "2026-08-03",
+  "mode": "live",
+  "generatedAt": "2026-08-03T15:59:14.683Z",
+  "scoreVersion": "v0.1.0",
+  "configHash": "17063093a8becbd1fad8530df6802e8bb5d9a9cb30f232b34746e3126994c5d7",
+  "counts": {
+    "discovered": 60,
+    "enriched": 20,
+    "published": 20
+  },
+  "sourceHealth": [
+    {
+      "sourceId": "github-trending",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:59:14.683Z",
+      "message": "TimeoutError"
+    },
+    {
+      "sourceId": "github-search",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:59:14.683Z",
+      "message": "HttpStatusError"
+    },
+    {
+      "sourceId": "gittrend",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:59:14.683Z",
+      "message": null
+    },
+    {
+      "sourceId": "hublens",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:59:14.683Z",
+      "message": null
+    },
+    {
+      "sourceId": "hacker-news",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:59:14.683Z",
+      "message": null
+    },
+    {
+      "sourceId": "github-rest",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:59:14.683Z",
+      "message": null
+    },
+    {
+      "sourceId": "openssf-scorecard",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:59:14.683Z",
+      "message": "20/20 个项目缺少 Scorecard"
+    }
+  ],
+  "rawObjectRefs": [
+    "sha256:bb373ed2c6c6cb83248e8ec7db0e3193dec9c7cda783e0b9f821e7a20e57800d",
+    "sha256:36e8f83988b9318e879734cd7abd80c089c86c4e0014b39ce397e96223d776a8",
+    "sha256:8d1563681f56eb6e303ee2d7d288d0800d8ed1451c0da798f83dac2a4350bdad",
+    "sha256:665ff6ef8163895ed208ca9350e1ffd829454ec0b923409efeab8719099a982c",
+    "sha256:53fd3d01244c1678d8d9f567bd4115660133c58b4bab68f5137b82757e9a1ff9",
+    "sha256:df443d267355582e3359518e2aedb534f19fdd2ed6cc0dc282de812c863d7d08",
+    "sha256:f2a47237136e411a56a704a435e23220b9185287fb7dc7f5ce40c5fbb6d16640",
+    "sha256:2b95960d346bf872357f6131a1a51c940dece4b82943c8bf6ad77483f8f3b3d1",
+    "sha256:5dc6f3947a9e0e4da49a723657273246c767d57521e9f87fc3ef6949e10e5543",
+    "sha256:7d45cee59bccdb6950d0eea1080563cecf7888dc7f30e8e034c90ffb9e59093c",
+    "sha256:eec536666f66c98db46d9782e95acde9b51f5ae41b5a4baa3428fa10a29481d7",
+    "sha256:237cdef480f0e26771d0b11a9f9d39b278fddefc10885580337f64c099686f81",
+    "sha256:92dfffb06dee5fe5b516b99f8842383deafbb028812aa85143e8aa080f6e1dac",
+    "sha256:a34f5829e720383a122f6bebb290dc9e06da5e9a00862901b4888a66cfe284ee",
+    "sha256:5f73abed371187ee30a70ba116dca2c0a0d02b883dc94e5076e61ac58d04ecc8",
+    "sha256:7a83bc0c942ad6f85cd2a8525509fd53d5d5079b62a7bd8b3e1093ab24fc6ba0",
+    "sha256:9abd62ce8f94ee33326fede9895f1e92359b48582d6c6352e30d8542c284777e",
+    "sha256:93d70045d099b6f02a8e76d7900360bb32ea42fb2d2e9f28808ce06a830b676f",
+    "sha256:e654502cafd30362ce0a7771b36ea89c4c7defb9b56db4bd9b6fa066d549114b",
+    "sha256:3533a0fcc3731b39a63757caed2fb490d184c74302e6ca1803132093d99a9c9b",
+    "sha256:dbd582f993460417682d2c5db899ff43926c1e1fc32177e9328fb80732acaa65",
+    "sha256:2c190498a0c7f64a4180e3afacf91e7d5e952692cf664a817647298d92b816bc",
+    "sha256:87be32df7c4e6de55702dda8aa3790e6d9901dddc453153be83ccc54c015ee93",
+    "sha256:67c9af07ab2bbfc388c56fcbbbe802f65b508996d7053f397498b85858f2e219",
+    "sha256:0d1403a9de65e26a45f0d163250983dc0ae69f6b577005017ea78012b43f1f39",
+    "sha256:7f67560bf677fe1bf0594508e78954118a1fb8c497b436429fc4f783ae5c5fe7",
+    "sha256:0e3c14e0a3cef132ff48047917c7f3058968d899d7def566b85ba2d0922b3691",
+    "sha256:90416dfaf23dde27f9a0f7c1b2002106bc746184bdff3c8c8cca56175ba33c2e",
+    "sha256:60d51233767bb954650d73f149721a29d524bee7ee8da332eaea8112ef37b22d",
+    "sha256:32466469400331cb2b32ebfaed76442d310ae8cb36d605ebf23da908b3249d2e",
+    "sha256:9a36a4e4b6999c8ff66da3808559c36ec0126058a84a0dc93249643f30005104",
+    "sha256:435e866ec4ac26c59222502b46049f55b08cd207db28887cb98c7f4e63b88e67",
+    "sha256:19bd46cc747d8e30915bdc0aece98c5eb39b1bb604b69d01c49ade9fe87ea99f",
+    "sha256:540dbee943ed842af2773ec7032e854bcbc16df4b3877fd15c73d222cf9ddd06",
+    "sha256:3c080df47060be9c09aaf09048380830325768064dc2e16f1d5e77ff1474183d",
+    "sha256:30bb555b7825ac13b1c379b69e75e7992f12b8231abf36dbbc824d73d27c8e76",
+    "sha256:578aff18cddd8d84ea8d3267868eb922fea33b9bcc2b74c596f4aeb085c1fb57",
+    "sha256:bc859868a2e1d795cd73f44b61ae5178412a12d39905a4b7d64239dee6ec7188",
+    "sha256:347d176e35c832477b3719da601cfc5144bd16b740edf1092eca076a8bd93c56",
+    "sha256:73d2050c874bf5fa3d848df9d214c121c4b7a3fb518831f1a18fdcf75572697a",
+    "sha256:00c0b2e36414b2fc6e266434f8360cda6a6d164a32549185aea8ff607906e944",
+    "sha256:31b418bcae7b4f98057539bb6c4eb8a62335694c034cbeb1af89d9ee83813540"
+  ],
+  "repositories": [
+    "lyogavin/airllm",
+    "microsoft/ai-for-beginners",
+    "tencentcloud/tencentdb-agent-memory",
+    "github/gh-stack",
+    "firecrawl/pdf-inspector",
+    "usekaneo/kaneo",
+    "yc-software/qm",
+    "zhaoxuya520/reverse-skill",
+    "trycompai/crm",
+    "anakin-inc/anakin",
+    "mattpocock/skills",
+    "codebymitch/titanbot",
+    "microsoft/skill-recorder",
+    "diegosouzapw/omniroute",
+    "bojieli/ai-agent-book",
+    "graphify-labs/graphify",
+    "wilonitydev/wilonityloader",
+    "web3cryptowallet/drive-py",
+    "codecrafters-io/build-your-own-x",
+    "genspark-ai/genoffice"
+  ]
+}

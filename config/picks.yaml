@@ -3,20 +3,57 @@ timezone: Asia/Shanghai
 directions:
   - id: ai-agent
     name: AI Coding 与 Agent
-    query: topic:ai-agent OR topic:llm stars:>20 archived:false
+    query: '"ai agent" OR llm stars:>20 archived:false'
   - id: data-ml
     name: 数据与机器学习工程
-    query: topic:machine-learning OR topic:data-engineering stars:>20 archived:false
+    query: '"machine learning" OR "data engineering" stars:>20 archived:false'
   - id: app-platform
     name: 前端、后端与跨端
-    query: topic:web-framework OR topic:backend stars:>20 archived:false
+    query: '"web framework" OR backend stars:>20 archived:false'
   - id: infra-devtools
     name: 云原生、可观测与开发者工具
-    query: topic:devtools OR topic:cloud-native stars:>20 archived:false
+    query: 'devtools OR "cloud native" stars:>20 archived:false'
   - id: security-supply-chain
     name: 安全与软件供应链
-    query: topic:security OR topic:supply-chain stars:>20 archived:false
+    query: 'security OR "supply chain" stars:>20 archived:false'
+seedRepositories:
+  - fullName: openai/codex
+    direction: ai-agent
+  - fullName: langchain-ai/langgraph
+    direction: ai-agent
+  - fullName: aider-ai/aider
+    direction: ai-agent
+  - fullName: vllm-project/vllm
+    direction: data-ml
+  - fullName: mlflow/mlflow
+    direction: data-ml
+  - fullName: dlt-hub/dlt
+    direction: data-ml
+  - fullName: vercel/next.js
+    direction: app-platform
+  - fullName: fastify/fastify
+    direction: app-platform
+  - fullName: tauri-apps/tauri
+    direction: app-platform
+  - fullName: dagger/dagger
+    direction: infra-devtools
+  - fullName: astral-sh/uv
+    direction: infra-devtools
+  - fullName: grafana/grafana
+    direction: infra-devtools
+  - fullName: ossf/scorecard
+    direction: security-supply-chain
+  - fullName: google/osv-scanner
+    direction: security-supply-chain
+  - fullName: aquasecurity/trivy
+    direction: security-supply-chain
 sources:
+  - sourceId: configured-seed
+    name: Configured Direction Seeds
+    tier: C
+    purpose: [discovery]
+    independenceGroup: github-public-data
+    evidenceUrl: https://github.com/topics
   - sourceId: github-rest
     name: GitHub REST API
     tier: S

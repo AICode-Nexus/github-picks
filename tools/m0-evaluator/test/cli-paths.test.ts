@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { resolveCliPaths } from "../src/cli-paths.js";
 
@@ -28,5 +29,13 @@ describe("resolveCliPaths", () => {
       observationDir: "/tmp/m0-run/rows",
       outputPath: "/tmp/m0-run/report.md",
     });
+  });
+
+  it("does not rediscover compiled tests after a build", async () => {
+    const packageJson = JSON.parse(
+      await readFile(new URL("../package.json", import.meta.url), "utf8"),
+    );
+
+    expect(packageJson.scripts.test).toBe("vitest run --dir test");
   });
 });

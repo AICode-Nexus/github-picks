@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import { resolveCliPaths } from "../src/cli-paths.js";
 
@@ -38,5 +39,15 @@ describe("resolveCliPaths", () => {
       rawDirectory: "/tmp/daily-run/raw",
       replayManifestPath: "/tmp/daily-run/replay.json",
     });
+  });
+
+  it("runs the root command without changing the invocation directory", async () => {
+    const packageJson = JSON.parse(
+      await readFile(new URL("../../../package.json", import.meta.url), "utf8"),
+    );
+
+    expect(packageJson.scripts["picks:daily"]).toBe(
+      "tsx workers/daily/src/cli.ts",
+    );
   });
 });

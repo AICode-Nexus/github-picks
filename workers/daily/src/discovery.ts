@@ -60,7 +60,7 @@ export function mergeCandidateSignals(
     grouped.set(signal.fullName, existing);
   }
 
-  return [...grouped.entries()]
+  const orderedCandidates = [...grouped.entries()]
     .map(([fullName, repositorySignals]) => {
       const sortedSignals = [...repositorySignals].sort(
         (left, right) =>
@@ -92,8 +92,22 @@ export function mergeCandidateSignals(
         right.signals.reduce((sum, signal) => sum + signalQuality(signal), 0) -
         left.signals.reduce((sum, signal) => sum + signalQuality(signal), 0);
       return qualityDifference || left.fullName.localeCompare(right.fullName);
-    })
-    .slice(0, config.limits.candidateLimit);
+    });
+  const selected = new Map<string, Candidate>();
+  for (const direction of config.directions) {
+    const matches = orderedCandidates
+      .filter((candidate) => candidate.primaryDirection === direction.id)
+      .slice(0, config.limits.perDirectionMinimum);
+    for (const candidate of matches) {
+      if (selected.size >= config.limits.candidateLimit) break;
+      selected.set(candidate.fullName, candidate);
+    }
+  }
+  for (const candidate of orderedCandidates) {
+    if (selected.size >= config.limits.candidateLimit) break;
+    selected.set(candidate.fullName, candidate);
+  }
+  return [...selected.values()];
 }
 
 function safeErrorMessage(error: unknown): string {
@@ -116,11 +130,21 @@ export async function discoverCandidates(
     if (adapter === undefined) continue;
     if (result.status === "fulfilled") {
       signals.push(...result.value);
+      const onlyStaleSignals =
+        result.value.length > 0 && result.value.every((signal) => signal.stale);
       sourceHealth.push({
         sourceId: adapter.sourceId,
-        status: result.value.length === 0 ? "degraded" : "healthy",
+        status:
+          result.value.length === 0 || onlyStaleSignals
+            ? "degraded"
+            : "healthy",
         observedAt: context.observedAt,
-        message: result.value.length === 0 ? "未发现可解析仓库" : null,
+        message:
+          result.value.length === 0
+            ? "未发现可解析仓库"
+            : onlyStaleSignals
+              ? "全部候选信号超过新鲜度阈值"
+              : null,
       });
     } else {
       sourceHealth.push({

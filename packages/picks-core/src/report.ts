@@ -120,5 +120,8 @@ export function renderDailyMarkdown(report: DailyReport): string {
     `配置哈希：\`${report.configHash}\``,
     "",
   );
-  return `${lines.join("\n").replace(/\n{3,}/g, "\n\n")}\n`;
+  return `${lines
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trimEnd()}\n`;
 }

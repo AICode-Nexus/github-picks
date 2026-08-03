@@ -448,13 +448,16 @@ Expected: replay creates deterministic JSON, Markdown and manifest artifacts wit
 - Create: `artifacts/daily/2026-08-03-live/report.json`
 - Create: `artifacts/daily/2026-08-03-live/report.md`
 - Create: `artifacts/daily/2026-08-03-live/manifest.json`
+- Create: `artifacts/daily/2026-08-04/report.json`
+- Create: `artifacts/daily/2026-08-04/report.md`
+- Create: `artifacts/daily/2026-08-04/manifest.json`
 - Modify: `README.md` if present; otherwise create it.
 
 **Interfaces:**
 - Consumes: the complete daily CLI.
 - Produces: first reproducible live report and operator instructions.
 
-- [ ] **Step 1: Run the live pipeline**
+- [x] **Step 1: Run the live pipeline**
 
 Run:
 
@@ -464,11 +467,13 @@ pnpm picks:daily --date 2026-08-03 --mode live --output artifacts/daily/2026-08-
 
 Expected: at least two discovery sources succeed, at least ten candidates are enriched, at least five publishable repositories are produced, and missing/degraded sources are explicit rather than silently discarded.
 
-- [ ] **Step 2: Validate generated artifacts**
+The anonymous 2026-08-03 run produced `60 / 20 / 20` and exposed a GitHub Search 422 plus direction gaps. After adding valid search queries, non-scoring direction seeds, stale-source health semantics and a root-CWD CLI regression, the authenticated 2026-08-04 stabilization run again produced `60 / 20 / 20` with at least three projects in every direction.
+
+- [x] **Step 2: Validate generated artifacts**
 
 Run an acceptance script or inline Node check that parses `report.json` through `DailyReportSchema`, verifies the eight weights, checks every public item has GitHub evidence and confirms no archived item appears in the overall list. Open `report.md` and manually inspect that the Chinese summary names evidence gaps and does not claim missing facts.
 
-- [ ] **Step 3: Document credentials, quotas and recovery**
+- [x] **Step 3: Document credentials, quotas and recovery**
 
 The runbook must document no-token and token modes, source endpoints, rate-limit behavior, raw snapshot layout, replay command, atomic-write recovery, rerun idempotency and the fact that HubLens stale data is discovery-only. README must identify this as an independent unofficial project and show the three commands: install, replay demo, live daily run.
 

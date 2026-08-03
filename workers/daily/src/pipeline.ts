@@ -22,6 +22,7 @@ import { z } from "zod";
 import { discoverCandidates } from "./discovery.js";
 import { enrichCandidate } from "./enrichment.js";
 import { FileRawStore } from "./raw-store.js";
+import { ConfiguredSeedAdapter } from "./sources/configured-seed.js";
 import { GitHubSearchAdapter } from "./sources/github-search.js";
 import { GitHubTrendingAdapter } from "./sources/github-trending.js";
 import { GitTrendAdapter } from "./sources/gittrend.js";
@@ -136,6 +137,7 @@ async function liveBatch(
   const rawStore = new FileRawStore(options.rawDirectory);
   const discovery = await discoverCandidates(
     [
+      new ConfiguredSeedAdapter(),
       new GitHubTrendingAdapter(),
       new GitHubSearchAdapter(),
       new GitTrendAdapter(),
