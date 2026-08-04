@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { RANKING_PERIOD_IDS, RANKING_PERIOD_META } from "../lib/site-meta";
 
 export function isNavigationActive(pathname: string, href: string): boolean {
@@ -22,29 +22,34 @@ export function isNavigationActive(pathname: string, href: string): boolean {
 
 export function SiteNavigation() {
   const routePathname = usePathname() || "/";
-  const [pathname, setPathname] = useState<string | null>(null);
-  const periodDetails = useRef<HTMLDetailsElement>(null);
-  const isActive = (href: string) =>
-    pathname !== null && isNavigationActive(pathname, href);
+  const [periodOpen, setPeriodOpen] = useState(true);
+  const isActive = (href: string) => isNavigationActive(routePathname, href);
   const isHome = isActive("/");
   const isPeriod = RANKING_PERIOD_IDS.some((periodId) =>
     isActive(`/rankings/${periodId}/`),
   );
 
   useEffect(() => {
-    setPathname(routePathname);
     const mobile = window.matchMedia?.("(max-width: 760px)");
     if (mobile === undefined) return;
-    const closeMobilePeriodMenu = () => {
-      if (routePathname && mobile.matches) {
-        periodDetails.current?.removeAttribute("open");
-      }
-    };
+    const synchronizePeriodMenu = () => setPeriodOpen(!mobile.matches);
 
-    closeMobilePeriodMenu();
-    mobile.addEventListener("change", closeMobilePeriodMenu);
-    return () => mobile.removeEventListener("change", closeMobilePeriodMenu);
+    synchronizePeriodMenu();
+    mobile.addEventListener("change", synchronizePeriodMenu);
+    return () => mobile.removeEventListener("change", synchronizePeriodMenu);
+  }, []);
+
+  useEffect(() => {
+    if (routePathname && window.matchMedia?.("(max-width: 760px)").matches) {
+      setPeriodOpen(false);
+    }
   }, [routePathname]);
+
+  const closePeriodMenuOnMobile = () => {
+    if (window.matchMedia?.("(max-width: 760px)").matches) {
+      setPeriodOpen(false);
+    }
+  };
 
   return (
     <nav className="site-navigation" aria-label="主导航">
@@ -60,7 +65,11 @@ export function SiteNavigation() {
         </Link>
 
         <p className="site-navigation__section-label">周期</p>
-        <details className="site-navigation__period" open ref={periodDetails}>
+        <details
+          className="site-navigation__period"
+          onToggle={(event) => setPeriodOpen(event.currentTarget.open)}
+          open={periodOpen}
+        >
           <summary
             className={`site-navigation__item${isPeriod ? " is-active" : ""}`}
           >
@@ -82,6 +91,7 @@ export function SiteNavigation() {
                   aria-current={active ? "page" : undefined}
                   aria-label={RANKING_PERIOD_META[periodId].label}
                   key={periodId}
+                  onClick={closePeriodMenuOnMobile}
                 >
                   {RANKING_PERIOD_META[periodId].shortLabel}
                 </Link>

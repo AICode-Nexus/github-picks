@@ -1,4 +1,5 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { SiteHeader } from "../src/components/site-header";
 
@@ -53,6 +54,35 @@ describe("site navigation", () => {
       screen.getByRole("link", { name: "今日" }).getAttribute("aria-current"),
     ).toBeNull();
     expect(screen.queryByRole("link", { name: "今日榜单" })).toBeNull();
+  });
+
+  it("includes homepage navigation semantics in the initial static markup", () => {
+    pathname = "/";
+
+    const markup = renderToStaticMarkup(<SiteNavigation />);
+    const container = document.createElement("div");
+    container.innerHTML = markup;
+
+    expect(
+      container.querySelector('a[href="/"]')?.getAttribute("aria-current"),
+    ).toBe("page");
+    expect(container.querySelector('a[href="#ranking"]')).toBeTruthy();
+    expect(container.querySelector('a[href="#directions"]')).toBeTruthy();
+    expect(container.querySelector('a[href="#method"]')).toBeTruthy();
+  });
+
+  it("marks the current period in the initial static markup", () => {
+    pathname = "/rankings/30d/";
+
+    const markup = renderToStaticMarkup(<SiteNavigation />);
+    const container = document.createElement("div");
+    container.innerHTML = markup;
+
+    expect(
+      container
+        .querySelector('a[href="/rankings/30d"]')
+        ?.getAttribute("aria-current"),
+    ).toBe("page");
   });
 
   it("matches the homepage exactly and nested sections by prefix", () => {

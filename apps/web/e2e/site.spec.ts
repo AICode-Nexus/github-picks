@@ -109,6 +109,37 @@ test("mobile period navigation closes after routing and never covers the footer"
   expect(overlap ?? 1).toBeLessThanOrEqual(0);
 });
 
+test("period navigation stays available when a mobile page widens", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const periodMenu = page.locator(".site-navigation__period");
+  await expect(periodMenu).not.toHaveAttribute("open", "");
+
+  for (const width of [1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const name of ["近 7 天", "近 30 天", "近 90 天", "近 180 天"]) {
+      const link = page.getByRole("link", { name });
+      await expect(link).toBeVisible();
+      await link.focus();
+      await expect(link).toBeFocused();
+    }
+  }
+});
+
+test("clicking the active mobile period closes its menu", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/rankings/7d/");
+
+  const periodMenu = page.locator(".site-navigation__period");
+  await periodMenu.locator("summary").click();
+  await expect(periodMenu).toHaveAttribute("open", "");
+  await page.getByRole("link", { name: "近 7 天" }).click();
+  await expect(periodMenu).not.toHaveAttribute("open", "");
+});
+
 test("homepage to direction to repository preserves the intelligence trail", async ({
   page,
 }) => {
