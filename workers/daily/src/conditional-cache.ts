@@ -1,10 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { mkdir, readFile, rename, unlink, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import {
-  type RawArtifactRef,
-  RawArtifactRefSchema,
-} from "@github-picks/core";
+import { type RawArtifactRef, RawArtifactRefSchema } from "@github-picks/core";
 import { z } from "zod";
 
 const CacheIndexSchema = z
@@ -45,9 +42,7 @@ function isMissing(error: unknown): boolean {
   return error instanceof Error && "code" in error && error.code === "ENOENT";
 }
 
-export class FileConditionalArtifactCache
-  implements ConditionalArtifactCache
-{
+export class FileConditionalArtifactCache implements ConditionalArtifactCache {
   constructor(private readonly rootDirectory: string) {}
 
   private indexPath(sourceId: string, url: string): string {
@@ -58,7 +53,10 @@ export class FileConditionalArtifactCache
     return join(this.rootDirectory, ".http-cache", sourceId, `${key}.json`);
   }
 
-  async read(sourceId: string, url: string): Promise<ConditionalArtifact | null> {
+  async read(
+    sourceId: string,
+    url: string,
+  ): Promise<ConditionalArtifact | null> {
     const path = this.indexPath(sourceId, url);
     let contents: string;
     try {
