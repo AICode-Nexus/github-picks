@@ -433,7 +433,7 @@ git commit -m "feat: build GitHub Picks editorial homepage"
 - Consumes: Task 1 report store and Task 2 view models.
 - Produces: five direction routes, one route per enriched repository, and `/sources/`.
 
-- [ ] **Step 1: Write failing route-component tests**
+- [x] **Step 1: Write failing route-component tests**
 
 Test exact semantics:
 
@@ -456,7 +456,7 @@ expect(screen.getByText(/未达到当前证据门槛/)).toBeTruthy();
 
 Verify evidence links are deduplicated and raw SHA identifiers never appear.
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
 ```bash
 pnpm --filter @github-picks/web test -- detail-pages.test.tsx
@@ -464,7 +464,7 @@ pnpm --filter @github-picks/web test -- detail-pages.test.tsx
 
 Expected: FAIL because route components do not exist.
 
-- [ ] **Step 3: Implement direction pages**
+- [x] **Step 3: Implement direction pages**
 
 Export all five parameters:
 
@@ -478,17 +478,17 @@ export const dynamicParams = false;
 
 Reject an unknown slug with `notFound()`. Show count, maximum score, median confidence, complete ranking, and adjacent direction links.
 
-- [ ] **Step 4: Implement repository detail pages**
+- [x] **Step 4: Implement repository detail pages**
 
 `generateStaticParams()` must return the owner and repo segments for every repository in the latest live report. The detail model must expose description, language, license, stars, forks, pushed date, eight dimensions, four Chinese analysis sections, activity features, risk findings, missing fields, signals, and public evidence.
 
 Do not display `rawObjectRef`. Do not convert missing Scorecard into a vulnerability statement.
 
-- [ ] **Step 5: Implement source-health page**
+- [x] **Step 5: Implement source-health page**
 
 Render text plus status symbol for healthy/degraded/offline. Explain independence groups and neutral prior semantics beneath the table. On small screens, use CSS grid definition cards rather than an overflowing table.
 
-- [ ] **Step 6: Run tests and verify all generated files**
+- [x] **Step 6: Run tests and verify all generated files**
 
 ```bash
 pnpm --filter @github-picks/web test -- detail-pages.test.tsx
@@ -502,7 +502,7 @@ test -f apps/web/out/sources/index.html
 
 Expected: all route tests pass and all named files exist.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add apps/web/src/app/directions apps/web/src/app/repositories apps/web/src/app/sources apps/web/src/components apps/web/test/detail-pages.test.tsx
