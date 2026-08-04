@@ -6,6 +6,8 @@ import type { DailyReport } from "@github-picks/core/schema";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import {
   getLatestLiveReport,
+  getLiveReportByDate,
+  getLiveReportHistory,
   loadDailyReports,
   resolveDailyArtifactsDirectory,
 } from "../src/lib/report-store";
@@ -135,6 +137,54 @@ describe("report store", () => {
 
     expect(latest.mode).toBe("live");
     expect(latest.generatedAt).toBe("2026-08-03T17:00:00.000Z");
+  });
+
+  it("builds a queryable live history and keeps only the latest run per date", async () => {
+    const root = await makeRoot();
+    await writeReport(root, "2026-08-03-replay", {
+      date: "2026-08-03",
+      mode: "replay",
+      generatedAt: "2026-08-03T18:00:00.000Z",
+    });
+    await writeReport(root, "2026-08-03-early", {
+      date: "2026-08-03",
+      mode: "live",
+      generatedAt: "2026-08-03T15:00:00.000Z",
+    });
+    await writeReport(root, "2026-08-03-late", {
+      date: "2026-08-03",
+      mode: "live",
+      generatedAt: "2026-08-03T17:00:00.000Z",
+    });
+    await writeReport(root, "2026-08-04", {
+      date: "2026-08-04",
+      mode: "live",
+      generatedAt: "2026-08-03T19:00:00.000Z",
+    });
+
+    const history = await getLiveReportHistory({ rootDirectory: root });
+
+    expect(
+      history.map(({ date, generatedAt }) => ({ date, generatedAt })),
+    ).toEqual([
+      {
+        date: "2026-08-03",
+        generatedAt: "2026-08-03T17:00:00.000Z",
+      },
+      {
+        date: "2026-08-04",
+        generatedAt: "2026-08-03T19:00:00.000Z",
+      },
+    ]);
+    await expect(
+      getLiveReportByDate("2026-08-03", { rootDirectory: root }),
+    ).resolves.toMatchObject({
+      date: "2026-08-03",
+      generatedAt: "2026-08-03T17:00:00.000Z",
+    });
+    await expect(
+      getLiveReportByDate("2026-08-02", { rootDirectory: root }),
+    ).resolves.toBeNull();
   });
 
   it("fails clearly when no live report exists", async () => {

@@ -13,6 +13,48 @@ export interface DimensionMeta {
   weight: number;
 }
 
+export const RANKING_PERIOD_IDS = ["7d", "30d", "90d", "180d"] as const;
+
+export type RankingPeriodId = (typeof RANKING_PERIOD_IDS)[number];
+
+export interface RankingPeriodMeta {
+  days: 7 | 30 | 90 | 180;
+  label: string;
+  shortLabel: string;
+  description: string;
+}
+
+export const RANKING_PERIOD_META = {
+  "7d": {
+    days: 7,
+    label: "近 7 天",
+    shortLabel: "7天",
+    description: "观察一周内持续进入每日综合榜的项目，降低单日偶发热度的影响。",
+  },
+  "30d": {
+    days: 30,
+    label: "近 30 天",
+    shortLabel: "30天",
+    description: "观察一个月内的稳定上榜、平均价值与近期变化。",
+  },
+  "90d": {
+    days: 90,
+    label: "近 90 天",
+    shortLabel: "90天",
+    description: "观察一个季度内仍能保持价值证据和工程活力的项目。",
+  },
+  "180d": {
+    days: 180,
+    label: "近 180 天",
+    shortLabel: "180天",
+    description: "观察半年尺度的持续价值，优先识别长期稳定而非短期爆发。",
+  },
+} as const satisfies Record<RankingPeriodId, RankingPeriodMeta>;
+
+export function isRankingPeriodId(value: string): value is RankingPeriodId {
+  return RANKING_PERIOD_IDS.some((periodId) => periodId === value);
+}
+
 export const DIRECTION_META = {
   "ai-agent": {
     name: "AI Coding 与 Agent",

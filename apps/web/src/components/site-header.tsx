@@ -2,9 +2,13 @@ import { BookOpenText, Menu } from "lucide-react";
 import Link from "next/link";
 
 const navigation = [
-  { href: "/", label: "今日榜单" },
-  { href: "/#directions", label: "技术方向" },
-  { href: "/sources/", label: "信源状态" },
+  { href: "/", label: "今日" },
+  { href: "/rankings/7d/", label: "7 天榜" },
+  { href: "/rankings/30d/", label: "30 天榜" },
+  { href: "/rankings/90d/", label: "90 天榜" },
+  { href: "/rankings/180d/", label: "180 天榜" },
+  { href: "/history/", label: "历史" },
+  { href: "/sources/", label: "信源" },
 ] as const;
 
 function NavigationLinks() {
@@ -26,7 +30,7 @@ export function SiteHeader() {
         <Link className="brand" href="/" aria-label="GitHub Picks 首页">
           <BookOpenText aria-hidden="true" size={20} strokeWidth={1.8} />
           <span className="brand__name">GitHub Picks</span>
-          <span className="brand__tag">每日开源情报</span>
+          <span className="brand__tag">开源情报排行</span>
         </Link>
 
         <nav className="desktop-nav" aria-label="主导航">

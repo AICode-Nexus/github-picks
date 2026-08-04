@@ -6,10 +6,11 @@ import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "GitHub Picks · 每日开源情报",
+    default: "GitHub Picks · 开源情报榜单",
     template: "%s · GitHub Picks",
   },
-  description: "不只看 Star 的中文 GitHub 开源项目榜单与证据分析。",
+  description:
+    "不只看 Star 的中文 GitHub 每日、7 天、30 天、90 天与 180 天开源项目榜单。",
   applicationName: "GitHub Picks",
   keywords: ["GitHub", "开源项目", "GitHub Trending", "开源情报", "中文榜单"],
   robots: {

@@ -63,12 +63,41 @@ export async function loadDailyReports(
 export async function getLatestLiveReport(
   options: ReportStoreOptions = {},
 ): Promise<DailyReport> {
-  const reports = await loadDailyReports(options);
-  const latest = reports.filter((report) => report.mode === "live").at(-1);
+  const latest = (await getLiveReportHistory(options)).at(-1);
 
   if (latest === undefined) {
     throw new Error("no live DailyReport is available for publication");
   }
 
   return latest;
+}
+
+export async function getLiveReportHistory(
+  options: ReportStoreOptions = {},
+): Promise<DailyReport[]> {
+  const reports = await loadDailyReports(options);
+  const latestByDate = new Map<string, DailyReport>();
+
+  for (const report of reports) {
+    if (report.mode !== "live") continue;
+    const current = latestByDate.get(report.date);
+    if (
+      current === undefined ||
+      report.generatedAt.localeCompare(current.generatedAt) > 0
+    ) {
+      latestByDate.set(report.date, report);
+    }
+  }
+
+  return [...latestByDate.values()].sort((left, right) =>
+    left.date.localeCompare(right.date),
+  );
+}
+
+export async function getLiveReportByDate(
+  date: string,
+  options: ReportStoreOptions = {},
+): Promise<DailyReport | null> {
+  const history = await getLiveReportHistory(options);
+  return history.find((report) => report.date === date) ?? null;
 }

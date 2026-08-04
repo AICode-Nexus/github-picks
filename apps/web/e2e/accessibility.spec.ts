@@ -1,7 +1,14 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const routes = ["/", "/sources/", "/directions/ai-agent/"] as const;
+const routes = [
+  "/",
+  "/sources/",
+  "/rankings/30d/",
+  "/history/",
+  "/history/2026-08-03/",
+  "/directions/ai-agent/",
+] as const;
 
 for (const route of routes) {
   test(`${route} has no serious or critical accessibility violations`, async ({
