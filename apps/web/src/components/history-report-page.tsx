@@ -5,7 +5,6 @@ import type { ReportArchiveEntryModel } from "../lib/period-ranking";
 import { getSourceName } from "../lib/site-meta";
 import { buildRankingItems } from "../lib/view-model";
 import { HistoryDatePicker } from "./history-date-picker";
-import { PeriodNavigation } from "./period-navigation";
 import { RankingSection } from "./ranking-section";
 
 export interface HistoryReportPageProps {
@@ -48,8 +47,6 @@ export function HistoryReportPage({
   return (
     <main id="main-content">
       <div className="page-shell history-report-page">
-        <PeriodNavigation active="history" />
-
         <nav className="breadcrumbs" aria-label="面包屑">
           <Link href="/history/">
             <ArrowLeft aria-hidden="true" size={15} />

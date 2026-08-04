@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { type ReactNode, Suspense } from "react";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
+import { SiteNavigation } from "../components/site-navigation";
 import "../styles/globals.css";
 
 export const metadata: Metadata = {
@@ -31,8 +32,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           跳到主要内容
         </a>
         <SiteHeader />
-        {children}
-        <SiteFooter />
+        <div className="site-frame">
+          <Suspense
+            fallback={
+              <div
+                className="site-navigation site-navigation--fallback"
+                aria-hidden="true"
+              />
+            }
+          >
+            <SiteNavigation />
+          </Suspense>
+          <div className="site-frame__content">
+            {children}
+            <SiteFooter />
+          </div>
+        </div>
       </body>
     </html>
   );

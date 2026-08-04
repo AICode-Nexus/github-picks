@@ -32,24 +32,51 @@ beforeAll(async () => {
 afterEach(cleanup);
 
 describe("period ranking experience", () => {
-  it("renders period navigation, honest coverage and the sustained ranking", () => {
+  it("renders honest coverage and the sustained ranking without local navigation", () => {
     const ranking = buildPeriodRanking(reports, "7d");
+    const leader = ranking.items[0];
+    if (leader === undefined) throw new Error("missing period leader");
 
     render(<PeriodRankingPage ranking={ranking} />);
 
-    const navigation = screen.getByRole("navigation", {
-      name: "榜单时间范围",
-    });
     expect(
-      within(navigation)
-        .getByRole("link", { name: "近 7 天" })
-        .getAttribute("aria-current"),
-    ).toBe("page");
+      screen.queryByRole("navigation", { name: "榜单时间范围" }),
+    ).toBeNull();
     expect(
       screen.getByRole("heading", { name: "近 7 天持续价值榜" }),
     ).toBeTruthy();
-    expect(screen.getByText("2 / 7 天")).toBeTruthy();
-    expect(screen.getByText(/当前历史库尚缺 5 天/)).toBeTruthy();
+    expect(screen.getAllByRole("link", { name: leader.id })).toHaveLength(1);
+    expect(screen.getAllByText(/当前历史库尚缺 5 天/)).toHaveLength(1);
+    const leaderRow = screen.getByTestId(
+      `period-row-${leader.id.replace("/", "-")}`,
+    );
+    expect(
+      within(leaderRow).getByRole("link", { name: leader.id }),
+    ).toBeTruthy();
+    const coverage = screen.getByRole("region", { name: "周期数据覆盖" });
+    expect(
+      within(coverage).getByText(`${ranking.reportCount} 份`),
+    ).toBeTruthy();
+    expect(
+      within(coverage).getByText(`${Math.round(ranking.coverageRate * 100)}%`),
+    ).toBeTruthy();
+    expect(
+      within(coverage).getByText(`${ranking.uniqueRepositoryCount} 个`),
+    ).toBeTruthy();
+    expect(
+      within(coverage).getByText(`${ranking.reportCount} / ${ranking.days} 天`),
+    ).toBeTruthy();
+    const coverageProgress = within(coverage).getByRole("progressbar", {
+      name: `${ranking.label}历史数据覆盖率`,
+    });
+    expect(coverageProgress.getAttribute("max")).toBe(String(ranking.days));
+    expect(coverageProgress.getAttribute("value")).toBe(
+      String(ranking.reportCount),
+    );
+    expect(within(coverage).getByText(/当前历史库尚缺 5 天/)).toBeTruthy();
+    expect(
+      within(coverage).getByRole("link", { name: "查看历史库" }),
+    ).toBeTruthy();
     expect(screen.getAllByTestId(/^period-row-/).length).toBeGreaterThan(0);
   });
 });

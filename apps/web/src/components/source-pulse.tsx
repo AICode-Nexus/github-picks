@@ -8,6 +8,10 @@ export interface SourcePulseProps {
 
 export function SourcePulse({ summary }: SourcePulseProps) {
   const observed = summary.items.length;
+  const problemSources = summary.items.filter(
+    (source) => source.status !== "healthy",
+  );
+
   return (
     <aside className="source-pulse" aria-label="本次信源健康状态">
       <div className="source-pulse__heading">
@@ -32,6 +36,16 @@ export function SourcePulse({ summary }: SourcePulseProps) {
           <dd>{summary.counts.offline}</dd>
         </div>
       </dl>
+      {problemSources.length > 0 ? (
+        <ul className="source-pulse__problems">
+          {problemSources.map((source) => (
+            <li key={source.id}>
+              <strong>{source.name}</strong>
+              <span>{source.message}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
       <Link className="text-link" href="/sources/">
         查看信源现场
       </Link>

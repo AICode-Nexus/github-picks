@@ -1,15 +1,28 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import type { DailyRankingTagModel } from "../lib/daily-ranking";
 import type { RepositoryCardModel } from "../lib/view-model";
+import { RankingTags } from "./ranking-tags";
 
 export interface TopStoryCardProps {
   item: RepositoryCardModel;
   featured?: boolean;
+  tags?: DailyRankingTagModel[];
+  testId?: string;
 }
 
-export function TopStoryCard({ item, featured = false }: TopStoryCardProps) {
+export function TopStoryCard({
+  item,
+  featured = false,
+  tags = [],
+  testId,
+}: TopStoryCardProps) {
   return (
-    <article className={`top-story${featured ? " top-story--featured" : ""}`}>
+    <article
+      className={`top-story${featured ? " top-story--featured" : ""}`}
+      data-repository-id={item.id}
+      data-testid={testId}
+    >
       <div className="top-story__number">
         <span className="sr-only">第 {item.rank} 名</span>
         <span aria-hidden="true">{String(item.rank).padStart(2, "0")}</span>
@@ -19,6 +32,7 @@ export function TopStoryCard({ item, featured = false }: TopStoryCardProps) {
           <span>{item.directionName}</span>
           <span>{item.language}</span>
         </div>
+        <RankingTags tags={tags} />
         <h3>
           <Link href={item.href}>{item.id}</Link>
         </h3>
@@ -29,15 +43,15 @@ export function TopStoryCard({ item, featured = false }: TopStoryCardProps) {
         </div>
         <div className="top-story__footer">
           <dl className="score-line">
-            <div>
+            <div data-testid="published-score">
               <dt>发布分</dt>
               <dd>{item.score.toFixed(1)}</dd>
             </div>
-            <div>
+            <div data-testid="confidence">
               <dt>置信度</dt>
               <dd>{Math.round(item.confidence * 100)}%</dd>
             </div>
-            <div>
+            <div data-testid="risk-penalty">
               <dt>风险</dt>
               <dd>−{item.riskPenalty.toFixed(0)}</dd>
             </div>

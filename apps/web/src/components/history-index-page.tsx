@@ -2,7 +2,6 @@ import { ArrowUpRight, Database, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import type { ReportArchiveEntryModel } from "../lib/period-ranking";
 import { HistoryDatePicker } from "./history-date-picker";
-import { PeriodNavigation } from "./period-navigation";
 
 export interface HistoryIndexPageProps {
   entries: ReportArchiveEntryModel[];
@@ -16,8 +15,6 @@ export function HistoryIndexPage({ entries, basePath }: HistoryIndexPageProps) {
   return (
     <main id="main-content">
       <div className="page-shell">
-        <PeriodNavigation active="history" />
-
         <section className="history-hero" aria-labelledby="history-title">
           <div className="history-hero__title">
             <p className="eyebrow">ARCHIVE / IMMUTABLE DAILY SNAPSHOTS</p>

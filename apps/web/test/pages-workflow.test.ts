@@ -13,9 +13,15 @@ describe("GitHub Pages workflow", () => {
 
     expect(workflow).toContain("branches: [master]");
     expect(workflow).toContain('NEXT_PUBLIC_BASE_PATH: "/github-picks"');
-    expect(workflow).toContain("actions/configure-pages@v5");
-    expect(workflow).toContain("actions/upload-pages-artifact@v4");
-    expect(workflow).toContain("actions/deploy-pages@v4");
+    expect(
+      workflow.match(/^\s*uses:\s+actions\/configure-pages@v6\s*$/gm),
+    ).toHaveLength(1);
+    expect(
+      workflow.match(/^\s*uses:\s+actions\/upload-pages-artifact@v5\s*$/gm),
+    ).toHaveLength(1);
+    expect(
+      workflow.match(/^\s*uses:\s+actions\/deploy-pages@v5\s*$/gm),
+    ).toHaveLength(1);
     expect(workflow).toContain("path: apps/web/out");
   });
 });

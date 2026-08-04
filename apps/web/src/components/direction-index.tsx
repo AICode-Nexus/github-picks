@@ -26,14 +26,6 @@ export function DirectionIndex({ directions }: DirectionIndexProps) {
               <span className="direction-card__body">
                 <strong>{direction.name}</strong>
                 <span>{direction.description}</span>
-                <span className="direction-card__projects">
-                  {direction.items.length > 0
-                    ? direction.items
-                        .slice(0, 3)
-                        .map((item) => item.id)
-                        .join(" · ")
-                    : "本期暂无达到证据门槛的项目"}
-                </span>
               </span>
               <span className="direction-card__count">
                 {direction.count}
