@@ -5,13 +5,20 @@ export interface AnalysisBriefProps {
 }
 
 const sections = [
-  { id: "why", index: "01", title: "为什么值得看" },
   { id: "suitableFor", index: "02", title: "适合谁" },
   { id: "risks", index: "03", title: "风险与边界" },
   { id: "nextStep", index: "04", title: "下一步验证" },
 ] as const;
 
 export function AnalysisBrief({ analysis }: AnalysisBriefProps) {
+  const sectionsWithRecommendation = [
+    {
+      id: "recommendationReason" as const,
+      index: "01",
+      title: analysis.attribution.label,
+    },
+    ...sections,
+  ];
   return (
     <section className="detail-section" aria-labelledby="analysis-title">
       <header className="detail-section__heading">
@@ -20,9 +27,10 @@ export function AnalysisBrief({ analysis }: AnalysisBriefProps) {
         <p className="detail-section__description">
           把分数还原成适用场景、风险边界和可执行验证。
         </p>
+        <p className="analysis-attribution">{analysis.attribution.detail}</p>
       </header>
       <div className="analysis-grid">
-        {sections.map((section) => (
+        {sectionsWithRecommendation.map((section) => (
           <article key={section.id}>
             <span>{section.index}</span>
             <h3>{section.title}</h3>

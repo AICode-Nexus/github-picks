@@ -21,12 +21,16 @@ afterEach(cleanup);
 
 describe("GitHub Picks homepage", () => {
   it("renders the live intelligence cover, rankings and direction index", () => {
+    const firstRepositoryId = report.rankings.overall[0];
+    if (firstRepositoryId === undefined) {
+      throw new Error("missing ranked test repository");
+    }
     render(<HomePage report={report} />);
 
     expect(screen.getByRole("heading", { name: /今日开源情报/ })).toBeTruthy();
-    expect(screen.getByText("60 个候选")).toBeTruthy();
+    expect(screen.getByText(`${report.counts.discovered} 个候选`)).toBeTruthy();
     expect(
-      screen.getAllByRole("link", { name: /quickwit-oss\/quickwit/ }).length,
+      screen.getAllByRole("link", { name: firstRepositoryId }).length,
     ).toBeGreaterThan(0);
     expect(screen.getAllByText(/HubLens/).length).toBeGreaterThan(0);
     expect(screen.getByText(/全部候选信号超过新鲜度阈值/)).toBeTruthy();
@@ -34,20 +38,40 @@ describe("GitHub Picks homepage", () => {
   });
 
   it("keeps score, confidence and risk in separate elements", () => {
+    const firstRepositoryId = report.rankings.overall[0];
+    const firstRepository = report.repositories.find(
+      (repository) => repository.snapshot.fullName === firstRepositoryId,
+    );
+    if (firstRepositoryId === undefined || firstRepository === undefined) {
+      throw new Error("missing ranked test repository");
+    }
+    if (
+      firstRepository.analysis.generation?.kind !== "ai" ||
+      firstRepository.analysis.recommendationReason === undefined
+    ) {
+      throw new Error("missing AI recommendation fixture");
+    }
+
     render(<HomePage report={report} />);
     const firstOverallRow = screen.getByTestId(
-      "overall-row-quickwit-oss-quickwit",
+      `overall-row-${firstRepositoryId.replace("/", "-")}`,
     );
 
     expect(
       within(firstOverallRow).getByTestId("published-score").textContent,
-    ).toContain("66.9");
+    ).toContain(String(firstRepository.score.publishedScore));
     expect(
       within(firstOverallRow).getByTestId("confidence").textContent,
-    ).toContain("90%");
+    ).toContain(`${Math.round(firstRepository.score.confidence * 100)}%`);
     expect(
       within(firstOverallRow).getByTestId("risk-penalty").textContent,
-    ).toContain("0");
+    ).toContain(String(firstRepository.score.riskPenalty));
+    expect(within(firstOverallRow).getByText("AI 推荐理由")).toBeTruthy();
+    expect(
+      within(firstOverallRow).getByText(
+        firstRepository.analysis.recommendationReason,
+      ),
+    ).toBeTruthy();
   });
 
   it("does not show a warning strip when every source is healthy", () => {

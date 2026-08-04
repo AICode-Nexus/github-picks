@@ -12,6 +12,7 @@
 - pnpm：`11.18.0`
 - 默认时区：`Asia/Shanghai`
 - 可选凭据：`GITHUB_TOKEN`
+- 可选本地模型：Ollama 与 `GITHUB_PICKS_AI_MODEL`
 
 ```bash
 nvm use
@@ -65,6 +66,31 @@ GITHUB_TOKEN="$(gh auth token)" pnpm picks:daily \
 
 日期代表北京时间的日报归属日；`generatedAt` 使用带时区可转换的 ISO 时间记录真实采集时刻。
 
+## AI 推荐理由
+
+实时模式可在评分完成后调用 Ollama，为每个已补全项目生成中文推荐理由。模型只接收结构化公开事实包，不接收原始响应路径、内容哈希对象或凭据；推荐理由不参与分数与名次计算。
+
+```bash
+GITHUB_TOKEN="$(gh auth token)" \
+GITHUB_PICKS_AI_PROVIDER=ollama \
+GITHUB_PICKS_AI_BASE_URL=http://127.0.0.1:11434 \
+GITHUB_PICKS_AI_MODEL=qwen3-vl:8b \
+GITHUB_PICKS_AI_REQUIRED=true \
+pnpm picks:daily
+```
+
+环境变量：
+
+- `GITHUB_PICKS_AI_MODEL`：启用 AI 分析并指定本地模型；未设置时使用规则事实摘要；
+- `GITHUB_PICKS_AI_REQUIRED=true`：任一模型调用或校验失败则整次运行失败，旧日报保持不变；
+- `GITHUB_PICKS_AI_BASE_URL`：默认 `http://127.0.0.1:11434`；
+- `GITHUB_PICKS_AI_CONCURRENCY`：默认 `1`，本地模型不建议盲目并发；
+- `GITHUB_PICKS_AI_TIMEOUT_MS`：单项目默认 `120000` 毫秒。
+
+每条新分析保存 `provider`、`model`、`promptVersion`、`analysisVersion`、`evidenceHash` 和 `generatedAt`。AI 推荐理由只回答核心价值、本期信号和适用对象；风险与下一步由独立规则区块展示。输出必须以仓库全名开头，并通过 JSON Schema、禁止夸大/逻辑越界表述与“新增数字必须存在于事实包”的校验。模型不可用且未启用 required 时，`sourceHealth` 会写入 `ai-analysis: degraded`，网站明确显示“规则事实摘要”；规则输出不会标为 AI。
+
+回放模式始终不调用模型，保证离线可复现。
+
 ## 当前执行信源
 
 | 信源 | 用途 | 独立性处理 | 失败行为 |
@@ -77,6 +103,7 @@ GITHUB_TOKEN="$(gh auth token)" pnpm picks:daily \
 | Hacker News Algolia | 独立社区讨论 | 独立社区组 | 标记降级，继续 |
 | GitHub REST | 仓库事实、近期事件 | GitHub 事实组 | 单仓库失败跳过；全部失败则终止 |
 | OpenSSF Scorecard | 安全工程事实 | OpenSSF 独立组 | 单仓库缺失用中性先验 |
+| AI 推荐理由 | 只读消费结构化事实包 | 不参与评分或信源独立性 | 失败则规则降级；required 模式终止发布 |
 
 `config/picks.yaml` 还注册了 OSV、deps.dev、npm、PyPI 和 crates.io，供后续版本接入；`v0.1.0` 的执行流水线尚未调用它们，不能把“已注册”表述成“已采集”。
 
@@ -152,3 +179,4 @@ git diff --check
 5. 每个发布项目至少有 GitHub REST 证据；
 6. 信源缺失必须出现在 `sourceHealth` 或项目 `missingFields` 中；
 7. 中文分析不得把中性先验写成已验证事实。
+8. 正式 AI 发布时 `ai-analysis` 必须为 `healthy`，且所有公开项目的 `generation.kind` 为 `ai`、`status` 为 `verified`。

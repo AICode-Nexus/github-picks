@@ -1,0 +1,96 @@
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { type DailyReport, DailyReportSchema } from "@github-picks/core/schema";
+import { cleanup, render, screen, within } from "@testing-library/react";
+import { afterEach, beforeAll, describe, expect, it } from "vitest";
+import { HistoryIndexPage } from "../src/components/history-index-page";
+import { HistoryReportPage } from "../src/components/history-report-page";
+import { PeriodRankingPage } from "../src/components/period-ranking-page";
+import {
+  buildPeriodRanking,
+  buildReportArchive,
+} from "../src/lib/period-ranking";
+
+let reports: DailyReport[];
+
+beforeAll(async () => {
+  const reportPaths = [
+    "../../artifacts/daily/2026-08-03-live/report.json",
+    "../../artifacts/daily/2026-08-04/report.json",
+  ];
+  reports = await Promise.all(
+    reportPaths.map(async (reportPath) =>
+      DailyReportSchema.parse(
+        JSON.parse(
+          await readFile(resolve(process.cwd(), reportPath), "utf8"),
+        ) as unknown,
+      ),
+    ),
+  );
+});
+
+afterEach(cleanup);
+
+describe("period ranking experience", () => {
+  it("renders period navigation, honest coverage and the sustained ranking", () => {
+    const ranking = buildPeriodRanking(reports, "7d");
+
+    render(<PeriodRankingPage ranking={ranking} />);
+
+    const navigation = screen.getByRole("navigation", {
+      name: "榜单时间范围",
+    });
+    expect(
+      within(navigation)
+        .getByRole("link", { name: "近 7 天" })
+        .getAttribute("aria-current"),
+    ).toBe("page");
+    expect(
+      screen.getByRole("heading", { name: "近 7 天持续价值榜" }),
+    ).toBeTruthy();
+    expect(screen.getByText("2 / 7 天")).toBeTruthy();
+    expect(screen.getByText(/当前历史库尚缺 5 天/)).toBeTruthy();
+    expect(screen.getAllByTestId(/^period-row-/).length).toBeGreaterThan(0);
+  });
+});
+
+describe("history query experience", () => {
+  it("lists stored reports newest first and exposes an exact date query", () => {
+    const archive = buildReportArchive(reports);
+
+    render(<HistoryIndexPage entries={archive} />);
+
+    expect(screen.getByRole("heading", { name: "历史日报查询" })).toBeTruthy();
+    expect(screen.getByLabelText("选择已存档日期")).toBeTruthy();
+    const archiveLinks = screen.getAllByRole("link", {
+      name: /查看 .* 日报/,
+    });
+    expect(archiveLinks[0]?.getAttribute("href")).toBe("/history/2026-08-04");
+  });
+
+  it("renders a selected snapshot with previous and next history navigation", () => {
+    const archive = buildReportArchive(reports);
+    const report = reports[0];
+    if (report === undefined) throw new Error("missing history test report");
+
+    render(
+      <HistoryReportPage
+        report={report}
+        archive={archive}
+        previousDate={null}
+        nextDate="2026-08-04"
+      />,
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "2026年08月03日 开源情报" }),
+    ).toBeTruthy();
+    expect(screen.getByText(/所选日期的不可变公开快照/)).toBeTruthy();
+    expect(
+      screen.getByRole("link", { name: /下一期/ }).getAttribute("href"),
+    ).toBe("/history/2026-08-04");
+    expect(
+      screen.getByRole("heading", { name: "当日综合价值榜" }),
+    ).toBeTruthy();
+  });
+});

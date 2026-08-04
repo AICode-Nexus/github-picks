@@ -330,13 +330,29 @@ export const RepositoryScoreSchema = z
   .strict();
 export type RepositoryScore = z.infer<typeof RepositoryScoreSchema>;
 
+export const AnalysisGenerationSchema = z
+  .object({
+    kind: z.enum(["ai", "rules"]),
+    status: z.enum(["verified", "fallback"]),
+    provider: z.string().min(2),
+    model: z.string().min(1).nullable(),
+    promptVersion: z.string().regex(/^v\d+\.\d+\.\d+$/),
+    analysisVersion: z.string().regex(/^v\d+\.\d+\.\d+$/),
+    evidenceHash: z.string().regex(/^[a-f0-9]{64}$/),
+    generatedAt: z.iso.datetime(),
+  })
+  .strict();
+export type AnalysisGeneration = z.infer<typeof AnalysisGenerationSchema>;
+
 export const ChineseAnalysisSchema = z
   .object({
+    recommendationReason: z.string().min(20).max(500).optional(),
     why: z.string().min(10),
     suitableFor: z.string().min(6),
     risks: z.string().min(6),
     nextStep: z.string().min(6),
     evidenceUrls: z.array(z.url()).min(1),
+    generation: AnalysisGenerationSchema.optional(),
   })
   .strict();
 export type ChineseAnalysis = z.infer<typeof ChineseAnalysisSchema>;
@@ -379,6 +395,10 @@ export const DailyReportSchema = z
     timezone: z.literal("Asia/Shanghai"),
     generatedAt: z.iso.datetime(),
     scoreVersion: z.string().regex(/^v\d+\.\d+\.\d+$/),
+    analysisVersion: z
+      .string()
+      .regex(/^v\d+\.\d+\.\d+$/)
+      .optional(),
     configHash: z.string().regex(/^[a-f0-9]{64}$/),
     sourceHealth: z.array(SourceHealthSchema),
     counts: z

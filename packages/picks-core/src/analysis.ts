@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import {
   type ChineseAnalysis,
   ChineseAnalysisSchema,
@@ -9,7 +10,11 @@ import {
 export interface AnalysisInput {
   snapshot: RepositorySnapshot;
   score: RepositoryScore;
+  generatedAt?: string;
 }
+
+export const RULE_ANALYSIS_VERSION = "v1.0.0";
+export const RULE_PROMPT_VERSION = "v1.0.0";
 
 const dimensionNames: Record<keyof DimensionScores, string> = {
   utility: "实用价值",
@@ -70,6 +75,85 @@ function action(score: RepositoryScore): string {
   return "下一步：继续观察并补齐缺失证据，当前不形成生产采用结论。";
 }
 
+export function buildAnalysisFactPackage(input: AnalysisInput) {
+  return {
+    repository: {
+      fullName: input.snapshot.fullName,
+      url: input.snapshot.url,
+      description: input.snapshot.description,
+      homepage: input.snapshot.homepage,
+      language: input.snapshot.language,
+      topics: input.snapshot.topics,
+      direction: input.snapshot.direction,
+      createdAt: input.snapshot.createdAt,
+      pushedAt: input.snapshot.pushedAt,
+      stars: input.snapshot.stars,
+      forks: input.snapshot.forks,
+      watchers: input.snapshot.watchers,
+      openIssues: input.snapshot.openIssues,
+      licenseSpdx: input.snapshot.licenseSpdx,
+      humanReadableCounts: {
+        starsThousandsFloor: Math.floor(input.snapshot.stars / 1000),
+        starsThousandsRounded: Math.round(input.snapshot.stars / 1000),
+        starsThousandsOneDecimal:
+          Math.round((input.snapshot.stars / 1000) * 10) / 10,
+        starsTenThousandsRounded:
+          Math.round((input.snapshot.stars / 10_000) * 10) / 10,
+        forksThousandsFloor: Math.floor(input.snapshot.forks / 1000),
+        forksThousandsRounded: Math.round(input.snapshot.forks / 1000),
+        forksThousandsOneDecimal:
+          Math.round((input.snapshot.forks / 1000) * 10) / 10,
+        forksTenThousandsRounded:
+          Math.round((input.snapshot.forks / 10_000) * 10) / 10,
+      },
+    },
+    activity: input.snapshot.eventFeatures,
+    scorecard:
+      input.snapshot.scorecard === null
+        ? null
+        : {
+            score: input.snapshot.scorecard.score,
+            date: input.snapshot.scorecard.date,
+            checks: input.snapshot.scorecard.checks,
+          },
+    score: {
+      publishedScore: input.score.publishedScore,
+      confidence: input.score.confidence,
+      confidencePercent: Math.round(input.score.confidence * 100),
+      dimensions: input.score.dimensions,
+      riskPenalty: input.score.riskPenalty,
+      eligibility: input.score.eligibility,
+    },
+    risks: input.score.riskFindings.map((finding) => ({
+      code: finding.code,
+      level: finding.level,
+      penalty: finding.penalty,
+      message: finding.message,
+    })),
+    missingFields: input.snapshot.missingFields,
+    discoverySignals: input.snapshot.candidateSignals.map((signal) => ({
+      sourceId: signal.sourceId,
+      sourceTier: signal.sourceTier,
+      observedAt: signal.observedAt,
+      stale: signal.stale,
+      rank: signal.rank,
+      summaryZh: signal.summaryZh,
+      metrics: signal.metrics,
+      evidenceUrl: signal.evidenceUrl,
+    })),
+    evidenceUrls: [
+      ...input.snapshot.evidence.map((evidence) => evidence.evidenceUrl),
+      ...input.snapshot.candidateSignals.map((signal) => signal.evidenceUrl),
+    ].filter((url, index, values) => values.indexOf(url) === index),
+  };
+}
+
+export function analysisEvidenceHash(input: AnalysisInput): string {
+  return createHash("sha256")
+    .update(JSON.stringify(buildAnalysisFactPackage(input)))
+    .digest("hex");
+}
+
 export function analyzeRepository(input: AnalysisInput): ChineseAnalysis {
   const drivers = topDimensions(input.score)
     .map(([name, value]) => `${dimensionNames[name]} ${value.toFixed(1)} 分`)
@@ -79,11 +163,28 @@ export function analyzeRepository(input: AnalysisInput): ChineseAnalysis {
     ...input.snapshot.candidateSignals.map((signal) => signal.evidenceUrl),
   ].filter((url, index, values) => values.indexOf(url) === index);
 
+  const why = `${input.snapshot.fullName} 值得关注：当前主要驱动来自${drivers}；发布分 ${input.score.publishedScore.toFixed(1)}，置信度 ${(input.score.confidence * 100).toFixed(0)}%。`;
+  const generatedAt =
+    input.generatedAt ??
+    input.snapshot.evidence[0]?.observedAt ??
+    input.snapshot.updatedAt;
+
   return ChineseAnalysisSchema.parse({
-    why: `${input.snapshot.fullName} 值得关注：当前主要驱动来自${drivers}；发布分 ${input.score.publishedScore.toFixed(1)}，置信度 ${(input.score.confidence * 100).toFixed(0)}%。`,
+    recommendationReason: why,
+    why,
     suitableFor: `${audiences[input.snapshot.direction]}；仍需结合项目类型和自身约束判断。`,
     risks: riskText(input),
     nextStep: action(input.score),
     evidenceUrls,
+    generation: {
+      kind: "rules",
+      status: "fallback",
+      provider: "github-picks-rules",
+      model: null,
+      promptVersion: RULE_PROMPT_VERSION,
+      analysisVersion: RULE_ANALYSIS_VERSION,
+      evidenceHash: analysisEvidenceHash(input),
+      generatedAt,
+    },
   });
 }

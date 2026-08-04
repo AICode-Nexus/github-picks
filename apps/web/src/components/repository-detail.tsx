@@ -234,7 +234,7 @@ export function RepositoryDetail({
           </header>
           <ol className="signal-list">
             {detail.signals.map((signal, index) => (
-              <li key={`${signal.sourceId}-${signal.evidenceUrl}`}>
+              <li key={signal.id}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <div>
                   <strong>{signal.sourceName}</strong>

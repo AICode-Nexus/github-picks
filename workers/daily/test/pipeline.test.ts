@@ -8,6 +8,7 @@ import {
   RepositorySnapshotSchema,
 } from "@github-picks/core";
 import { describe, expect, it } from "vitest";
+import type { RecommendationGenerator } from "../src/ai-analysis.js";
 import { parseGitHubSnapshot } from "../src/github.js";
 import { runDailyPipeline } from "../src/pipeline.js";
 
@@ -116,6 +117,16 @@ describe("daily pipeline replay", () => {
       }),
     );
 
+    const recommendationGenerator: RecommendationGenerator = {
+      provider: "test-ai",
+      model: "test-model",
+      promptVersion: "v1.0.0",
+      analysisVersion: "v1.1.0",
+      concurrency: 2,
+      async generate({ snapshot }) {
+        return `${snapshot.fullName}：工程活动与方向价值均有事实支撑，适合对应技术团队先做隔离验证；正式采用前仍需核验长期维护与安全边界。`;
+      },
+    };
     const report = await runDailyPipeline({
       mode: "replay",
       date: "2026-08-03",
@@ -127,6 +138,8 @@ describe("daily pipeline replay", () => {
       fetchImpl: (async () => {
         throw new Error("replay must not access the network");
       }) as typeof fetch,
+      recommendationGenerator,
+      analysisRequired: true,
     });
 
     expect(DailyReportSchema.parse(report)).toEqual(report);
@@ -139,6 +152,19 @@ describe("daily pipeline replay", () => {
     ).toBe(true);
     expect(
       report.sourceHealth.some((source) => source.status === "degraded"),
+    ).toBe(true);
+    expect(
+      report.sourceHealth.find((source) => source.sourceId === "ai-analysis"),
+    ).toMatchObject({ status: "healthy" });
+    expect(
+      report.repositories.every(
+        (repository) =>
+          repository.analysis.generation?.kind === "ai" &&
+          repository.analysis.generation.status === "verified" &&
+          repository.analysis.recommendationReason?.startsWith(
+            repository.snapshot.fullName,
+          ),
+      ),
     ).toBe(true);
     expect(
       JSON.parse(await readFile(join(outputDirectory, "report.json"), "utf8")),

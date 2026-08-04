@@ -31,6 +31,10 @@ export function RepositoryRow({
           <Link href={item.href}>{item.id}</Link>
         </h3>
         <p className="repository-row__description">{item.description}</p>
+        <div className="recommendation-reason repository-row__reason">
+          <span>{item.analysisAttribution.label}</span>
+          <p>{item.recommendationReason}</p>
+        </div>
         {compact ? null : (
           <p className="repository-row__annotation">
             强项：{item.strongestDimension.label}{" "}

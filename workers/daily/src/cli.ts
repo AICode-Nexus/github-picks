@@ -1,3 +1,7 @@
+import {
+  aiAnalysisIsRequired,
+  createRecommendationGeneratorFromEnvironment,
+} from "./ai-analysis.js";
 import { parseCliArgs } from "./cli-args.js";
 import { resolveCliPaths } from "./cli-paths.js";
 import { runDailyPipeline } from "./pipeline.js";
@@ -5,11 +9,18 @@ import { runDailyPipeline } from "./pipeline.js";
 try {
   const options = parseCliArgs(process.argv.slice(2));
   const paths = resolveCliPaths(options, process.cwd(), import.meta.url);
+  const recommendationGenerator =
+    options.mode === "live"
+      ? createRecommendationGeneratorFromEnvironment(process.env)
+      : null;
   const report = await runDailyPipeline({
     mode: options.mode,
     date: options.date,
     ...paths,
     githubToken: process.env.GITHUB_TOKEN?.trim() || null,
+    recommendationGenerator,
+    analysisRequired:
+      options.mode === "live" && aiAnalysisIsRequired(process.env),
   });
   const degraded = report.sourceHealth
     .filter((source) => source.status !== "healthy")
@@ -20,6 +31,7 @@ try {
       `discovered=${report.counts.discovered}`,
       `enriched=${report.counts.enriched}`,
       `published=${report.counts.published}`,
+      `analysis=${report.analysisVersion ?? "legacy"}`,
       `degraded=${degraded.length === 0 ? "none" : degraded.join(",")}`,
       `report=${paths.outputDirectory}/report.md`,
     ].join("\n")}\n`,

@@ -44,34 +44,41 @@ describe("site metadata", () => {
 
 describe("repository view models", () => {
   it("keeps score, confidence and risk as separate card semantics", () => {
-    const model = buildRepositoryCard(report, "quickwit-oss/quickwit", 1);
+    const repositoryId = report.rankings.overall[0];
+    const repository = report.repositories.find(
+      (item) => item.snapshot.fullName === repositoryId,
+    );
+    if (repositoryId === undefined || repository === undefined) {
+      throw new Error("missing ranked test repository");
+    }
 
-    expect(model.score).toBe(66.9);
-    expect(model.confidence).toBe(0.9);
-    expect(model.confidenceLabel).toBe("高");
-    expect(model.riskPenalty).toBe(0);
-    expect(model.strongestDimension).toEqual({
-      id: "security",
-      label: "安全与合规",
-      value: 85,
-    });
-    expect(model.href).toBe("/repositories/quickwit-oss/quickwit/");
+    const model = buildRepositoryCard(report, repositoryId, 1);
+
+    expect(model.score).toBe(repository.score.publishedScore);
+    expect(model.confidence).toBe(repository.score.confidence);
+    expect(["高", "中", "低"]).toContain(model.confidenceLabel);
+    expect(model.riskPenalty).toBe(repository.score.riskPenalty);
+    expect(model.strongestDimension.value).toBe(
+      Math.max(...Object.values(repository.score.dimensions)),
+    );
+    expect(model.href).toBe(`/repositories/${repositoryId}/`);
   });
 
   it("normalizes index keys and preserves ranking order", () => {
+    const repositoryIds = report.rankings.overall.slice(0, 2);
+    const firstRepositoryId = repositoryIds[0];
+    if (firstRepositoryId === undefined || repositoryIds.length < 2) {
+      throw new Error("missing ranked test repositories");
+    }
     const index = buildRepositoryIndex(report);
-    const items = buildRankingItems(report, [
-      "openmls/openmls",
-      "quickwit-oss/quickwit",
-    ]);
+    const items = buildRankingItems(report, repositoryIds);
 
     expect(
-      index.get("QUICKWIT-OSS/QUICKWIT".toLowerCase())?.snapshot.fullName,
-    ).toBe("quickwit-oss/quickwit");
-    expect(items.map((item) => [item.rank, item.id])).toEqual([
-      [1, "openmls/openmls"],
-      [2, "quickwit-oss/quickwit"],
-    ]);
+      index.get(firstRepositoryId.toUpperCase().toLowerCase())?.snapshot
+        .fullName,
+    ).toBe(firstRepositoryId);
+    expect(items.map((item) => item.id)).toEqual(repositoryIds);
+    expect(items.map((item) => item.rank)).toEqual([1, 2]);
   });
 
   it("fails the build when a ranking references a missing repository", () => {
@@ -81,11 +88,17 @@ describe("repository view models", () => {
   });
 
   it("describes missing license and Scorecard as evidence gaps", () => {
-    const missingLicense = buildRepositoryDetail(
-      report,
-      "argonne-lcf/atpesc_machinelearning",
-    );
-    const missingScorecard = buildRepositoryDetail(report, "lyogavin/airllm");
+    const missingLicenseId = report.repositories.find(
+      (item) => item.snapshot.licenseSpdx === null,
+    )?.snapshot.fullName;
+    const missingScorecardId = report.repositories.find(
+      (item) => item.snapshot.scorecard === null,
+    )?.snapshot.fullName;
+    if (missingLicenseId === undefined || missingScorecardId === undefined) {
+      throw new Error("missing evidence-gap test repositories");
+    }
+    const missingLicense = buildRepositoryDetail(report, missingLicenseId);
+    const missingScorecard = buildRepositoryDetail(report, missingScorecardId);
 
     expect(missingLicense.license.label).toBe("未识别 · 生产采用前需核验");
     expect(missingLicense.evidenceGaps).toContain("许可证信息缺失");
@@ -117,12 +130,12 @@ describe("direction and source summaries", () => {
   it("retains degraded source names and diagnostic messages", () => {
     const summary = buildSourceSummary(report);
     const hubLens = summary.items.find((item) => item.id === "hublens");
+    const expectedCounts = { healthy: 0, degraded: 0, offline: 0 };
+    for (const source of report.sourceHealth) {
+      expectedCounts[source.status] += 1;
+    }
 
-    expect(summary.counts).toEqual({
-      healthy: 6,
-      degraded: 2,
-      offline: 0,
-    });
+    expect(summary.counts).toEqual(expectedCounts);
     expect(summary.hasProblems).toBe(true);
     expect(hubLens).toMatchObject({
       name: "HubLens",

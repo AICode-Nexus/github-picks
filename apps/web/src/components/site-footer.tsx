@@ -10,6 +10,8 @@ export function SiteFooter() {
       </div>
       <nav aria-label="页脚导航">
         <Link href="/">今日榜单</Link>
+        <Link href="/rankings/30d/">近 30 天榜</Link>
+        <Link href="/history/">历史日报</Link>
         <Link href="/sources/">信源状态</Link>
         <a
           href="https://github.com/"

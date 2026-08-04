@@ -9,6 +9,7 @@ import {
 } from "../lib/view-model";
 import { DailyMasthead, type DailyMastheadModel } from "./daily-masthead";
 import { DirectionIndex } from "./direction-index";
+import { PeriodNavigation } from "./period-navigation";
 import { RankingSection } from "./ranking-section";
 import { TopStoryCard } from "./top-story-card";
 
@@ -103,6 +104,8 @@ export function HomePage({ report }: HomePageProps) {
   return (
     <main id="main-content">
       <div className="page-shell">
+        <PeriodNavigation active="daily" />
+
         {sourceSummary.hasProblems ? (
           <aside className="source-warning" data-testid="source-warning">
             <AlertTriangle aria-hidden="true" size={19} />

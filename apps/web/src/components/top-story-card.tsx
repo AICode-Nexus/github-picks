@@ -23,7 +23,10 @@ export function TopStoryCard({ item, featured = false }: TopStoryCardProps) {
           <Link href={item.href}>{item.id}</Link>
         </h3>
         <p className="top-story__description">{item.description}</p>
-        {featured ? <p className="top-story__why">{item.why}</p> : null}
+        <div className="recommendation-reason top-story__why">
+          <span>{item.analysisAttribution.label}</span>
+          <p>{item.recommendationReason}</p>
+        </div>
         <div className="top-story__footer">
           <dl className="score-line">
             <div>
