@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RANKING_PERIOD_IDS, RANKING_PERIOD_META } from "../lib/site-meta";
 
 export function isNavigationActive(pathname: string, href: string): boolean {
@@ -21,18 +21,22 @@ export function isNavigationActive(pathname: string, href: string): boolean {
 }
 
 export function SiteNavigation() {
-  const pathname = usePathname() || "/";
+  const routePathname = usePathname() || "/";
+  const [pathname, setPathname] = useState<string | null>(null);
   const periodDetails = useRef<HTMLDetailsElement>(null);
-  const isHome = isNavigationActive(pathname, "/");
+  const isActive = (href: string) =>
+    pathname !== null && isNavigationActive(pathname, href);
+  const isHome = isActive("/");
   const isPeriod = RANKING_PERIOD_IDS.some((periodId) =>
-    isNavigationActive(pathname, `/rankings/${periodId}/`),
+    isActive(`/rankings/${periodId}/`),
   );
 
   useEffect(() => {
+    setPathname(routePathname);
     const mobile = window.matchMedia?.("(max-width: 760px)");
     if (mobile === undefined) return;
     const closeMobilePeriodMenu = () => {
-      if (pathname && mobile.matches) {
+      if (routePathname && mobile.matches) {
         periodDetails.current?.removeAttribute("open");
       }
     };
@@ -40,7 +44,7 @@ export function SiteNavigation() {
     closeMobilePeriodMenu();
     mobile.addEventListener("change", closeMobilePeriodMenu);
     return () => mobile.removeEventListener("change", closeMobilePeriodMenu);
-  }, [pathname]);
+  }, [routePathname]);
 
   return (
     <nav className="site-navigation" aria-label="主导航">
@@ -71,7 +75,7 @@ export function SiteNavigation() {
           <div className="site-navigation__periods">
             {RANKING_PERIOD_IDS.map((periodId) => {
               const href = `/rankings/${periodId}/`;
-              const active = isNavigationActive(pathname, href);
+              const active = isActive(href);
               return (
                 <Link
                   href={href}
@@ -90,9 +94,7 @@ export function SiteNavigation() {
         <Link
           className="site-navigation__item"
           href="/history/"
-          aria-current={
-            isNavigationActive(pathname, "/history/") ? "page" : undefined
-          }
+          aria-current={isActive("/history/") ? "page" : undefined}
         >
           <History aria-hidden="true" size={18} />
           <span>历史</span>
@@ -100,9 +102,7 @@ export function SiteNavigation() {
         <Link
           className="site-navigation__item"
           href="/sources/"
-          aria-current={
-            isNavigationActive(pathname, "/sources/") ? "page" : undefined
-          }
+          aria-current={isActive("/sources/") ? "page" : undefined}
         >
           <RadioTower aria-hidden="true" size={18} />
           <span>信源</span>
