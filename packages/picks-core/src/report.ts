@@ -39,6 +39,12 @@ function rankingSection(
     lines.push(
       `${index + 1}. [${fullName}](${item.snapshot.url}) · ${item.score.publishedScore.toFixed(1)} 分 · 置信度：${confidenceLabel(item.score.confidence)} · 风险扣分：${item.score.riskPenalty}`,
     );
+    const isAi =
+      item.analysis.generation?.kind === "ai" &&
+      item.analysis.generation.status === "verified";
+    lines.push(
+      `   - ${isAi ? "AI 推荐理由" : "规则事实摘要"}：${item.analysis.recommendationReason ?? item.analysis.why}`,
+    );
   }
   lines.push("");
   return lines.join("\n");
@@ -50,6 +56,16 @@ function analysisSection(items: ScoredRepository[]): string {
     return [...lines, "本期没有达到分析门槛的项目。", ""].join("\n");
   for (const item of items) {
     lines.push(`### [${item.snapshot.fullName}](${item.snapshot.url})`, "");
+    const generation = item.analysis.generation;
+    const isAi = generation?.kind === "ai" && generation.status === "verified";
+    lines.push(
+      `- ${isAi ? "AI 推荐理由" : "规则事实摘要"}：${item.analysis.recommendationReason ?? item.analysis.why}`,
+    );
+    if (isAi) {
+      lines.push(
+        `- 生成记录：${generation.provider}/${generation.model ?? "unknown"} · Prompt ${generation.promptVersion} · Analysis ${generation.analysisVersion} · Evidence \`${generation.evidenceHash.slice(0, 12)}\``,
+      );
+    }
     lines.push(`- ${item.analysis.why}`);
     lines.push(`- ${item.analysis.suitableFor}`);
     lines.push(`- ${item.analysis.risks}`);
@@ -82,6 +98,8 @@ export function renderDailyMarkdown(report: DailyReport): string {
     `运行模式：${report.mode === "live" ? "实时采集" : "证据回放（非实时榜单）"}`,
     "",
     `生成时间：${report.generatedAt} · 时区：${report.timezone}`,
+    "",
+    `分析版本：${report.analysisVersion ?? "legacy"}`,
     "",
     `发现 ${report.counts.discovered} 个候选，补全 ${report.counts.enriched} 个，发布 ${report.counts.published} 个。`,
     "",

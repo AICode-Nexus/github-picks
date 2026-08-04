@@ -14,6 +14,12 @@ import {
 export type ConfidenceLabel = "高" | "中" | "低";
 export type SourceStatus = "healthy" | "degraded" | "offline";
 
+export interface AnalysisAttributionModel {
+  kind: "ai" | "rules";
+  label: "AI 推荐理由" | "规则事实摘要";
+  detail: string;
+}
+
 export interface RepositoryCardModel {
   id: string;
   owner: string;
@@ -33,7 +39,8 @@ export interface RepositoryCardModel {
   };
   directionId: DirectionId;
   directionName: string;
-  why: string;
+  recommendationReason: string;
+  analysisAttribution: AnalysisAttributionModel;
   href: string;
   githubUrl: string;
 }
@@ -54,6 +61,7 @@ export interface EvidenceLinkModel {
 }
 
 export interface DiscoverySignalModel {
+  id: string;
   sourceId: string;
   sourceName: string;
   sourceTier: "S" | "A" | "B" | "C";
@@ -78,10 +86,12 @@ export interface RepositoryDetailModel extends RepositoryCardModel {
   eligibility: "eligible" | "watch" | "quarantined" | "excluded";
   dimensions: DimensionModel[];
   analysis: {
+    recommendationReason: string;
     why: string;
     suitableFor: string;
     risks: string;
     nextStep: string;
+    attribution: AnalysisAttributionModel;
   };
   activity: {
     activeDays7d: number;
@@ -196,6 +206,21 @@ function toRepositoryCard(
   }
 
   const directionId = repository.snapshot.direction;
+  const generation = repository.analysis.generation;
+  const isAi = generation?.kind === "ai" && generation.status === "verified";
+  const provider =
+    generation?.provider === "ollama" ? "Ollama" : generation?.provider;
+  const analysisAttribution: AnalysisAttributionModel = isAi
+    ? {
+        kind: "ai",
+        label: "AI 推荐理由",
+        detail: `${provider ?? "AI"} · ${generation.model ?? "未记录模型"}`,
+      }
+    : {
+        kind: "rules",
+        label: "规则事实摘要",
+        detail: "模型未参与或输出未通过校验",
+      };
   return {
     id: repository.snapshot.fullName,
     owner,
@@ -211,7 +236,9 @@ function toRepositoryCard(
     strongestDimension: strongestDimension(repository),
     directionId,
     directionName: DIRECTION_META[directionId].name,
-    why: repository.analysis.why,
+    recommendationReason:
+      repository.analysis.recommendationReason ?? repository.analysis.why,
+    analysisAttribution,
     href: `/repositories/${encodeURIComponent(owner)}/${encodeURIComponent(name)}/`,
     githubUrl: repository.snapshot.url,
   };
@@ -337,7 +364,14 @@ export function buildRepositoryDetail(
       weight: DIMENSION_META[id].weight,
       value: repository.score.dimensions[id],
     })),
-    analysis: { ...repository.analysis },
+    analysis: {
+      recommendationReason: card.recommendationReason,
+      why: repository.analysis.why,
+      suitableFor: repository.analysis.suitableFor,
+      risks: repository.analysis.risks,
+      nextStep: repository.analysis.nextStep,
+      attribution: card.analysisAttribution,
+    },
     activity: { ...repository.snapshot.eventFeatures },
     riskFindings: repository.score.riskFindings.map((finding) => ({
       code: finding.code,
@@ -361,6 +395,15 @@ export function buildRepositoryDetail(
           observedAt: null,
         },
     signals: repository.snapshot.candidateSignals.map((signal) => ({
+      id:
+        signal.rawObjectRef ??
+        [
+          signal.sourceId,
+          signal.evidenceUrl,
+          signal.direction ?? "unscoped",
+          signal.rank ?? "unranked",
+          signal.observedAt,
+        ].join("|"),
       sourceId: signal.sourceId,
       sourceName: getSourceName(signal.sourceId),
       sourceTier: signal.sourceTier,

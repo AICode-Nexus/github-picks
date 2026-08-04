@@ -22,6 +22,14 @@ describe("evidence-based Chinese analysis", () => {
     expect(analysis.risks).toContain("风险");
     expect(analysis.risks).toContain("scorecard");
     expect(analysis.nextStep).toContain("下一步");
+    expect(analysis.recommendationReason).toBe(analysis.why);
+    expect(analysis.generation).toMatchObject({
+      kind: "rules",
+      status: "fallback",
+      provider: "github-picks-rules",
+      model: null,
+    });
+    expect(analysis.generation?.evidenceHash).toMatch(/^[a-f0-9]{64}$/);
     expect(analysis.evidenceUrls).toContain(
       "https://github.com/example/project",
     );

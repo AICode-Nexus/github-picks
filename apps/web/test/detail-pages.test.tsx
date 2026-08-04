@@ -24,6 +24,11 @@ afterEach(cleanup);
 
 describe("direction intelligence", () => {
   it("renders a complete direction ranking with decision metrics", () => {
+    const repositoryIds = report.rankings.byDirection["security-supply-chain"];
+    const firstRepositoryId = repositoryIds[0];
+    if (firstRepositoryId === undefined) {
+      throw new Error("missing security test repository");
+    }
     render(
       <DirectionPage report={report} directionId="security-supply-chain" />,
     );
@@ -31,9 +36,9 @@ describe("direction intelligence", () => {
     expect(
       screen.getByRole("heading", { name: "安全与软件供应链" }),
     ).toBeTruthy();
-    expect(screen.getByText("3 个项目入榜")).toBeTruthy();
+    expect(screen.getByText(`${repositoryIds.length} 个项目入榜`)).toBeTruthy();
     expect(
-      screen.getAllByRole("link", { name: /aquasecurity\/trivy/ }).length,
+      screen.getAllByRole("link", { name: firstRepositoryId }).length,
     ).toBeGreaterThan(0);
   });
 
@@ -54,19 +59,26 @@ describe("direction intelligence", () => {
 
 describe("repository intelligence", () => {
   it("describes missing Scorecard as an evidence gap", () => {
-    render(<RepositoryDetail report={report} repositoryId="lyogavin/airllm" />);
+    const repositoryId = report.repositories.find(
+      (item) => item.snapshot.scorecard === null,
+    )?.snapshot.fullName;
+    if (repositoryId === undefined) {
+      throw new Error("missing Scorecard-gap test repository");
+    }
+    render(<RepositoryDetail report={report} repositoryId={repositoryId} />);
 
     expect(screen.getAllByText("安全工程证据缺口").length).toBeGreaterThan(0);
     expect(screen.queryByText(/发现安全漏洞/)).toBeNull();
   });
 
   it("warns before production adoption when the license is missing", () => {
-    render(
-      <RepositoryDetail
-        report={report}
-        repositoryId="argonne-lcf/atpesc_machinelearning"
-      />,
-    );
+    const repositoryId = report.repositories.find(
+      (item) => item.snapshot.licenseSpdx === null,
+    )?.snapshot.fullName;
+    if (repositoryId === undefined) {
+      throw new Error("missing license-gap test repository");
+    }
+    render(<RepositoryDetail report={report} repositoryId={repositoryId} />);
 
     expect(screen.getByText("未识别 · 生产采用前需核验")).toBeTruthy();
     expect(
@@ -75,8 +87,12 @@ describe("repository intelligence", () => {
   });
 
   it("deduplicates public evidence links and never exposes raw object hashes", () => {
+    const repositoryId = report.rankings.overall[0];
+    if (repositoryId === undefined) {
+      throw new Error("missing ranked test repository");
+    }
     const { container } = render(
-      <RepositoryDetail report={report} repositoryId="quickwit-oss/quickwit" />,
+      <RepositoryDetail report={report} repositoryId={repositoryId} />,
     );
     const evidenceRegion = screen.getByRole("region", { name: "公开证据" });
     const urls = [...evidenceRegion.querySelectorAll("a")].map((link) =>
@@ -85,6 +101,32 @@ describe("repository intelligence", () => {
 
     expect(new Set(urls).size).toBe(urls.length);
     expect(container.textContent).not.toContain("sha256:");
+  });
+
+  it("labels verified model output as an AI recommendation reason", () => {
+    const repository = report.repositories.find(
+      (item) => item.analysis.generation?.kind === "ai",
+    );
+    if (repository?.analysis.generation?.kind !== "ai") {
+      throw new Error("missing AI recommendation fixture");
+    }
+
+    render(
+      <RepositoryDetail
+        report={report}
+        repositoryId={repository.snapshot.fullName}
+      />,
+    );
+
+    expect(screen.getByRole("heading", { name: "AI 推荐理由" })).toBeTruthy();
+    expect(
+      screen.getByText(
+        new RegExp(
+          `${repository.analysis.generation.provider} · ${repository.analysis.generation.model}`,
+          "i",
+        ),
+      ),
+    ).toBeTruthy();
   });
 });
 

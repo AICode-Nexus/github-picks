@@ -19,6 +19,10 @@ import {
   scoreRepository,
 } from "@github-picks/core";
 import { z } from "zod";
+import type {
+  RecommendationGenerator,
+  RecommendationInput,
+} from "./ai-analysis.js";
 import { discoverCandidates } from "./discovery.js";
 import { enrichCandidate } from "./enrichment.js";
 import { FileRawStore } from "./raw-store.js";
@@ -48,6 +52,8 @@ export interface PipelineOptions {
   replayManifestPath: string;
   githubToken: string | null;
   fetchImpl?: typeof fetch | undefined;
+  recommendationGenerator?: RecommendationGenerator | null;
+  analysisRequired?: boolean;
 }
 
 interface SnapshotBatch {
@@ -211,12 +217,124 @@ async function liveBatch(
 function scoreSnapshots(
   snapshots: RepositorySnapshot[],
   config: Awaited<ReturnType<typeof loadPicksConfig>>,
+  generatedAt: string,
 ): ScoredRepository[] {
   return snapshots.map((snapshot) => {
     const score = scoreRepository(snapshot, config);
-    const analysis = analyzeRepository({ snapshot, score });
+    const analysis = analyzeRepository({ snapshot, score, generatedAt });
     return ScoredRepositorySchema.parse({ snapshot, score, analysis });
   });
+}
+
+interface AnalysisBatchResult {
+  repositories: ScoredRepository[];
+  health: SourceHealth;
+}
+
+async function generateAiRecommendations(
+  repositories: ScoredRepository[],
+  generator: RecommendationGenerator | null,
+  generatedAt: string,
+  required: boolean,
+): Promise<AnalysisBatchResult> {
+  if (generator === null) {
+    if (required) {
+      throw new Error(
+        "AI analysis is required but GITHUB_PICKS_AI_MODEL is not configured",
+      );
+    }
+    return {
+      repositories,
+      health: {
+        sourceId: "ai-analysis",
+        status: "degraded",
+        observedAt: generatedAt,
+        message: "未配置 AI 分析模型；公开内容使用规则事实摘要",
+      },
+    };
+  }
+  const activeGenerator = generator;
+
+  const generated = new Map<string, ScoredRepository>();
+  const failures: string[] = [];
+  let cursor = 0;
+  async function worker(): Promise<void> {
+    while (cursor < repositories.length) {
+      const index = cursor;
+      cursor += 1;
+      const repository = repositories[index];
+      if (repository === undefined) continue;
+      const input: RecommendationInput = {
+        snapshot: repository.snapshot,
+        score: repository.score,
+        fallback: repository.analysis,
+        generatedAt,
+      };
+      try {
+        const recommendationReason = await activeGenerator.generate(input);
+        const evidenceHash = repository.analysis.generation?.evidenceHash;
+        if (evidenceHash === undefined) {
+          throw new Error("rule analysis did not provide an evidence hash");
+        }
+        generated.set(
+          repository.snapshot.fullName,
+          ScoredRepositorySchema.parse({
+            ...repository,
+            analysis: {
+              ...repository.analysis,
+              recommendationReason,
+              generation: {
+                kind: "ai",
+                status: "verified",
+                provider: activeGenerator.provider,
+                model: activeGenerator.model,
+                promptVersion: activeGenerator.promptVersion,
+                analysisVersion: activeGenerator.analysisVersion,
+                evidenceHash,
+                generatedAt,
+              },
+            },
+          }),
+        );
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "unknown error";
+        failures.push(`${repository.snapshot.fullName}: ${message}`);
+      }
+    }
+  }
+  await Promise.all(
+    Array.from(
+      {
+        length: Math.min(
+          Math.max(1, activeGenerator.concurrency),
+          repositories.length,
+        ),
+      },
+      () => worker(),
+    ),
+  );
+
+  if (required && failures.length > 0) {
+    throw new Error(
+      `AI analysis failed for ${failures.length}/${repositories.length}: ${failures.slice(0, 5).join(" | ")}`,
+    );
+  }
+  const successCount = generated.size;
+  return {
+    repositories: repositories.map(
+      (repository) => generated.get(repository.snapshot.fullName) ?? repository,
+    ),
+    health: {
+      sourceId: "ai-analysis",
+      status: failures.length === 0 ? "healthy" : "degraded",
+      observedAt: generatedAt,
+      message:
+        failures.length === 0
+          ? `${successCount}/${repositories.length} 个项目的 AI 推荐理由已通过结构与事实边界校验 · ${activeGenerator.provider}/${activeGenerator.model}`
+          : `${successCount}/${repositories.length} 个项目使用 AI 推荐理由；${failures.length} 个降级为规则摘要`,
+    },
+  };
 }
 
 async function atomicWrite(path: string, contents: string): Promise<void> {
@@ -250,6 +368,7 @@ function manifestFor(report: DailyReport) {
     mode: report.mode,
     generatedAt: report.generatedAt,
     scoreVersion: report.scoreVersion,
+    analysisVersion: report.analysisVersion,
     configHash: report.configHash,
     counts: report.counts,
     sourceHealth: report.sourceHealth,
@@ -266,15 +385,28 @@ export async function runDailyPipeline(
     options.mode === "replay"
       ? await replayBatch(options.replayManifestPath)
       : await liveBatch(options, config);
-  const repositories = scoreSnapshots(batch.snapshots, config);
+  const ruleRepositories = scoreSnapshots(
+    batch.snapshots,
+    config,
+    batch.observedAt,
+  );
+  const analysisBatch = await generateAiRecommendations(
+    ruleRepositories,
+    options.recommendationGenerator ?? null,
+    batch.observedAt,
+    options.analysisRequired ?? false,
+  );
+  const repositories = analysisBatch.repositories;
   const report = DailyReportSchema.parse({
     date: options.date,
     mode: options.mode,
     timezone: config.timezone,
     generatedAt: batch.observedAt,
     scoreVersion: config.version,
+    analysisVersion:
+      options.recommendationGenerator?.analysisVersion ?? "v1.0.0",
     configHash: hashPicksConfig(config),
-    sourceHealth: batch.sourceHealth,
+    sourceHealth: [...batch.sourceHealth, analysisBatch.health],
     counts: {
       discovered: batch.discoveredCount,
       enriched: repositories.length,

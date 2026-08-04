@@ -18,8 +18,9 @@ GitHub Picks 是一个中文开源项目情报引擎：从多个发现源持续�
 4. 计算八维评分、置信度和独立风险扣分；
 5. 生成综合榜、趋势榜、新项目榜、隐藏宝石榜、活跃榜和五个方向榜；
 6. 输出可回放的 JSON、中文 Markdown 和运行清单；
-7. 从最新实时报告静态生成中文首页、五个方向榜、20 个仓库分析页和信源状态页；
-8. 通过桌面/移动端导航、WCAG AA 自动扫描和 GitHub Pages 构建门禁。
+7. 用本地 AI 模型基于事实包生成逐项目推荐理由，并记录模型、Prompt 版本、分析版本和证据哈希；
+8. 从最新实时报告静态生成中文首页、五个方向榜、20 个仓库分析页和信源状态页；
+9. 通过桌面/移动端导航、WCAG AA 自动扫描和 GitHub Pages 构建门禁。
 
 Obsidian 接入和个性化 Agent 仍是下一阶段，尚未在本版本中假装完成。当前网站和后续消费者都以稳定的 `report.json` 契约为唯一数据入口，不在界面层重复计算分数。
 
@@ -49,6 +50,17 @@ pnpm picks:daily
 ```bash
 GITHUB_TOKEN="$(gh auth token)" pnpm picks:daily
 ```
+
+如需生成并强制校验 AI 推荐理由，可连接本机 Ollama；模型不可用或任一输出未通过事实边界校验时，本次运行不会覆盖既有日报：
+
+```bash
+GITHUB_TOKEN="$(gh auth token)" \
+GITHUB_PICKS_AI_MODEL="qwen3-vl:8b" \
+GITHUB_PICKS_AI_REQUIRED=true \
+pnpm picks:daily
+```
+
+未配置模型时，流水线会明确标记 `ai-analysis: degraded` 并展示“规则事实摘要”，不会把规则拼接冒充为 AI 结果。
 
 默认结果写入 `artifacts/daily/YYYY-MM-DD/`。可用 `--output`、`--config`、`--raw` 和 `--replay-manifest` 显式指定路径。
 
@@ -85,7 +97,7 @@ Star 存量对总分的最大直接贡献为 `1.5` 分，Star 速度最大直接
 
 ## 当前信源
 
-实际运行中的发现源包括 GitHub Trending、GitHub Search、GitTrend、HubLens 和 Hacker News；配置候选仅在外部源降级时保障五个方向都有可采项目，不提供榜单名次、速度或独立信源加分。事实层当前使用 GitHub REST 和 OpenSSF Scorecard。
+实际运行中的发现源包括 GitHub Trending、GitHub Search、GitTrend、HubLens 和 Hacker News；配置候选仅在外部源降级时保障五个方向都有可采项目，不提供榜单名次、速度或独立信源加分。事实层当前使用 GitHub REST 和 OpenSSF Scorecard。AI 推荐理由只消费这份已结构化事实包，不参与打分或改变名次；网站会区分“AI 推荐理由”和降级后的“规则事实摘要”。
 
 更完整的端点、额度、降级和恢复说明见 [`docs/runbooks/daily-pipeline.md`](docs/runbooks/daily-pipeline.md)。首次实时运行与修复后的对照见 [`docs/research/daily/2026-08-03-first-live-run.md`](docs/research/daily/2026-08-03-first-live-run.md)。最新已提交实时榜单见 [`artifacts/daily/2026-08-04/report.md`](artifacts/daily/2026-08-04/report.md)。
 

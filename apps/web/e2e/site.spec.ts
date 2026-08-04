@@ -31,13 +31,23 @@ test("homepage to direction to repository preserves the intelligence trail", asy
   ).toBeVisible();
   await expectNoHorizontalOverflow(page);
 
-  await page
-    .getByRole("link", { name: /aquasecurity\/trivy/ })
-    .first()
-    .click();
-  await expect(page).toHaveURL(/repositories\/aquasecurity\/trivy\/?$/);
+  const repositoryLink = page
+    .locator('.repository-row a[href^="/repositories/"]')
+    .first();
+  const repositoryName = (await repositoryLink.textContent())?.trim();
+  const repositoryHref = await repositoryLink.getAttribute("href");
+  if (repositoryName === undefined || repositoryHref === null) {
+    throw new Error("direction page has no repository link");
+  }
+  await repositoryLink.click();
+  await expect(page).toHaveURL(
+    new RegExp(`${repositoryHref.replace(/\/$/, "")}/?$`),
+    {
+      timeout: 15_000,
+    },
+  );
   await expect(
-    page.getByRole("heading", { name: /aquasecurity\/trivy/ }),
+    page.getByRole("heading", { name: repositoryName }),
   ).toBeVisible();
   await expect(page.getByRole("region", { name: "公开证据" })).toBeVisible();
   await expectNoHorizontalOverflow(page);
