@@ -22,8 +22,10 @@ export function isNavigationActive(pathname: string, href: string): boolean {
 
 export function SiteNavigation() {
   const routePathname = usePathname() || "/";
-  const [periodOpen, setPeriodOpen] = useState(true);
-  const isActive = (href: string) => isNavigationActive(routePathname, href);
+  const [pathname, setPathname] = useState<string | null>(null);
+  const [periodOpen, setPeriodOpen] = useState(false);
+  const isActive = (href: string) =>
+    pathname !== null && isNavigationActive(pathname, href);
   const isHome = isActive("/");
   const isPeriod = RANKING_PERIOD_IDS.some((periodId) =>
     isActive(`/rankings/${periodId}/`),
@@ -40,6 +42,7 @@ export function SiteNavigation() {
   }, []);
 
   useEffect(() => {
+    setPathname(routePathname);
     if (routePathname && window.matchMedia?.("(max-width: 760px)").matches) {
       setPeriodOpen(false);
     }

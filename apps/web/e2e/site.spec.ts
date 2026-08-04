@@ -46,6 +46,31 @@ test("one navigation tree adapts to wide, medium and mobile viewports", async ({
   }
 });
 
+test("non-home routes hydrate without a navigation mismatch", async ({
+  page,
+}) => {
+  const hydrationErrors: string[] = [];
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      /hydration failed|hydration mismatch/i.test(message.text())
+    ) {
+      hydrationErrors.push(message.text());
+    }
+  });
+  page.on("pageerror", (error) => {
+    if (/hydration failed|hydration mismatch/i.test(error.message)) {
+      hydrationErrors.push(error.message);
+    }
+  });
+
+  await page.goto("/directions/security-supply-chain/");
+  await expect(
+    page.getByRole("heading", { name: "安全与软件供应链" }),
+  ).toBeVisible();
+  expect(hydrationErrors).toEqual([]);
+});
+
 test("homepage repositories stay unique while specialty filters reuse their nodes", async ({
   page,
 }) => {
@@ -86,6 +111,7 @@ test("mobile period navigation closes after routing and never covers the footer"
   await page.goto("/");
 
   const periodMenu = page.locator(".site-navigation__period");
+  await expect(periodMenu).not.toHaveAttribute("open", "");
   await periodMenu.locator("summary").click();
   await expect(periodMenu).toHaveAttribute("open", "");
   await page.getByRole("link", { name: "近 7 天" }).click();
@@ -134,6 +160,7 @@ test("clicking the active mobile period closes its menu", async ({ page }) => {
   await page.goto("/rankings/7d/");
 
   const periodMenu = page.locator(".site-navigation__period");
+  await expect(periodMenu).not.toHaveAttribute("open", "");
   await periodMenu.locator("summary").click();
   await expect(periodMenu).toHaveAttribute("open", "");
   await page.getByRole("link", { name: "近 7 天" }).click();

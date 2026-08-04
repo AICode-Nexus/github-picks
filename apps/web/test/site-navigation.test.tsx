@@ -1,4 +1,5 @@
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { act, cleanup, render, screen, within } from "@testing-library/react";
+import { hydrateRoot } from "react-dom/client";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { SiteHeader } from "../src/components/site-header";
@@ -56,7 +57,7 @@ describe("site navigation", () => {
     expect(screen.queryByRole("link", { name: "今日榜单" })).toBeNull();
   });
 
-  it("includes homepage navigation semantics in the initial static markup", () => {
+  it("keeps the initial static navigation shell route-neutral", () => {
     pathname = "/";
 
     const markup = renderToStaticMarkup(<SiteNavigation />);
@@ -65,13 +66,14 @@ describe("site navigation", () => {
 
     expect(
       container.querySelector('a[href="/"]')?.getAttribute("aria-current"),
-    ).toBe("page");
-    expect(container.querySelector('a[href="#ranking"]')).toBeTruthy();
-    expect(container.querySelector('a[href="#directions"]')).toBeTruthy();
-    expect(container.querySelector('a[href="#method"]')).toBeTruthy();
+    ).toBeNull();
+    expect(container.querySelector('a[href="#ranking"]')).toBeNull();
+    expect(container.querySelector('a[href="#directions"]')).toBeNull();
+    expect(container.querySelector('a[href="#method"]')).toBeNull();
+    expect(container.querySelector("details[open]")).toBeNull();
   });
 
-  it("marks the current period in the initial static markup", () => {
+  it("defers the current period marker until hydration", () => {
     pathname = "/rankings/30d/";
 
     const markup = renderToStaticMarkup(<SiteNavigation />);
@@ -82,7 +84,25 @@ describe("site navigation", () => {
       container
         .querySelector('a[href="/rankings/30d"]')
         ?.getAttribute("aria-current"),
-    ).toBe("page");
+    ).toBeNull();
+  });
+
+  it("hydrates a stable navigation shell when the client pathname differs", async () => {
+    pathname = "/";
+    const container = document.createElement("div");
+    container.innerHTML = renderToStaticMarkup(<SiteNavigation />);
+    document.body.append(container);
+
+    pathname = "/directions/security-supply-chain/";
+    const recoverableErrors: unknown[] = [];
+    const root = hydrateRoot(container, <SiteNavigation />, {
+      onRecoverableError: (error) => recoverableErrors.push(error),
+    });
+    await act(async () => {});
+
+    expect(recoverableErrors).toEqual([]);
+    await act(async () => root.unmount());
+    container.remove();
   });
 
   it("matches the homepage exactly and nested sections by prefix", () => {
