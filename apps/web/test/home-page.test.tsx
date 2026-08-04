@@ -1,7 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { type DailyReport, DailyReportSchema } from "@github-picks/core/schema";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { HomePage } from "../src/components/home-page";
 
@@ -72,6 +78,34 @@ describe("GitHub Picks homepage", () => {
         firstRepository.analysis.recommendationReason,
       ),
     ).toBeTruthy();
+  });
+
+  it("renders every repository once and filters without changing overall order", () => {
+    render(<HomePage report={report} />);
+
+    const renderedRepositories = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-repository-id]"),
+    );
+    const renderedIds = renderedRepositories.map(
+      (repository) => repository.dataset.repositoryId,
+    );
+
+    expect(renderedIds).toEqual(report.rankings.overall);
+    expect(new Set(renderedIds).size).toBe(report.rankings.overall.length);
+
+    const newProjectsFilter = screen.getByRole("button", { name: "新项目" });
+    fireEvent.click(newProjectsFilter);
+
+    expect(newProjectsFilter.getAttribute("aria-pressed")).toBe("true");
+    const visibleIds = renderedRepositories
+      .filter((repository) => repository.closest("[hidden]") === null)
+      .map((repository) => repository.dataset.repositoryId);
+    const newProjectIds = new Set(report.rankings.newProjects);
+    expect(visibleIds).toEqual(
+      report.rankings.overall.filter((repositoryId) =>
+        newProjectIds.has(repositoryId),
+      ),
+    );
   });
 
   it("does not show a warning strip when every source is healthy", () => {

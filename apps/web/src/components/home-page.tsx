@@ -1,17 +1,13 @@
 import type { DailyReport } from "@github-picks/core/schema";
 import { AlertTriangle, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { buildDailyRankingItems } from "../lib/daily-ranking";
 import { DIMENSION_IDS, DIMENSION_META, DIRECTION_IDS } from "../lib/site-meta";
-import {
-  buildDirectionSummary,
-  buildRankingItems,
-  buildSourceSummary,
-} from "../lib/view-model";
+import { buildDirectionSummary, buildSourceSummary } from "../lib/view-model";
 import { DailyMasthead, type DailyMastheadModel } from "./daily-masthead";
+import { DailyRanking } from "./daily-ranking";
 import { DirectionIndex } from "./direction-index";
 import { PeriodNavigation } from "./period-navigation";
-import { RankingSection } from "./ranking-section";
-import { TopStoryCard } from "./top-story-card";
 
 export interface HomePageProps {
   report: DailyReport;
@@ -48,9 +44,8 @@ function formatGeneratedAt(generatedAt: string): string {
 }
 
 export function HomePage({ report }: HomePageProps) {
-  const overall = buildRankingItems(report, report.rankings.overall);
-  const topStories = overall.slice(0, 3);
-  const topStory = topStories[0];
+  const items = buildDailyRankingItems(report);
+  const topStory = items[0];
   if (topStory === undefined) {
     throw new Error("live DailyReport has no overall ranking");
   }
@@ -70,37 +65,6 @@ export function HomePage({ report }: HomePageProps) {
   const directionSummaries = DIRECTION_IDS.map((directionId) =>
     buildDirectionSummary(report, directionId),
   );
-  const rankingSlices = [
-    {
-      key: "rising",
-      eyebrow: "MOMENTUM",
-      title: "趋势上升",
-      description: "近期信号增速与跨源趋势更强的项目。",
-      items: report.rankings.rising,
-    },
-    {
-      key: "new",
-      eyebrow: "NEW PROJECTS",
-      title: "新项目潜力",
-      description: "仍年轻，但已经显露工程交付和真实采用信号。",
-      items: report.rankings.newProjects,
-    },
-    {
-      key: "hidden",
-      eyebrow: "UNDER THE RADAR",
-      title: "隐藏宝石",
-      description: "Star 存量尚未占优，综合证据却值得提前观察。",
-      items: report.rankings.hiddenGems,
-    },
-    {
-      key: "active",
-      eyebrow: "ENGINEERING PULSE",
-      title: "开发活跃",
-      description: "近期真人参与、提交协作和维护连续性更突出。",
-      items: report.rankings.active,
-    },
-  ] as const;
-
   return (
     <main id="main-content">
       <div className="page-shell">
@@ -132,42 +96,7 @@ export function HomePage({ report }: HomePageProps) {
           sources={sourceSummary}
         />
 
-        <section className="editor-picks" aria-labelledby="editor-picks-title">
-          <header className="section-heading">
-            <p className="eyebrow">EDITOR'S DESK / TOP 03</p>
-            <div>
-              <h2 id="editor-picks-title">编辑部精选</h2>
-              <p>先看价值证据，再看热度；每个分数都保留置信度与风险边界。</p>
-            </div>
-          </header>
-          <div className="editor-picks__grid">
-            {topStories.map((item, index) => (
-              <TopStoryCard item={item} featured={index === 0} key={item.id} />
-            ))}
-          </div>
-        </section>
-
-        <RankingSection
-          id="overall"
-          eyebrow="COMPOSITE VALUE / FULL LIST"
-          title="综合价值榜"
-          description="八维价值分经置信度折算并扣除明确风险；Star 只占采用维度的一小部分。"
-          items={overall}
-          testIdPrefix="overall-row"
-        />
-
-        <section className="ranking-slices" aria-label="专项榜单">
-          {rankingSlices.map((ranking) => (
-            <RankingSection
-              key={ranking.key}
-              eyebrow={ranking.eyebrow}
-              title={ranking.title}
-              description={ranking.description}
-              items={buildRankingItems(report, ranking.items.slice(0, 5))}
-              compact
-            />
-          ))}
-        </section>
+        <DailyRanking items={items} />
 
         <DirectionIndex directions={directionSummaries} />
 

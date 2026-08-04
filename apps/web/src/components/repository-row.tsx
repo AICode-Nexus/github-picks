@@ -1,21 +1,26 @@
 import { ArrowUpRight, Star } from "lucide-react";
 import Link from "next/link";
+import type { DailyRankingTagModel } from "../lib/daily-ranking";
 import type { RepositoryCardModel } from "../lib/view-model";
+import { RankingTags } from "./ranking-tags";
 
 export interface RepositoryRowProps {
   item: RepositoryCardModel;
   testId?: string | undefined;
   compact?: boolean;
+  tags?: DailyRankingTagModel[];
 }
 
 export function RepositoryRow({
   item,
   testId,
   compact = false,
+  tags = [],
 }: RepositoryRowProps) {
   return (
     <article
       className={`repository-row${compact ? " repository-row--compact" : ""}`}
+      data-repository-id={item.id}
       data-testid={testId}
     >
       <div className="repository-row__rank">
@@ -27,6 +32,7 @@ export function RepositoryRow({
           <span>{item.directionName}</span>
           <span>{item.language}</span>
         </p>
+        <RankingTags tags={tags} />
         <h3>
           <Link href={item.href}>{item.id}</Link>
         </h3>
