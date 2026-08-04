@@ -212,7 +212,7 @@ git commit -m "feat: scaffold static GitHub Picks web app"
 - Consumes: `DailyReport`, `ScoredRepository`, `DirectionId`, dimension keys.
 - Produces: `DIRECTION_META`, `DIMENSION_META`, `RepositoryCardModel`, `RepositoryDetailModel`, `buildRepositoryIndex()`, `buildRankingItems()`, `buildDirectionSummary()`, `buildSourceSummary()`.
 
-- [ ] **Step 1: Write failing metadata and view-model tests**
+- [x] **Step 1: Write failing metadata and view-model tests**
 
 The tests must assert exact Chinese labels and semantic separation:
 
@@ -231,7 +231,7 @@ expect(() => buildRepositoryCard(report, "missing/repository", 1))
 
 Add cases for missing license, missing Scorecard, a degraded source, and an empty direction.
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
 Run:
 
@@ -241,7 +241,7 @@ pnpm --filter @github-picks/web test -- view-model.test.ts
 
 Expected: FAIL because `site-meta.ts` and `view-model.ts` do not exist.
 
-- [ ] **Step 3: Implement fixed metadata**
+- [x] **Step 3: Implement fixed metadata**
 
 `site-meta.ts` must define five route slugs and eight dimensions without deriving weights from UI code:
 
@@ -257,7 +257,7 @@ export const DIRECTION_META = {
 
 Define dimension labels and weights exactly as `18/18/15/14/10/10/10/5`.
 
-- [ ] **Step 4: Implement pure view-model functions**
+- [x] **Step 4: Implement pure view-model functions**
 
 Use explicit types:
 
@@ -283,7 +283,7 @@ export interface RepositoryCardModel {
 
 `buildRepositoryIndex()` normalizes keys to lower case. `buildRankingItems()` preserves ranking order and throws on broken references. Confidence labels use `>= 0.85 high`, `>= 0.7 medium`, otherwise low. Risk and confidence cannot be folded into `score`.
 
-- [ ] **Step 5: Run focused and package tests**
+- [x] **Step 5: Run focused and package tests**
 
 ```bash
 pnpm --filter @github-picks/web test -- view-model.test.ts
@@ -293,7 +293,7 @@ pnpm --filter @github-picks/web typecheck
 
 Expected: all tests pass with no warnings from application code.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add apps/web/src/lib/site-meta.ts apps/web/src/lib/view-model.ts apps/web/test/view-model.test.ts
