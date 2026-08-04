@@ -324,7 +324,7 @@ git commit -m "feat: add website presentation models"
 - Consumes: latest live report and Task 2 view models.
 - Produces: static homepage with navigation, Top 3, full overall ranking, four ranking excerpts, five direction entries, and methodology summary.
 
-- [ ] **Step 1: Write failing homepage rendering tests**
+- [x] **Step 1: Write failing homepage rendering tests**
 
 Render `HomePage` with the committed live report and assert:
 
@@ -339,7 +339,7 @@ expect(screen.getByRole("heading", { name: "五个技术方向" })).toBeTruthy()
 
 Add a reduced fixture with no degraded sources and verify the warning strip is absent.
 
-- [ ] **Step 2: Run the component test and verify RED**
+- [x] **Step 2: Run the component test and verify RED**
 
 ```bash
 pnpm --filter @github-picks/web test -- home-page.test.tsx
@@ -347,7 +347,7 @@ pnpm --filter @github-picks/web test -- home-page.test.tsx
 
 Expected: FAIL because homepage components do not exist.
 
-- [ ] **Step 3: Create layout and localised typography**
+- [x] **Step 3: Create layout and localised typography**
 
 Use `Noto_Serif_SC`, `Noto_Sans_SC`, and `IBM_Plex_Mono` through `next/font/google`; expose font variables on `<body>`. Global metadata must identify the site as independent and unofficial.
 
@@ -358,7 +358,7 @@ export const metadata: Metadata = {
 };
 ```
 
-- [ ] **Step 4: Implement design tokens and responsive primitives**
+- [x] **Step 4: Implement design tokens and responsive primitives**
 
 Start `globals.css` with exact tokens:
 
@@ -379,11 +379,11 @@ Start `globals.css` with exact tokens:
 
 Use a 12-column desktop grid, a one-column mobile flow, editorial border rules instead of generic card shadows, visible `:focus-visible`, and a reduced-motion media query.
 
-- [ ] **Step 5: Implement stateless homepage components**
+- [x] **Step 5: Implement stateless homepage components**
 
 `DailyMasthead` must show date, mode, score version, counts, Top 1 score/confidence/risk, and `SourcePulse`. `RepositoryRow` must keep score/confidence/risk in separate DOM elements. All internal navigation uses `next/link`; external links include `target="_blank" rel="noreferrer"`.
 
-- [ ] **Step 6: Connect the page to the report store**
+- [x] **Step 6: Connect the page to the report store**
 
 ```tsx
 export default async function Page() {
@@ -394,7 +394,7 @@ export default async function Page() {
 
 The homepage must not use `fetch()`, `useEffect`, or client-side scoring.
 
-- [ ] **Step 7: Run tests and static build**
+- [x] **Step 7: Run tests and static build**
 
 ```bash
 pnpm --filter @github-picks/web test -- home-page.test.tsx
@@ -405,7 +405,7 @@ test -f apps/web/out/index.html
 
 Expected: component test passes and static homepage exists.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add apps/web/src/app apps/web/src/components apps/web/src/styles apps/web/test/home-page.test.tsx

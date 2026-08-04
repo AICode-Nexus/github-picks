@@ -2,13 +2,13 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import type { DailyReport } from "@github-picks/core";
+import type { DailyReport } from "@github-picks/core/schema";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import {
   getLatestLiveReport,
   loadDailyReports,
   resolveDailyArtifactsDirectory,
-} from "../src/lib/report-store.js";
+} from "../src/lib/report-store";
 
 const fixturePath = resolve(
   process.cwd(),

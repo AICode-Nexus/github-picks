@@ -2,14 +2,14 @@ import type {
   DailyReport,
   DirectionId,
   ScoredRepository,
-} from "@github-picks/core";
+} from "@github-picks/core/schema";
 import {
   DIMENSION_IDS,
   DIMENSION_META,
   DIRECTION_META,
   type DimensionId,
   getSourceName,
-} from "./site-meta.js";
+} from "./site-meta";
 
 export type ConfidenceLabel = "高" | "中" | "低";
 export type SourceStatus = "healthy" | "degraded" | "offline";

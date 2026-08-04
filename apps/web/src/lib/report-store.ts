@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { type DailyReport, DailyReportSchema } from "@github-picks/core";
+import { type DailyReport, DailyReportSchema } from "@github-picks/core/schema";
 
 export type ReportStoreOptions = Readonly<{
   rootDirectory?: string;

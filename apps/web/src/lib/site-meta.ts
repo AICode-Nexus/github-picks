@@ -1,4 +1,4 @@
-import type { DimensionScores, DirectionId } from "@github-picks/core";
+import type { DimensionScores, DirectionId } from "@github-picks/core/schema";
 
 export type DimensionId = keyof DimensionScores;
 

@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { type DailyReport, DailyReportSchema } from "@github-picks/core";
+import { type DailyReport, DailyReportSchema } from "@github-picks/core/schema";
 import { beforeAll, describe, expect, it } from "vitest";
-import { DIMENSION_META, DIRECTION_META } from "../src/lib/site-meta.js";
+import { DIMENSION_META, DIRECTION_META } from "../src/lib/site-meta";
 import {
   buildDirectionSummary,
   buildRankingItems,
@@ -10,7 +10,7 @@ import {
   buildRepositoryDetail,
   buildRepositoryIndex,
   buildSourceSummary,
-} from "../src/lib/view-model.js";
+} from "../src/lib/view-model";
 
 let report: DailyReport;
 
