@@ -93,6 +93,13 @@ export function SourceHealthTable({ sources }: SourceHealthTableProps) {
         OpenSSF Scorecard
         的覆盖不足不等于安全通过或失败；它只表示当前缺少这一类安全工程证据。
       </p>
+      <p className="source-health-note">
+        部分仓库发现信号由{" "}
+        <a href="https://aihot.virxact.com/" target="_blank" rel="noreferrer">
+          AI HOT
+        </a>{" "}
+        提供；GitHub Picks 独立完成仓库事实核验、评分与中文分析。
+      </p>
     </section>
   );
 }

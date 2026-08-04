@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "query": {
+    "mode": "all",
+    "category": null,
+    "q": "GitHub",
+    "window": "24h",
+    "by": "timeline",
+    "ordering": "timelineDesc"
+  },
+  "items": [
+    {
+      "id": "nightcrawler-low",
+      "title": "Nightcrawler：本地 AI 渗透测试工具",
+      "originalTitle": null,
+      "summary": "一款在智能手机上运行的本地 AI 渗透测试工具。",
+      "source": { "name": "Hacker News 热门（buzzing.cc 中文翻译）" },
+      "links": {
+        "aihot": "https://aihot.virxact.com/items/nightcrawler-low",
+        "original": "https://github.com/garagehq/nightcrawler"
+      },
+      "publishedAt": "2026-08-04T04:00:00.000Z",
+      "discoveredAt": "2026-08-04T05:00:00.000Z",
+      "category": "ai-products",
+      "score": 55,
+      "selected": false,
+      "futureField": "ignored"
+    },
+    {
+      "id": "nightcrawler-selected",
+      "title": "Nightcrawler 入选",
+      "originalTitle": null,
+      "summary": null,
+      "source": { "name": "Hacker News 热门（buzzing.cc 中文翻译）" },
+      "links": {
+        "aihot": "https://aihot.virxact.com/items/nightcrawler-selected",
+        "original": "https://github.com/garagehq/nightcrawler"
+      },
+      "publishedAt": null,
+      "discoveredAt": "2026-08-04T06:00:00.000Z",
+      "category": null,
+      "score": 50,
+      "selected": true
+    },
+    {
+      "id": "simple-english",
+      "title": "SimpleEnglish Agent Skill",
+      "originalTitle": null,
+      "summary": "简化技术英语的文档生成技能。",
+      "source": { "name": "独立开发者 RSS" },
+      "links": {
+        "aihot": "https://aihot.virxact.com/items/simple-english",
+        "original": "https://github.com/AminBlg/SimpleEnglish"
+      },
+      "publishedAt": "2026-08-04T03:00:00.000Z",
+      "discoveredAt": "2026-08-04T03:30:00.000Z",
+      "category": "tip",
+      "score": 61,
+      "selected": false
+    },
+    {
+      "id": "article-only",
+      "title": "一篇提到 GitHub 的媒体文章",
+      "originalTitle": null,
+      "summary": "没有可验证仓库首页链接。",
+      "source": { "name": "IT之家（RSS）" },
+      "links": {
+        "aihot": "https://aihot.virxact.com/items/article-only",
+        "original": "https://www.ithome.com/0/985/448.htm"
+      },
+      "publishedAt": "2026-08-04T02:00:00.000Z",
+      "discoveredAt": "2026-08-04T02:30:00.000Z",
+      "category": "industry",
+      "score": 47,
+      "selected": false
+    }
+  ],
+  "page": {
+    "count": 4,
+    "hasMore": false,
+    "nextCursor": null
+  }
+}

@@ -90,6 +90,12 @@ sources:
     purpose: [discovery, cross_validation]
     independenceGroup: hacker-news-community
     evidenceUrl: https://hn.algolia.com/api
+  - sourceId: ai-hot
+    name: AI HOT
+    tier: C
+    purpose: [discovery, cross_validation]
+    independenceGroup: ai-hot-aggregator
+    evidenceUrl: https://aihot.virxact.com/all
   - sourceId: openssf-scorecard
     name: OpenSSF Scorecard
     tier: A

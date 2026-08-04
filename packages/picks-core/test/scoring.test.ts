@@ -255,6 +255,44 @@ describe("explainable repository scoring", () => {
     expect(score.eligibility).toBe("excluded");
   });
 
+  it("does not turn an aggregator source score into repository value", async () => {
+    const config = await loadPicksConfig("../../config/picks.yaml");
+    const snapshot = makeSnapshot();
+    const signal = snapshot.candidateSignals[0];
+    if (signal === undefined) {
+      throw new Error("scoring fixture must contain a signal");
+    }
+    const aiHotSignal = {
+      ...signal,
+      sourceId: "ai-hot",
+      sourceTier: "C" as const,
+      independenceGroup: "ai-hot-aggregator",
+      rank: null,
+      metrics: {
+        starVelocity: null,
+        trendingScore: null,
+        discussionPoints: null,
+        discussionComments: null,
+      },
+    };
+    const low = scoreRepository(
+      makeSnapshot({
+        candidateSignals: [{ ...aiHotSignal, sourceScore: 1 }],
+      }),
+      config,
+    );
+    const high = scoreRepository(
+      makeSnapshot({
+        candidateSignals: [{ ...aiHotSignal, sourceScore: 99 }],
+      }),
+      config,
+    );
+
+    expect(high.dimensions).toEqual(low.dimensions);
+    expect(high.publishedScore).toBe(low.publishedScore);
+    expect(high.riskPenalty).toBe(low.riskPenalty);
+  });
+
   it("returns byte-identical results for the same snapshot and config", async () => {
     const config: PicksConfig = await loadPicksConfig(
       "../../config/picks.yaml",

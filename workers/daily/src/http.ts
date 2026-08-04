@@ -1,4 +1,5 @@
 import type { RawArtifactRef } from "@github-picks/core";
+import type { ConditionalArtifactCache } from "./conditional-cache.js";
 import type { RawStore } from "./raw-store.js";
 
 const userAgent =
@@ -21,6 +22,8 @@ export interface RequestArtifactOptions {
   url: string;
   observedAt: string;
   rawStore: RawStore;
+  conditionalCache?: ConditionalArtifactCache | undefined;
+  rateLimitFallbackMs?: number | undefined;
   fetchImpl?: typeof fetch | undefined;
   headers?: Record<string, string> | undefined;
 }
@@ -29,6 +32,7 @@ export class HttpStatusError extends Error {
   constructor(
     readonly status: number,
     readonly url: string,
+    readonly responseText: string,
   ) {
     super(`HTTP ${status}`);
     this.name = "HttpStatusError";
@@ -51,10 +55,20 @@ function safeHeaders(headers: Headers): Record<string, string> {
   );
 }
 
-function retryDelay(response: Response, attempt: number): number {
-  const retryAfter = Number(response.headers.get("retry-after"));
-  if (Number.isFinite(retryAfter) && retryAfter >= 0) {
-    return Math.min(retryAfter * 1000, 5_000);
+function retryDelay(
+  response: Response,
+  attempt: number,
+  rateLimitFallbackMs?: number,
+): number {
+  const retryAfterHeader = response.headers.get("retry-after");
+  if (retryAfterHeader !== null) {
+    const retryAfter = Number(retryAfterHeader);
+    if (Number.isFinite(retryAfter) && retryAfter >= 0) {
+      return Math.min(retryAfter * 1000, 60_000);
+    }
+  }
+  if (response.status === 429 && rateLimitFallbackMs !== undefined) {
+    return rateLimitFallbackMs;
   }
   return Math.min(250 * 2 ** attempt + Math.floor(Math.random() * 100), 2_000);
 }
@@ -67,22 +81,39 @@ export async function requestArtifact(
   options: RequestArtifactOptions,
 ): Promise<HttpArtifact> {
   const fetchImpl = options.fetchImpl ?? fetch;
+  const cached =
+    (await options.conditionalCache?.read(options.sourceId, options.url)) ??
+    null;
+  const requestHeaders = {
+    Accept: "application/json, text/html;q=0.9",
+    "User-Agent": userAgent,
+    ...(cached === null ? {} : { "If-None-Match": cached.etag }),
+    ...options.headers,
+  };
   let response: Response | null = null;
 
   for (let attempt = 0; attempt < 3; attempt += 1) {
     response = await fetchImpl(options.url, {
-      headers: {
-        Accept: "application/json, text/html;q=0.9",
-        "User-Agent": userAgent,
-        ...options.headers,
-      },
+      headers: requestHeaders,
       signal: AbortSignal.timeout(15_000),
     });
     if (!retryableStatuses.has(response.status) || attempt === 2) break;
-    await pause(retryDelay(response, attempt));
+    await pause(retryDelay(response, attempt, options.rateLimitFallbackMs));
   }
 
   if (response === null) throw new Error("request did not produce a response");
+  if (response.status === 304 && cached !== null) {
+    return {
+      url: options.url,
+      status: 304,
+      observedAt: options.observedAt,
+      contentType: cached.contentType,
+      body: cached.body,
+      text: new TextDecoder().decode(cached.body),
+      headers: safeHeaders(response.headers),
+      rawRef: cached.rawRef,
+    };
+  }
   const body = new Uint8Array(await response.arrayBuffer());
   const contentType =
     response.headers.get("content-type") ?? "application/octet-stream";
@@ -103,6 +134,22 @@ export async function requestArtifact(
     headers: safeHeaders(response.headers),
     rawRef,
   };
-  if (!response.ok) throw new HttpStatusError(response.status, options.url);
+  if (!response.ok) {
+    throw new HttpStatusError(response.status, options.url, artifact.text);
+  }
+  const etag = response.headers.get("etag");
+  if (
+    response.status === 200 &&
+    etag !== null &&
+    options.conditionalCache !== undefined
+  ) {
+    await options.conditionalCache.write({
+      sourceId: options.sourceId,
+      url: options.url,
+      etag,
+      contentType,
+      rawRef,
+    });
+  }
   return artifact;
 }

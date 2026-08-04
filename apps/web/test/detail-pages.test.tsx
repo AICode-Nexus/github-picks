@@ -137,6 +137,8 @@ describe("source health semantics", () => {
     expect(screen.getByText("HubLens")).toBeTruthy();
     expect(screen.getByText("全部候选信号超过新鲜度阈值")).toBeTruthy();
     expect(screen.getByText(/覆盖不足不等于安全通过或失败/)).toBeTruthy();
+    const attribution = screen.getByRole("link", { name: "AI HOT" });
+    expect(attribution.getAttribute("href")).toBe("https://aihot.virxact.com/");
   });
 
   it("provides a reusable empty-ranking explanation", () => {

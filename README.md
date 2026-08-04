@@ -107,7 +107,9 @@ Star 存量对总分的最大直接贡献为 `1.5` 分，Star 速度最大直接
 
 ## 当前信源
 
-实际运行中的发现源包括 GitHub Trending、GitHub Search、GitTrend、HubLens 和 Hacker News；配置候选仅在外部源降级时保障五个方向都有可采项目，不提供榜单名次、速度或独立信源加分。事实层当前使用 GitHub REST 和 OpenSSF Scorecard。AI 推荐理由只消费这份已结构化事实包，不参与打分或改变名次；网站会区分“AI 推荐理由”和降级后的“规则事实摘要”。
+实际运行中的发现源包括 GitHub Trending、GitHub Search、GitTrend、HubLens、Hacker News 和 [AI Hot](https://aihot.virxact.com/)；配置候选仅在外部源降级时保障五个方向都有可采项目，不提供榜单名次、速度或独立信源加分。AI Hot 通过匿名 v1 API 补充过去 24 小时内直接指向 GitHub 仓库的 AI 资讯信号；媒体文章和无法严格映射 `owner/repo` 的内容不会进入候选池。AI Hot 的时间顺序与条目分数不参与仓库评分。
+
+事实层当前使用 GitHub REST 和 OpenSSF Scorecard。AI 推荐理由只消费这份已结构化事实包，不参与打分或改变名次；网站会区分“AI 推荐理由”和降级后的“规则事实摘要”。
 
 更完整的端点、额度、降级和恢复说明见 [`docs/runbooks/daily-pipeline.md`](docs/runbooks/daily-pipeline.md)。首次实时运行与修复后的对照见 [`docs/research/daily/2026-08-03-first-live-run.md`](docs/research/daily/2026-08-03-first-live-run.md)。最新已提交实时榜单见 [`artifacts/daily/2026-08-04/report.md`](artifacts/daily/2026-08-04/report.md)。
 
