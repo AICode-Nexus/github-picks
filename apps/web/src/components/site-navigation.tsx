@@ -29,9 +29,17 @@ export function SiteNavigation() {
   );
 
   useEffect(() => {
-    if (pathname && window.matchMedia?.("(max-width: 760px)").matches) {
-      periodDetails.current?.removeAttribute("open");
-    }
+    const mobile = window.matchMedia?.("(max-width: 760px)");
+    if (mobile === undefined) return;
+    const closeMobilePeriodMenu = () => {
+      if (pathname && mobile.matches) {
+        periodDetails.current?.removeAttribute("open");
+      }
+    };
+
+    closeMobilePeriodMenu();
+    mobile.addEventListener("change", closeMobilePeriodMenu);
+    return () => mobile.removeEventListener("change", closeMobilePeriodMenu);
   }, [pathname]);
 
   return (
