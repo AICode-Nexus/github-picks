@@ -46,6 +46,31 @@ test("one navigation tree adapts to wide, medium and mobile viewports", async ({
   }
 });
 
+test("non-home routes hydrate without a navigation mismatch", async ({
+  page,
+}) => {
+  const hydrationErrors: string[] = [];
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      /hydration failed|hydration mismatch/i.test(message.text())
+    ) {
+      hydrationErrors.push(message.text());
+    }
+  });
+  page.on("pageerror", (error) => {
+    if (/hydration failed|hydration mismatch/i.test(error.message)) {
+      hydrationErrors.push(error.message);
+    }
+  });
+
+  await page.goto("/directions/security-supply-chain/");
+  await expect(
+    page.getByRole("heading", { name: "安全与软件供应链" }),
+  ).toBeVisible();
+  expect(hydrationErrors).toEqual([]);
+});
+
 test("homepage repositories stay unique while specialty filters reuse their nodes", async ({
   page,
 }) => {
