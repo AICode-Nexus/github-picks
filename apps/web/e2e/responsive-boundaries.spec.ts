@@ -10,6 +10,7 @@ test("opened mobile period menu stays entirely within each narrow viewport", asy
     await page.goto("/");
 
     const periodMenu = page.locator(".site-navigation__period");
+    await expect(periodMenu).not.toHaveAttribute("open", "");
     await periodMenu.locator("summary").click();
     await expect(periodMenu).toHaveAttribute("open", "");
 
@@ -19,20 +20,46 @@ test("opened mobile period menu stays entirely within each narrow viewport", asy
         const menuRect = menu.getBoundingClientRect();
         const linkRects = Array.from(menu.querySelectorAll("a"), (link) => {
           const rect = link.getBoundingClientRect();
-          return { left: rect.left, right: rect.right };
+          return {
+            left: rect.left,
+            right: rect.right,
+            top: rect.top,
+            bottom: rect.bottom,
+          };
         });
+        const navigation = menu.closest("nav");
+        if (navigation === null) throw new Error("missing mobile navigation");
+        const navigationRect = navigation.getBoundingClientRect();
         return {
-          menu: { left: menuRect.left, right: menuRect.right },
+          menu: {
+            left: menuRect.left,
+            right: menuRect.right,
+            top: menuRect.top,
+            bottom: menuRect.bottom,
+          },
           links: linkRects,
           viewportWidth: window.innerWidth,
+          viewportHeight: window.innerHeight,
+          navigationTop: navigationRect.top,
         };
       });
 
+    expect(boundaries.links.length).toBeGreaterThan(0);
     expect(boundaries.menu.left).toBeGreaterThanOrEqual(0);
     expect(boundaries.menu.right).toBeLessThanOrEqual(boundaries.viewportWidth);
+    expect(boundaries.menu.top).toBeGreaterThanOrEqual(0);
+    expect(boundaries.menu.bottom).toBeLessThanOrEqual(
+      boundaries.viewportHeight,
+    );
+    expect(boundaries.menu.bottom).toBeLessThanOrEqual(
+      boundaries.navigationTop,
+    );
     for (const link of boundaries.links) {
       expect(link.left).toBeGreaterThanOrEqual(0);
       expect(link.right).toBeLessThanOrEqual(boundaries.viewportWidth);
+      expect(link.top).toBeGreaterThanOrEqual(0);
+      expect(link.bottom).toBeLessThanOrEqual(boundaries.viewportHeight);
+      expect(link.bottom).toBeLessThanOrEqual(boundaries.navigationTop);
     }
   }
 });
@@ -46,11 +73,13 @@ test("wide navigation rail scrolls its final local link inside the available vie
 
   const rail = page.locator('nav[aria-label="主导航"]');
   await expect(rail).toHaveCSS("overflow-y", /auto|scroll/);
+  await expect(page.locator(".site-navigation__period")).toHaveAttribute(
+    "open",
+    "",
+  );
   const lastLocalLink = page.getByRole("link", { name: "读榜说明" });
   await lastLocalLink.focus();
-  await lastLocalLink.evaluate((link) =>
-    link.scrollIntoView({ block: "nearest" }),
-  );
+  await expect(lastLocalLink).toBeFocused();
 
   const { link, rail: railBox } = await page.evaluate(() => {
     const rail = document.querySelector<HTMLElement>(
@@ -89,6 +118,7 @@ test("ranking and primary navigation controls retain the minimum readable font s
         Number.parseFloat(getComputedStyle(control).fontSize),
       ),
     );
+  expect(mobileControlSizes.length).toBeGreaterThan(0);
   for (const size of mobileControlSizes) {
     expect(size).toBeGreaterThanOrEqual(minimumControlFontSize);
   }
@@ -103,6 +133,7 @@ test("ranking and primary navigation controls retain the minimum readable font s
         Number.parseFloat(getComputedStyle(control).fontSize),
       ),
     );
+  expect(wideControlSizes.length).toBeGreaterThan(0);
   for (const size of wideControlSizes) {
     expect(size).toBeGreaterThanOrEqual(minimumControlFontSize);
   }

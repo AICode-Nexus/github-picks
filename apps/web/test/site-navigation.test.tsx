@@ -69,6 +69,7 @@ describe("site navigation", () => {
     expect(container.querySelector('a[href="#ranking"]')).toBeTruthy();
     expect(container.querySelector('a[href="#directions"]')).toBeTruthy();
     expect(container.querySelector('a[href="#method"]')).toBeTruthy();
+    expect(container.querySelector("details[open]")).toBeNull();
   });
 
   it("marks the current period in the initial static markup", () => {

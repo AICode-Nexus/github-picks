@@ -22,7 +22,7 @@ export function isNavigationActive(pathname: string, href: string): boolean {
 
 export function SiteNavigation() {
   const routePathname = usePathname() || "/";
-  const [periodOpen, setPeriodOpen] = useState(true);
+  const [periodOpen, setPeriodOpen] = useState(false);
   const isActive = (href: string) => isNavigationActive(routePathname, href);
   const isHome = isActive("/");
   const isPeriod = RANKING_PERIOD_IDS.some((periodId) =>

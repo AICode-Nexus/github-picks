@@ -86,6 +86,7 @@ test("mobile period navigation closes after routing and never covers the footer"
   await page.goto("/");
 
   const periodMenu = page.locator(".site-navigation__period");
+  await expect(periodMenu).not.toHaveAttribute("open", "");
   await periodMenu.locator("summary").click();
   await expect(periodMenu).toHaveAttribute("open", "");
   await page.getByRole("link", { name: "近 7 天" }).click();
@@ -134,6 +135,7 @@ test("clicking the active mobile period closes its menu", async ({ page }) => {
   await page.goto("/rankings/7d/");
 
   const periodMenu = page.locator(".site-navigation__period");
+  await expect(periodMenu).not.toHaveAttribute("open", "");
   await periodMenu.locator("summary").click();
   await expect(periodMenu).toHaveAttribute("open", "");
   await page.getByRole("link", { name: "近 7 天" }).click();
