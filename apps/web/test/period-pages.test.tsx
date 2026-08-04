@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { type DailyReport, DailyReportSchema } from "@github-picks/core/schema";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { HistoryIndexPage } from "../src/components/history-index-page";
 import { HistoryReportPage } from "../src/components/history-report-page";
@@ -32,19 +32,14 @@ beforeAll(async () => {
 afterEach(cleanup);
 
 describe("period ranking experience", () => {
-  it("renders period navigation, honest coverage and the sustained ranking", () => {
+  it("renders honest coverage and the sustained ranking without local navigation", () => {
     const ranking = buildPeriodRanking(reports, "7d");
 
     render(<PeriodRankingPage ranking={ranking} />);
 
-    const navigation = screen.getByRole("navigation", {
-      name: "榜单时间范围",
-    });
     expect(
-      within(navigation)
-        .getByRole("link", { name: "近 7 天" })
-        .getAttribute("aria-current"),
-    ).toBe("page");
+      screen.queryByRole("navigation", { name: "榜单时间范围" }),
+    ).toBeNull();
     expect(
       screen.getByRole("heading", { name: "近 7 天持续价值榜" }),
     ).toBeTruthy();

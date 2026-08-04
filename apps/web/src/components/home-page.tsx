@@ -6,7 +6,6 @@ import { buildDirectionSummary, buildSourceSummary } from "../lib/view-model";
 import { DailyMasthead, type DailyMastheadModel } from "./daily-masthead";
 import { DailyRanking } from "./daily-ranking";
 import { DirectionIndex } from "./direction-index";
-import { PeriodNavigation } from "./period-navigation";
 
 export interface HomePageProps {
   report: DailyReport;
@@ -60,15 +59,17 @@ export function HomePage({ report }: HomePageProps) {
   return (
     <main id="main-content">
       <div className="page-shell">
-        <PeriodNavigation active="daily" />
-
         <DailyMasthead cover={cover} sources={sourceSummary} />
 
         <DailyRanking items={items} />
 
         <DirectionIndex directions={directionSummaries} />
 
-        <section className="method-note" aria-labelledby="method-note-title">
+        <section
+          className="method-note"
+          id="method"
+          aria-labelledby="method-note-title"
+        >
           <div>
             <p className="eyebrow">SCORING NOTE / {report.scoreVersion}</p>
             <h2 id="method-note-title">这不是另一个 Star 排行榜</h2>

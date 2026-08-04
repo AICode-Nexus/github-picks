@@ -1,7 +1,6 @@
 import { ArrowRight, CalendarRange, Database } from "lucide-react";
 import Link from "next/link";
 import type { PeriodRankingModel } from "../lib/period-ranking";
-import { PeriodNavigation } from "./period-navigation";
 import { PeriodRepositoryRow } from "./period-repository-row";
 
 export interface PeriodRankingPageProps {
@@ -19,8 +18,6 @@ export function PeriodRankingPage({ ranking }: PeriodRankingPageProps) {
   return (
     <main id="main-content">
       <div className="page-shell">
-        <PeriodNavigation active={ranking.id} />
-
         <section className="period-hero" aria-labelledby="period-title">
           <div className="period-hero__title">
             <p className="eyebrow">ROLLING WINDOW / {ranking.days} DAYS</p>
