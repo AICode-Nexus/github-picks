@@ -101,6 +101,7 @@ pnpm picks:daily
 | GitTrend | 趋势发现、Star 速度 | 与 GitHub 同组 | 标记降级，继续 |
 | HubLens | 发现、中文摘要 | 独立聚合组；超过 48 小时不算新鲜 | 全部过期时标记降级 |
 | Hacker News Algolia | 独立社区讨论 | 独立社区组 | 标记降级，继续 |
+| AI Hot | AI 资讯中的仓库发现、交叉验证 | 已知 Hacker News/GitHub 路径复用原来源组，其余统一为聚合组；无 rank 或指标加分 | 超时、限流、Schema 异常或无可解析仓库时降级 |
 | GitHub REST | 仓库事实、近期事件 | GitHub 事实组 | 单仓库失败跳过；全部失败则终止 |
 | OpenSSF Scorecard | 安全工程事实 | OpenSSF 独立组 | 单仓库缺失用中性先验 |
 | AI 推荐理由 | 只读消费结构化事实包 | 不参与评分或信源独立性 | 失败则规则降级；required 模式终止发布 |
@@ -112,6 +113,9 @@ pnpm picks:daily
 - HTTP User-Agent 固定为 `github-picks/0.1 (+https://github.com/AICode-Nexus/github-picks)`。
 - 单次请求超时 15 秒。
 - 对 `429`、`500`、`502`、`503`、`504` 最多再尝试两次，并使用有上限的退避。
+- AI Hot 请求按完整 URL 保存 ETag，下次发送 `If-None-Match`；收到 `304` 时复用此前已保存的原始字节和对象引用，不重复写 raw 对象。
+- AI Hot 首次请求固定为过去 24 小时、时间顺序和 `GitHub` 查询；后续只跟随服务端返回的不透明 cursor，不解析或自行构造 cursor。服务端返回 `invalid_cursor` 时清除本次链路的条件缓存并最多从第一页重启一次。
+- AI Hot 的 `429` 优先遵守 `Retry-After`；响应未提供该字段时等待 60 秒后重试，避免密集请求匿名公共服务。
 - 单一发现源失败不会阻断其他信源。
 - GitHub Search 和 GitHub REST 使用不同额度池；实际额度应以响应头和 [GitHub Rate Limit 文档](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api) 为准。
 - 当前一次完整运行最多补全 20 个候选，每个候选至少需要仓库详情和事件两次 GitHub REST 请求。匿名运行后不要立即重复执行。
@@ -127,6 +131,8 @@ artifacts/raw/<sourceId>/<sha256>.json
 ```
 
 `.bin` 是原始响应字节，`.json` 记录来源、URL、采集时间和内容类型。相同字节复用同一对象，文件采用 exclusive create，不覆盖既有快照。`artifacts/raw/` 默认被 Git 忽略；公开仓库只提交日报及其中的公开证据链接。
+
+AI Hot 的条件请求索引保存在 `artifacts/raw/.http-cache/<sourceId>/`。索引仅记录完整 URL、ETag、内容类型和既有 raw 对象引用，不复制响应正文；索引损坏或正文缺失会自动按缓存未命中处理。该目录与全部原始响应一样只保留在本机、不会进入 Git。
 
 日报目录包含：
 
@@ -146,6 +152,7 @@ artifacts/raw/<sourceId>/<sha256>.json
 - GitHub 未返回明确许可证：记录 6 分风险扣分；
 - 仓库已归档：从公开榜单中排除；
 - HubLens 超过 48 小时：可帮助发现候选，但不参与新鲜趋势信号；
+- AI Hot：只把 `links.original` 严格映射为 GitHub 仓库首页的条目作为候选；条目热度、时间顺序和媒体内容不参与仓库评分；
 - 配置候选：只保证方向覆盖，不提供名次、速度或独立信源加分。
 
 ## 原子写入、重跑与恢复
