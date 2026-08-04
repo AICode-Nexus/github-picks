@@ -60,7 +60,7 @@
 - Consumes: committed `artifacts/daily/*/report.json`, `DailyReportSchema`.
 - Produces: `loadDailyReports(options?): Promise<DailyReport[]>`, `getLatestLiveReport(options?): Promise<DailyReport>`, `resolveDailyArtifactsDirectory(moduleUrl?): string`.
 
-- [ ] **Step 1: Register and configure the package**
+- [x] **Step 1: Register and configure the package**
 
 Add `apps/*` to `pnpm-workspace.yaml`. Extend Turbo build outputs to `dist/**`, `.next/**`, and `out/**`. Ignore `.next/`, `apps/web/out/`, `playwright-report/`, and `test-results/`.
 
@@ -119,7 +119,7 @@ export default config;
 
 Use `module: "ESNext"`, `moduleResolution: "Bundler"`, `jsx: "preserve"`, `noEmit: true`, and the Next TypeScript plugin in `apps/web/tsconfig.json`.
 
-- [ ] **Step 2: Install exact dependencies**
+- [x] **Step 2: Install exact dependencies**
 
 Run:
 
@@ -129,7 +129,7 @@ pnpm install
 
 Expected: lockfile records the exact versions above; no unapproved package is added.
 
-- [ ] **Step 3: Write failing report-store tests**
+- [x] **Step 3: Write failing report-store tests**
 
 Create tests that copy the committed replay and live reports into a temporary directory, then assert:
 
@@ -145,7 +145,7 @@ await expect(loadDailyReports({ rootDirectory: invalidRoot }))
 
 The test must create a second live report with a later `generatedAt` on the same date and verify that it wins the tie.
 
-- [ ] **Step 4: Run the focused test and verify RED**
+- [x] **Step 4: Run the focused test and verify RED**
 
 Run:
 
@@ -155,7 +155,7 @@ pnpm --filter @github-picks/web test -- report-store.test.ts
 
 Expected: FAIL because `report-store.ts` does not exist.
 
-- [ ] **Step 5: Implement the report store**
+- [x] **Step 5: Implement the report store**
 
 Use this contract:
 
@@ -181,7 +181,7 @@ export async function getLatestLiveReport(
 
 `loadDailyReports()` must sort directory names, parse each `report.json` through `DailyReportSchema`, wrap failures as `invalid DailyReport: <path>`, and return reports sorted by date then `generatedAt`. `getLatestLiveReport()` filters to live mode and throws `no live DailyReport in <directory>` when none exists.
 
-- [ ] **Step 6: Run focused tests and typecheck**
+- [x] **Step 6: Run focused tests and typecheck**
 
 Run:
 
@@ -192,7 +192,7 @@ pnpm --filter @github-picks/web typecheck
 
 Expected: all report-store tests pass and TypeScript reports no errors.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add .gitignore pnpm-workspace.yaml turbo.json apps/web/package.json apps/web/tsconfig.json apps/web/next-env.d.ts apps/web/next.config.ts apps/web/vitest.config.ts apps/web/test/report-store.test.ts apps/web/src/lib/report-store.ts pnpm-lock.yaml

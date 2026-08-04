@@ -5,8 +5,12 @@
 !.env.example
 node_modules/
 dist/
+.next/
+apps/web/out/
 coverage/
 .turbo/
+playwright-report/
+test-results/
 *.log
 artifacts/raw/
 artifacts/.tmp/
