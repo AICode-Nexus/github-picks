@@ -6,12 +6,14 @@ import {
   type PicksConfig,
   type SourceHealth,
 } from "@github-picks/core";
+import type { ConditionalArtifactCache } from "./conditional-cache.js";
 import type { RawStore } from "./raw-store.js";
 
 export interface DiscoveryContext {
   config: PicksConfig;
   observedAt: string;
   rawStore: RawStore;
+  conditionalCache?: ConditionalArtifactCache | undefined;
   githubToken: string | null;
   fetchImpl?: typeof fetch | undefined;
 }
