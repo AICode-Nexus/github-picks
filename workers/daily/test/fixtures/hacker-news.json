@@ -1,0 +1,20 @@
+{
+  "hits": [
+    {
+      "objectID": "49156768",
+      "title": "Show HN: Driftty – mobile focused web TTY",
+      "url": "https://github.com/mdp/driftty",
+      "points": 17,
+      "num_comments": 6,
+      "created_at": "2026-08-03T15:06:21Z"
+    },
+    {
+      "objectID": "49150000",
+      "title": "An article that is not a repository",
+      "url": "https://example.com/article",
+      "points": 99,
+      "num_comments": 10,
+      "created_at": "2026-08-03T12:00:00Z"
+    }
+  ]
+}

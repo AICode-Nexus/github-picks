@@ -1,0 +1,1867 @@
+{
+  "date": "2026-08-03",
+  "mode": "replay",
+  "timezone": "Asia/Shanghai",
+  "generatedAt": "2026-08-03T15:30:00.000Z",
+  "scoreVersion": "v0.1.0",
+  "configHash": "c9bcae0d61f33ec3baf3114b3384aa2a49de7d38dda17ea5003deb8682ecf1b5",
+  "sourceHealth": [
+    {
+      "sourceId": "gittrend",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": null
+    },
+    {
+      "sourceId": "github-rest",
+      "status": "healthy",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": null
+    },
+    {
+      "sourceId": "hublens",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": "回放样本显示公开数据超过 48 小时"
+    },
+    {
+      "sourceId": "openssf-scorecard",
+      "status": "degraded",
+      "observedAt": "2026-08-03T15:30:00.000Z",
+      "message": "部分项目没有可用 Scorecard"
+    }
+  ],
+  "counts": {
+    "discovered": 12,
+    "enriched": 5,
+    "published": 5
+  },
+  "repositories": [
+    {
+      "snapshot": {
+        "nodeId": "R_replay_ai_agent",
+        "fullName": "openai/codex",
+        "url": "https://github.com/openai/codex",
+        "ownerLogin": "openai",
+        "ownerType": "Organization",
+        "description": "Lightweight coding agent that runs in your terminal",
+        "homepage": "https://developers.openai.com/codex",
+        "language": "Rust",
+        "topics": ["ai", "coding-agent", "rust"],
+        "createdAt": "2025-04-16T12:00:00.000Z",
+        "updatedAt": "2026-08-03T14:00:00.000Z",
+        "pushedAt": "2026-08-03T13:45:00.000Z",
+        "defaultBranch": "main",
+        "stars": 50000,
+        "forks": 6200,
+        "watchers": 420,
+        "openIssues": 310,
+        "archived": false,
+        "licenseSpdx": "Apache-2.0",
+        "direction": "ai-agent",
+        "eventFeatures": {
+          "activeDays7d": 4,
+          "activeDays30d": 18,
+          "humanActors30d": 12,
+          "pushes30d": 30,
+          "pullRequests30d": 14,
+          "issues30d": 10,
+          "releases30d": 2
+        },
+        "scorecard": {
+          "score": 7.8,
+          "date": "2026-08-03",
+          "checks": [
+            {
+              "name": "Maintained",
+              "score": 10
+            },
+            {
+              "name": "Code-Review",
+              "score": 8
+            },
+            {
+              "name": "Security-Policy",
+              "score": 5
+            }
+          ]
+        },
+        "candidateSignals": [
+          {
+            "fullName": "openai/codex",
+            "sourceId": "gittrend",
+            "sourceTier": "B",
+            "independenceGroup": "github-public-data",
+            "direction": "ai-agent",
+            "evidenceUrl": "https://gittrend.io/api/trending?limit=50",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "rank": 3,
+            "sourceScore": 95,
+            "stale": false,
+            "summaryZh": null,
+            "metrics": {
+              "starVelocity": 620,
+              "trendingScore": 95,
+              "discussionPoints": null,
+              "discussionComments": null
+            },
+            "rawObjectRef": null
+          },
+          {
+            "fullName": "openai/codex",
+            "sourceId": "hacker-news",
+            "sourceTier": "B",
+            "independenceGroup": "hacker-news-community",
+            "direction": null,
+            "evidenceUrl": "https://news.ycombinator.com/item?id=1",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "rank": 8,
+            "sourceScore": 42,
+            "stale": false,
+            "summaryZh": null,
+            "metrics": {
+              "starVelocity": null,
+              "trendingScore": null,
+              "discussionPoints": 42,
+              "discussionComments": 16
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "evidence": [
+          {
+            "id": "github-rest:repository:replay-ai",
+            "sourceId": "github-rest",
+            "sourceTier": "S",
+            "independenceGroup": "github-public-data",
+            "evidenceUrl": "https://github.com/openai/codex",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "field": "repository",
+            "value": {
+              "archived": false,
+              "licenseSpdx": "Apache-2.0"
+            },
+            "rawObjectRef": null
+          },
+          {
+            "id": "openssf-scorecard:score:replay-ai",
+            "sourceId": "openssf-scorecard",
+            "sourceTier": "A",
+            "independenceGroup": "openssf-security",
+            "evidenceUrl": "https://api.securityscorecards.dev/projects/github.com/openai/codex",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "field": "scorecard",
+            "value": {
+              "score": 7.8
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "missingFields": []
+      },
+      "score": {
+        "version": "v0.1.0",
+        "dimensions": {
+          "utility": 90.5,
+          "activity": 100,
+          "organization": 94,
+          "engineering": 92.3,
+          "adoption": 89,
+          "security": 81.8,
+          "momentum": 91.3,
+          "innovation": 61
+        },
+        "features": {
+          "utility.description": {
+            "score": 90,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "仓库描述提供了可核验的问题边界"
+          },
+          "utility.homepage": {
+            "score": 85,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "存在独立文档或产品入口"
+          },
+          "utility.topics": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "主题标签用于确认使用场景覆盖"
+          },
+          "utility.delivery": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "近期 Release 作为功能交付的有限代理信号"
+          },
+          "utility.discovery": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": [
+              "signal:gittrend:openai/codex",
+              "signal:hacker-news:openai/codex"
+            ],
+            "note": "独立信源覆盖用于交叉验证真实使用场景"
+          },
+          "activity.activeDays": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "三十天内的人类活跃日"
+          },
+          "activity.humanActors": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "三十天内去除机器人后的独立参与者"
+          },
+          "activity.eventDiversity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "Push、PR、Issue 与 Release 的活动多样性"
+          },
+          "activity.pushRecency": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "最近推送时间反映维护是否仍在继续"
+          },
+          "activity.releaseCadence": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "三十天发布节奏按项目当前事件窗口计算"
+          },
+          "organization.identity": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "组织身份仅提供有限先验加分"
+          },
+          "organization.continuity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "项目年龄与近期维护共同表示持续维护能力"
+          },
+          "organization.maintainers": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "多个人类参与者可降低单一维护者先验风险"
+          },
+          "organization.activity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "持续活跃日只表示当前维护连续性，不代表品牌声誉"
+          },
+          "organization.governance": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["openssf-scorecard:score:replay-ai"],
+            "note": "OpenSSF Maintained 检查作为治理证据"
+          },
+          "engineering.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "存在明确 SPDX 许可证"
+          },
+          "engineering.scorecard": {
+            "score": 78,
+            "status": "observed",
+            "evidenceIds": ["openssf-scorecard:score:replay-ai"],
+            "note": "OpenSSF 综合工程实践分"
+          },
+          "engineering.review": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "PR 事件数量是评审活动的有限代理信号"
+          },
+          "engineering.release": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "近期 Release 反映发布纪律但不替代完整版本审计"
+          },
+          "engineering.workflow": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "事件类型多样性反映基本协作流程"
+          },
+          "adoption.starStock": {
+            "score": 94,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "Star 存量仅占 Adoption 的 15%"
+          },
+          "adoption.forks": {
+            "score": 94.8,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "Fork 存量作为采用代理，未假设每个 Fork 都活跃"
+          },
+          "adoption.watchers": {
+            "score": 87.5,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "订阅者数量作为持续关注的弱信号"
+          },
+          "adoption.contributors": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "近期人类参与者广度作为真实采用信号"
+          },
+          "adoption.discussion": {
+            "score": 81.5,
+            "status": "observed",
+            "evidenceIds": ["signal:hacker-news:openai/codex"],
+            "note": "存在独立 Hacker News 讨论"
+          },
+          "adoption.coverage": {
+            "score": 75,
+            "status": "observed",
+            "evidenceIds": [
+              "signal:gittrend:openai/codex",
+              "signal:hacker-news:openai/codex"
+            ],
+            "note": "采用判断由独立信源组覆盖度约束"
+          },
+          "momentum.starVelocity": {
+            "score": 93.1,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:openai/codex"],
+            "note": "Star 速度只占 Momentum 的 30%"
+          },
+          "momentum.sourceRank": {
+            "score": 92,
+            "status": "observed",
+            "evidenceIds": [
+              "signal:gittrend:openai/codex",
+              "signal:hacker-news:openai/codex"
+            ],
+            "note": "多个发现源中的近期名次"
+          },
+          "momentum.discussion": {
+            "score": 81.5,
+            "status": "observed",
+            "evidenceIds": ["signal:hacker-news:openai/codex"],
+            "note": "非 GitHub 社区讨论提供独立趋势验证"
+          },
+          "momentum.crossSource": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": [
+              "signal:gittrend:openai/codex",
+              "signal:hacker-news:openai/codex"
+            ],
+            "note": "趋势必须由多个独立信源组支持"
+          },
+          "security.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "许可证标识明确"
+          },
+          "security.scorecard": {
+            "score": 78,
+            "status": "observed",
+            "evidenceIds": ["openssf-scorecard:score:replay-ai"],
+            "note": "OpenSSF 安全工程实践证据"
+          },
+          "security.lifecycle": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "仓库未归档"
+          },
+          "security.policy": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["openssf-scorecard:score:replay-ai"],
+            "note": "OpenSSF Security-Policy 检查"
+          },
+          "innovation.projectAge": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "项目年龄仅表示时效机会，不直接证明创新"
+          },
+          "innovation.delivery": {
+            "score": 80,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "近期功能交付支持创新已进入工程阶段"
+          },
+          "innovation.ecosystem": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-ai"],
+            "note": "主题覆盖只表示潜在生态扩展性"
+          },
+          "innovation.unverifiedNovelty": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "尚无可复现实验或独立差异证据，保持中性先验"
+          }
+        },
+        "confidence": 0.95,
+        "confidenceComponents": {
+          "keyCompleteness": 1,
+          "independentSources": 0.75,
+          "sourceConsistency": 1,
+          "freshness": 1,
+          "observationWindow": 1,
+          "entityMapping": 1,
+          "collectionHealth": 1
+        },
+        "riskPenalty": 0,
+        "riskFindings": [],
+        "baseScore": 90.6,
+        "publishedScore": 88.5,
+        "eligibility": "eligible"
+      },
+      "analysis": {
+        "why": "openai/codex 值得关注：当前主要驱动来自开发活跃 100.0 分、组织与维护者 94.0 分；发布分 88.5，置信度 95%。",
+        "suitableFor": "适合关注 AI Coding、Agent 工程化和研发效率的开发者与技术负责人；仍需结合项目类型和自身约束判断。",
+        "risks": "风险：尚未发现带数值扣分的明确风险；关键证据字段齐全。高分不能抵消许可证、安全或维护风险。",
+        "nextStep": "下一步：建议在隔离环境中试用，并用真实工作负载验证安装、性能和维护响应。",
+        "evidenceUrls": [
+          "https://github.com/openai/codex",
+          "https://api.securityscorecards.dev/projects/github.com/openai/codex",
+          "https://gittrend.io/api/trending?limit=50",
+          "https://news.ycombinator.com/item?id=1"
+        ]
+      }
+    },
+    {
+      "snapshot": {
+        "nodeId": "R_replay_data_ml",
+        "fullName": "dlt-hub/dlt",
+        "url": "https://github.com/dlt-hub/dlt",
+        "ownerLogin": "dlt-hub",
+        "ownerType": "Organization",
+        "description": "Open source Python library for loading data into data platforms",
+        "homepage": "https://dlthub.com",
+        "language": "Python",
+        "topics": ["data-engineering", "etl", "python"],
+        "createdAt": "2022-07-01T00:00:00.000Z",
+        "updatedAt": "2026-08-03T12:00:00.000Z",
+        "pushedAt": "2026-08-03T11:00:00.000Z",
+        "defaultBranch": "devel",
+        "stars": 25000,
+        "forks": 1800,
+        "watchers": 120,
+        "openIssues": 190,
+        "archived": false,
+        "licenseSpdx": "Apache-2.0",
+        "direction": "data-ml",
+        "eventFeatures": {
+          "activeDays7d": 5,
+          "activeDays30d": 16,
+          "humanActors30d": 10,
+          "pushes30d": 28,
+          "pullRequests30d": 12,
+          "issues30d": 8,
+          "releases30d": 1
+        },
+        "scorecard": null,
+        "candidateSignals": [
+          {
+            "fullName": "dlt-hub/dlt",
+            "sourceId": "gittrend",
+            "sourceTier": "B",
+            "independenceGroup": "github-public-data",
+            "direction": "data-ml",
+            "evidenceUrl": "https://gittrend.io/api/trending?limit=50",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "rank": 11,
+            "sourceScore": 82,
+            "stale": false,
+            "summaryZh": null,
+            "metrics": {
+              "starVelocity": 120,
+              "trendingScore": 82,
+              "discussionPoints": null,
+              "discussionComments": null
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "evidence": [
+          {
+            "id": "github-rest:repository:replay-data",
+            "sourceId": "github-rest",
+            "sourceTier": "S",
+            "independenceGroup": "github-public-data",
+            "evidenceUrl": "https://github.com/dlt-hub/dlt",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "field": "repository",
+            "value": {
+              "archived": false,
+              "licenseSpdx": "Apache-2.0"
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "missingFields": ["scorecard"]
+      },
+      "score": {
+        "version": "v0.1.0",
+        "dimensions": {
+          "utility": 62.2,
+          "activity": 95,
+          "organization": 89,
+          "engineering": 75,
+          "adoption": 65.6,
+          "security": 65,
+          "momentum": 55,
+          "innovation": 58
+        },
+        "features": {
+          "utility.description": {
+            "score": 90,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "仓库描述提供了可核验的问题边界"
+          },
+          "utility.homepage": {
+            "score": 85,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "存在独立文档或产品入口"
+          },
+          "utility.topics": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "主题标签用于确认使用场景覆盖"
+          },
+          "utility.delivery": {
+            "score": 75,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "近期 Release 作为功能交付的有限代理信号"
+          },
+          "utility.discovery": {
+            "score": 33.3,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:dlt-hub/dlt"],
+            "note": "独立信源覆盖用于交叉验证真实使用场景"
+          },
+          "activity.activeDays": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "三十天内的人类活跃日"
+          },
+          "activity.humanActors": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "三十天内去除机器人后的独立参与者"
+          },
+          "activity.eventDiversity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "Push、PR、Issue 与 Release 的活动多样性"
+          },
+          "activity.pushRecency": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "最近推送时间反映维护是否仍在继续"
+          },
+          "activity.releaseCadence": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "三十天发布节奏按项目当前事件窗口计算"
+          },
+          "organization.identity": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "组织身份仅提供有限先验加分"
+          },
+          "organization.continuity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "项目年龄与近期维护共同表示持续维护能力"
+          },
+          "organization.maintainers": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "多个人类参与者可降低单一维护者先验风险"
+          },
+          "organization.activity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "持续活跃日只表示当前维护连续性，不代表品牌声誉"
+          },
+          "organization.governance": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少 OpenSSF 维护证据，采用先验"
+          },
+          "engineering.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "存在明确 SPDX 许可证"
+          },
+          "engineering.scorecard": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "OpenSSF 数据缺失，采用先验"
+          },
+          "engineering.review": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "PR 事件数量是评审活动的有限代理信号"
+          },
+          "engineering.release": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "近期 Release 反映发布纪律但不替代完整版本审计"
+          },
+          "engineering.workflow": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "事件类型多样性反映基本协作流程"
+          },
+          "adoption.starStock": {
+            "score": 88,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "Star 存量仅占 Adoption 的 15%"
+          },
+          "adoption.forks": {
+            "score": 81.4,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "Fork 存量作为采用代理，未假设每个 Fork 都活跃"
+          },
+          "adoption.watchers": {
+            "score": 69.4,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "订阅者数量作为持续关注的弱信号"
+          },
+          "adoption.contributors": {
+            "score": 83.3,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "近期人类参与者广度作为真实采用信号"
+          },
+          "adoption.discussion": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少独立社区讨论，采用先验"
+          },
+          "adoption.coverage": {
+            "score": 25,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:dlt-hub/dlt"],
+            "note": "采用判断由独立信源组覆盖度约束"
+          },
+          "momentum.starVelocity": {
+            "score": 69.4,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:dlt-hub/dlt"],
+            "note": "Star 速度只占 Momentum 的 30%"
+          },
+          "momentum.sourceRank": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:dlt-hub/dlt"],
+            "note": "多个发现源中的近期名次"
+          },
+          "momentum.discussion": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少独立社区讨论，采用先验"
+          },
+          "momentum.crossSource": {
+            "score": 33.3,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:dlt-hub/dlt"],
+            "note": "趋势必须由多个独立信源组支持"
+          },
+          "security.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "许可证标识明确"
+          },
+          "security.scorecard": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "Scorecard 缺失只降低置信度"
+          },
+          "security.lifecycle": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "仓库未归档"
+          },
+          "security.policy": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少安全策略检查，采用先验"
+          },
+          "innovation.projectAge": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "项目年龄仅表示时效机会，不直接证明创新"
+          },
+          "innovation.delivery": {
+            "score": 80,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "近期功能交付支持创新已进入工程阶段"
+          },
+          "innovation.ecosystem": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-data"],
+            "note": "主题覆盖只表示潜在生态扩展性"
+          },
+          "innovation.unverifiedNovelty": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "尚无可复现实验或独立差异证据，保持中性先验"
+          }
+        },
+        "confidence": 0.807,
+        "confidenceComponents": {
+          "keyCompleteness": 0.8333333333333334,
+          "independentSources": 0.25,
+          "sourceConsistency": 1,
+          "freshness": 1,
+          "observationWindow": 1,
+          "entityMapping": 1,
+          "collectionHealth": 0.8
+        },
+        "riskPenalty": 0,
+        "riskFindings": [],
+        "baseScore": 73.6,
+        "publishedScore": 69.1,
+        "eligibility": "eligible"
+      },
+      "analysis": {
+        "why": "dlt-hub/dlt 值得关注：当前主要驱动来自开发活跃 95.0 分、组织与维护者 89.0 分；发布分 69.1，置信度 81%。",
+        "suitableFor": "适合负责数据平台、机器学习工程和模型基础设施的团队；仍需结合项目类型和自身约束判断。",
+        "risks": "风险：尚未发现带数值扣分的明确风险；证据缺口：scorecard。高分不能抵消许可证、安全或维护风险。",
+        "nextStep": "下一步：建议在隔离环境中试用，并用真实工作负载验证安装、性能和维护响应。",
+        "evidenceUrls": [
+          "https://github.com/dlt-hub/dlt",
+          "https://gittrend.io/api/trending?limit=50"
+        ]
+      }
+    },
+    {
+      "snapshot": {
+        "nodeId": "R_replay_app_platform",
+        "fullName": "fastify/fastify",
+        "url": "https://github.com/fastify/fastify",
+        "ownerLogin": "fastify",
+        "ownerType": "Organization",
+        "description": "Fast and low overhead web framework for Node.js",
+        "homepage": "https://fastify.dev",
+        "language": "JavaScript",
+        "topics": ["backend", "framework", "nodejs"],
+        "createdAt": "2016-09-27T00:00:00.000Z",
+        "updatedAt": "2026-08-03T10:00:00.000Z",
+        "pushedAt": "2026-08-02T20:00:00.000Z",
+        "defaultBranch": "main",
+        "stars": 35000,
+        "forks": 2500,
+        "watchers": 180,
+        "openIssues": 140,
+        "archived": false,
+        "licenseSpdx": "MIT",
+        "direction": "app-platform",
+        "eventFeatures": {
+          "activeDays7d": 4,
+          "activeDays30d": 14,
+          "humanActors30d": 14,
+          "pushes30d": 20,
+          "pullRequests30d": 18,
+          "issues30d": 12,
+          "releases30d": 2
+        },
+        "scorecard": null,
+        "candidateSignals": [
+          {
+            "fullName": "fastify/fastify",
+            "sourceId": "github-search",
+            "sourceTier": "S",
+            "independenceGroup": "github-public-data",
+            "direction": "app-platform",
+            "evidenceUrl": "https://github.com/fastify/fastify",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "rank": 4,
+            "sourceScore": 1,
+            "stale": false,
+            "summaryZh": null,
+            "metrics": {
+              "starVelocity": null,
+              "trendingScore": null,
+              "discussionPoints": null,
+              "discussionComments": null
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "evidence": [
+          {
+            "id": "github-rest:repository:replay-app",
+            "sourceId": "github-rest",
+            "sourceTier": "S",
+            "independenceGroup": "github-public-data",
+            "evidenceUrl": "https://github.com/fastify/fastify",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "field": "repository",
+            "value": {
+              "archived": false,
+              "licenseSpdx": "MIT"
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "missingFields": ["scorecard"]
+      },
+      "score": {
+        "version": "v0.1.0",
+        "dimensions": {
+          "utility": 67.2,
+          "activity": 98,
+          "organization": 89,
+          "engineering": 82.5,
+          "adoption": 70.7,
+          "security": 65,
+          "momentum": 56.2,
+          "innovation": 58
+        },
+        "features": {
+          "utility.description": {
+            "score": 90,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "仓库描述提供了可核验的问题边界"
+          },
+          "utility.homepage": {
+            "score": 85,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "存在独立文档或产品入口"
+          },
+          "utility.topics": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "主题标签用于确认使用场景覆盖"
+          },
+          "utility.delivery": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "近期 Release 作为功能交付的有限代理信号"
+          },
+          "utility.discovery": {
+            "score": 33.3,
+            "status": "observed",
+            "evidenceIds": ["signal:github-search:fastify/fastify"],
+            "note": "独立信源覆盖用于交叉验证真实使用场景"
+          },
+          "activity.activeDays": {
+            "score": 93.3,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "三十天内的人类活跃日"
+          },
+          "activity.humanActors": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "三十天内去除机器人后的独立参与者"
+          },
+          "activity.eventDiversity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "Push、PR、Issue 与 Release 的活动多样性"
+          },
+          "activity.pushRecency": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "最近推送时间反映维护是否仍在继续"
+          },
+          "activity.releaseCadence": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "三十天发布节奏按项目当前事件窗口计算"
+          },
+          "organization.identity": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "组织身份仅提供有限先验加分"
+          },
+          "organization.continuity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "项目年龄与近期维护共同表示持续维护能力"
+          },
+          "organization.maintainers": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "多个人类参与者可降低单一维护者先验风险"
+          },
+          "organization.activity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "持续活跃日只表示当前维护连续性，不代表品牌声誉"
+          },
+          "organization.governance": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少 OpenSSF 维护证据，采用先验"
+          },
+          "engineering.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "存在明确 SPDX 许可证"
+          },
+          "engineering.scorecard": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "OpenSSF 数据缺失，采用先验"
+          },
+          "engineering.review": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "PR 事件数量是评审活动的有限代理信号"
+          },
+          "engineering.release": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "近期 Release 反映发布纪律但不替代完整版本审计"
+          },
+          "engineering.workflow": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "事件类型多样性反映基本协作流程"
+          },
+          "adoption.starStock": {
+            "score": 90.9,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "Star 存量仅占 Adoption 的 15%"
+          },
+          "adoption.forks": {
+            "score": 85,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "Fork 存量作为采用代理，未假设每个 Fork 都活跃"
+          },
+          "adoption.watchers": {
+            "score": 75.2,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "订阅者数量作为持续关注的弱信号"
+          },
+          "adoption.contributors": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "近期人类参与者广度作为真实采用信号"
+          },
+          "adoption.discussion": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少独立社区讨论，采用先验"
+          },
+          "adoption.coverage": {
+            "score": 25,
+            "status": "observed",
+            "evidenceIds": ["signal:github-search:fastify/fastify"],
+            "note": "采用判断由独立信源组覆盖度约束"
+          },
+          "momentum.starVelocity": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少 Star 速度窗口，采用先验"
+          },
+          "momentum.sourceRank": {
+            "score": 88,
+            "status": "observed",
+            "evidenceIds": ["signal:github-search:fastify/fastify"],
+            "note": "多个发现源中的近期名次"
+          },
+          "momentum.discussion": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少独立社区讨论，采用先验"
+          },
+          "momentum.crossSource": {
+            "score": 33.3,
+            "status": "observed",
+            "evidenceIds": ["signal:github-search:fastify/fastify"],
+            "note": "趋势必须由多个独立信源组支持"
+          },
+          "security.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "许可证标识明确"
+          },
+          "security.scorecard": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "Scorecard 缺失只降低置信度"
+          },
+          "security.lifecycle": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "仓库未归档"
+          },
+          "security.policy": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少安全策略检查，采用先验"
+          },
+          "innovation.projectAge": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "项目年龄仅表示时效机会，不直接证明创新"
+          },
+          "innovation.delivery": {
+            "score": 80,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "近期功能交付支持创新已进入工程阶段"
+          },
+          "innovation.ecosystem": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-app"],
+            "note": "主题覆盖只表示潜在生态扩展性"
+          },
+          "innovation.unverifiedNovelty": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "尚无可复现实验或独立差异证据，保持中性先验"
+          }
+        },
+        "confidence": 0.807,
+        "confidenceComponents": {
+          "keyCompleteness": 0.8333333333333334,
+          "independentSources": 0.25,
+          "sourceConsistency": 1,
+          "freshness": 1,
+          "observationWindow": 1,
+          "entityMapping": 1,
+          "collectionHealth": 0.8
+        },
+        "riskPenalty": 0,
+        "riskFindings": [],
+        "baseScore": 76.7,
+        "publishedScore": 71.6,
+        "eligibility": "eligible"
+      },
+      "analysis": {
+        "why": "fastify/fastify 值得关注：当前主要驱动来自开发活跃 98.0 分、组织与维护者 89.0 分；发布分 71.6，置信度 81%。",
+        "suitableFor": "适合进行前端、后端、API 或跨端技术选型的工程团队；仍需结合项目类型和自身约束判断。",
+        "risks": "风险：尚未发现带数值扣分的明确风险；证据缺口：scorecard。高分不能抵消许可证、安全或维护风险。",
+        "nextStep": "下一步：建议在隔离环境中试用，并用真实工作负载验证安装、性能和维护响应。",
+        "evidenceUrls": ["https://github.com/fastify/fastify"]
+      }
+    },
+    {
+      "snapshot": {
+        "nodeId": "R_replay_infra_devtools",
+        "fullName": "astral-sh/uv",
+        "url": "https://github.com/astral-sh/uv",
+        "ownerLogin": "astral-sh",
+        "ownerType": "Organization",
+        "description": "An extremely fast Python package and project manager written in Rust",
+        "homepage": "https://docs.astral.sh/uv/",
+        "language": "Rust",
+        "topics": ["developer-tools", "package-manager", "python", "rust"],
+        "createdAt": "2023-10-03T00:00:00.000Z",
+        "updatedAt": "2026-08-03T14:10:00.000Z",
+        "pushedAt": "2026-08-03T14:00:00.000Z",
+        "defaultBranch": "main",
+        "stars": 70000,
+        "forks": 2100,
+        "watchers": 260,
+        "openIssues": 480,
+        "archived": false,
+        "licenseSpdx": "Apache-2.0",
+        "direction": "infra-devtools",
+        "eventFeatures": {
+          "activeDays7d": 7,
+          "activeDays30d": 24,
+          "humanActors30d": 18,
+          "pushes30d": 46,
+          "pullRequests30d": 22,
+          "issues30d": 20,
+          "releases30d": 4
+        },
+        "scorecard": {
+          "score": 8.6,
+          "date": "2026-08-03",
+          "checks": [
+            {
+              "name": "Maintained",
+              "score": 10
+            },
+            {
+              "name": "Code-Review",
+              "score": 9
+            },
+            {
+              "name": "Security-Policy",
+              "score": 7
+            }
+          ]
+        },
+        "candidateSignals": [
+          {
+            "fullName": "astral-sh/uv",
+            "sourceId": "gittrend",
+            "sourceTier": "B",
+            "independenceGroup": "github-public-data",
+            "direction": "infra-devtools",
+            "evidenceUrl": "https://gittrend.io/api/trending?limit=50",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "rank": 5,
+            "sourceScore": 92,
+            "stale": false,
+            "summaryZh": null,
+            "metrics": {
+              "starVelocity": 410,
+              "trendingScore": 92,
+              "discussionPoints": null,
+              "discussionComments": null
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "evidence": [
+          {
+            "id": "github-rest:repository:replay-infra",
+            "sourceId": "github-rest",
+            "sourceTier": "S",
+            "independenceGroup": "github-public-data",
+            "evidenceUrl": "https://github.com/astral-sh/uv",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "field": "repository",
+            "value": {
+              "archived": false,
+              "licenseSpdx": "Apache-2.0"
+            },
+            "rawObjectRef": null
+          },
+          {
+            "id": "openssf-scorecard:score:replay-infra",
+            "sourceId": "openssf-scorecard",
+            "sourceTier": "A",
+            "independenceGroup": "openssf-security",
+            "evidenceUrl": "https://api.securityscorecards.dev/projects/github.com/astral-sh/uv",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "field": "scorecard",
+            "value": {
+              "score": 8.6
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "missingFields": []
+      },
+      "score": {
+        "version": "v0.1.0",
+        "dimensions": {
+          "utility": 81.8,
+          "activity": 100,
+          "organization": 94,
+          "engineering": 95.1,
+          "adoption": 76.7,
+          "security": 88.6,
+          "momentum": 73,
+          "innovation": 65
+        },
+        "features": {
+          "utility.description": {
+            "score": 90,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "仓库描述提供了可核验的问题边界"
+          },
+          "utility.homepage": {
+            "score": 85,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "存在独立文档或产品入口"
+          },
+          "utility.topics": {
+            "score": 80,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "主题标签用于确认使用场景覆盖"
+          },
+          "utility.delivery": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "近期 Release 作为功能交付的有限代理信号"
+          },
+          "utility.discovery": {
+            "score": 66.7,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:astral-sh/uv"],
+            "note": "独立信源覆盖用于交叉验证真实使用场景"
+          },
+          "activity.activeDays": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "三十天内的人类活跃日"
+          },
+          "activity.humanActors": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "三十天内去除机器人后的独立参与者"
+          },
+          "activity.eventDiversity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "Push、PR、Issue 与 Release 的活动多样性"
+          },
+          "activity.pushRecency": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "最近推送时间反映维护是否仍在继续"
+          },
+          "activity.releaseCadence": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "三十天发布节奏按项目当前事件窗口计算"
+          },
+          "organization.identity": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "组织身份仅提供有限先验加分"
+          },
+          "organization.continuity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "项目年龄与近期维护共同表示持续维护能力"
+          },
+          "organization.maintainers": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "多个人类参与者可降低单一维护者先验风险"
+          },
+          "organization.activity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "持续活跃日只表示当前维护连续性，不代表品牌声誉"
+          },
+          "organization.governance": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["openssf-scorecard:score:replay-infra"],
+            "note": "OpenSSF Maintained 检查作为治理证据"
+          },
+          "engineering.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "存在明确 SPDX 许可证"
+          },
+          "engineering.scorecard": {
+            "score": 86,
+            "status": "observed",
+            "evidenceIds": ["openssf-scorecard:score:replay-infra"],
+            "note": "OpenSSF 综合工程实践分"
+          },
+          "engineering.review": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "PR 事件数量是评审活动的有限代理信号"
+          },
+          "engineering.release": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "近期 Release 反映发布纪律但不替代完整版本审计"
+          },
+          "engineering.workflow": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "事件类型多样性反映基本协作流程"
+          },
+          "adoption.starStock": {
+            "score": 96.9,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "Star 存量仅占 Adoption 的 15%"
+          },
+          "adoption.forks": {
+            "score": 83.1,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "Fork 存量作为采用代理，未假设每个 Fork 都活跃"
+          },
+          "adoption.watchers": {
+            "score": 80.5,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "订阅者数量作为持续关注的弱信号"
+          },
+          "adoption.contributors": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "近期人类参与者广度作为真实采用信号"
+          },
+          "adoption.discussion": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少独立社区讨论，采用先验"
+          },
+          "adoption.coverage": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:astral-sh/uv"],
+            "note": "采用判断由独立信源组覆盖度约束"
+          },
+          "momentum.starVelocity": {
+            "score": 87.1,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:astral-sh/uv"],
+            "note": "Star 速度只占 Momentum 的 30%"
+          },
+          "momentum.sourceRank": {
+            "score": 84,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:astral-sh/uv"],
+            "note": "多个发现源中的近期名次"
+          },
+          "momentum.discussion": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少独立社区讨论，采用先验"
+          },
+          "momentum.crossSource": {
+            "score": 66.7,
+            "status": "observed",
+            "evidenceIds": ["signal:gittrend:astral-sh/uv"],
+            "note": "趋势必须由多个独立信源组支持"
+          },
+          "security.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "许可证标识明确"
+          },
+          "security.scorecard": {
+            "score": 86,
+            "status": "observed",
+            "evidenceIds": ["openssf-scorecard:score:replay-infra"],
+            "note": "OpenSSF 安全工程实践证据"
+          },
+          "security.lifecycle": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "仓库未归档"
+          },
+          "security.policy": {
+            "score": 70,
+            "status": "observed",
+            "evidenceIds": ["openssf-scorecard:score:replay-infra"],
+            "note": "OpenSSF Security-Policy 检查"
+          },
+          "innovation.projectAge": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "项目年龄仅表示时效机会，不直接证明创新"
+          },
+          "innovation.delivery": {
+            "score": 80,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "近期功能交付支持创新已进入工程阶段"
+          },
+          "innovation.ecosystem": {
+            "score": 80,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-infra"],
+            "note": "主题覆盖只表示潜在生态扩展性"
+          },
+          "innovation.unverifiedNovelty": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "尚无可复现实验或独立差异证据，保持中性先验"
+          }
+        },
+        "confidence": 0.9,
+        "confidenceComponents": {
+          "keyCompleteness": 1,
+          "independentSources": 0.5,
+          "sourceConsistency": 1,
+          "freshness": 1,
+          "observationWindow": 1,
+          "entityMapping": 1,
+          "collectionHealth": 1
+        },
+        "riskPenalty": 0,
+        "riskFindings": [],
+        "baseScore": 87.2,
+        "publishedScore": 83.5,
+        "eligibility": "eligible"
+      },
+      "analysis": {
+        "why": "astral-sh/uv 值得关注：当前主要驱动来自开发活跃 100.0 分、工程质量 95.1 分；发布分 83.5，置信度 90%。",
+        "suitableFor": "适合负责云原生、可观测性、DevOps 和开发者工具的团队；仍需结合项目类型和自身约束判断。",
+        "risks": "风险：尚未发现带数值扣分的明确风险；关键证据字段齐全。高分不能抵消许可证、安全或维护风险。",
+        "nextStep": "下一步：建议在隔离环境中试用，并用真实工作负载验证安装、性能和维护响应。",
+        "evidenceUrls": [
+          "https://github.com/astral-sh/uv",
+          "https://api.securityscorecards.dev/projects/github.com/astral-sh/uv",
+          "https://gittrend.io/api/trending?limit=50"
+        ]
+      }
+    },
+    {
+      "snapshot": {
+        "nodeId": "R_replay_security",
+        "fullName": "ossf/scorecard",
+        "url": "https://github.com/ossf/scorecard",
+        "ownerLogin": "ossf",
+        "ownerType": "Organization",
+        "description": "OpenSSF Scorecard evaluates security health metrics for open source projects",
+        "homepage": "https://securityscorecards.dev",
+        "language": "Go",
+        "topics": ["security", "supply-chain", "openssf"],
+        "createdAt": "2020-10-29T00:00:00.000Z",
+        "updatedAt": "2026-08-03T09:00:00.000Z",
+        "pushedAt": "2026-08-02T18:00:00.000Z",
+        "defaultBranch": "main",
+        "stars": 5000,
+        "forks": 700,
+        "watchers": 90,
+        "openIssues": 190,
+        "archived": false,
+        "licenseSpdx": "Apache-2.0",
+        "direction": "security-supply-chain",
+        "eventFeatures": {
+          "activeDays7d": 3,
+          "activeDays30d": 12,
+          "humanActors30d": 9,
+          "pushes30d": 18,
+          "pullRequests30d": 12,
+          "issues30d": 9,
+          "releases30d": 1
+        },
+        "scorecard": null,
+        "candidateSignals": [
+          {
+            "fullName": "ossf/scorecard",
+            "sourceId": "github-search",
+            "sourceTier": "S",
+            "independenceGroup": "github-public-data",
+            "direction": "security-supply-chain",
+            "evidenceUrl": "https://github.com/ossf/scorecard",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "rank": 2,
+            "sourceScore": 1,
+            "stale": false,
+            "summaryZh": null,
+            "metrics": {
+              "starVelocity": null,
+              "trendingScore": null,
+              "discussionPoints": null,
+              "discussionComments": null
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "evidence": [
+          {
+            "id": "github-rest:repository:replay-security",
+            "sourceId": "github-rest",
+            "sourceTier": "S",
+            "independenceGroup": "github-public-data",
+            "evidenceUrl": "https://github.com/ossf/scorecard",
+            "observedAt": "2026-08-03T15:30:00.000Z",
+            "field": "repository",
+            "value": {
+              "archived": false,
+              "licenseSpdx": "Apache-2.0"
+            },
+            "rawObjectRef": null
+          }
+        ],
+        "missingFields": ["scorecard"]
+      },
+      "score": {
+        "version": "v0.1.0",
+        "dimensions": {
+          "utility": 62.2,
+          "activity": 86.5,
+          "organization": 89,
+          "engineering": 75,
+          "adoption": 59.4,
+          "security": 65,
+          "momentum": 58.2,
+          "innovation": 58
+        },
+        "features": {
+          "utility.description": {
+            "score": 90,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "仓库描述提供了可核验的问题边界"
+          },
+          "utility.homepage": {
+            "score": 85,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "存在独立文档或产品入口"
+          },
+          "utility.topics": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "主题标签用于确认使用场景覆盖"
+          },
+          "utility.delivery": {
+            "score": 75,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "近期 Release 作为功能交付的有限代理信号"
+          },
+          "utility.discovery": {
+            "score": 33.3,
+            "status": "observed",
+            "evidenceIds": ["signal:github-search:ossf/scorecard"],
+            "note": "独立信源覆盖用于交叉验证真实使用场景"
+          },
+          "activity.activeDays": {
+            "score": 80,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "三十天内的人类活跃日"
+          },
+          "activity.humanActors": {
+            "score": 90,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "三十天内去除机器人后的独立参与者"
+          },
+          "activity.eventDiversity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "Push、PR、Issue 与 Release 的活动多样性"
+          },
+          "activity.pushRecency": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "最近推送时间反映维护是否仍在继续"
+          },
+          "activity.releaseCadence": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "三十天发布节奏按项目当前事件窗口计算"
+          },
+          "organization.identity": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "组织身份仅提供有限先验加分"
+          },
+          "organization.continuity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "项目年龄与近期维护共同表示持续维护能力"
+          },
+          "organization.maintainers": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "多个人类参与者可降低单一维护者先验风险"
+          },
+          "organization.activity": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "持续活跃日只表示当前维护连续性，不代表品牌声誉"
+          },
+          "organization.governance": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少 OpenSSF 维护证据，采用先验"
+          },
+          "engineering.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "存在明确 SPDX 许可证"
+          },
+          "engineering.scorecard": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "OpenSSF 数据缺失，采用先验"
+          },
+          "engineering.review": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "PR 事件数量是评审活动的有限代理信号"
+          },
+          "engineering.release": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "近期 Release 反映发布纪律但不替代完整版本审计"
+          },
+          "engineering.workflow": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "事件类型多样性反映基本协作流程"
+          },
+          "adoption.starStock": {
+            "score": 74,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "Star 存量仅占 Adoption 的 15%"
+          },
+          "adoption.forks": {
+            "score": 71.1,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "Fork 存量作为采用代理，未假设每个 Fork 都活跃"
+          },
+          "adoption.watchers": {
+            "score": 65.3,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "订阅者数量作为持续关注的弱信号"
+          },
+          "adoption.contributors": {
+            "score": 75,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "近期人类参与者广度作为真实采用信号"
+          },
+          "adoption.discussion": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少独立社区讨论，采用先验"
+          },
+          "adoption.coverage": {
+            "score": 25,
+            "status": "observed",
+            "evidenceIds": ["signal:github-search:ossf/scorecard"],
+            "note": "采用判断由独立信源组覆盖度约束"
+          },
+          "momentum.starVelocity": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少 Star 速度窗口，采用先验"
+          },
+          "momentum.sourceRank": {
+            "score": 96,
+            "status": "observed",
+            "evidenceIds": ["signal:github-search:ossf/scorecard"],
+            "note": "多个发现源中的近期名次"
+          },
+          "momentum.discussion": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少独立社区讨论，采用先验"
+          },
+          "momentum.crossSource": {
+            "score": 33.3,
+            "status": "observed",
+            "evidenceIds": ["signal:github-search:ossf/scorecard"],
+            "note": "趋势必须由多个独立信源组支持"
+          },
+          "security.license": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "许可证标识明确"
+          },
+          "security.scorecard": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "Scorecard 缺失只降低置信度"
+          },
+          "security.lifecycle": {
+            "score": 100,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "仓库未归档"
+          },
+          "security.policy": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "缺少安全策略检查，采用先验"
+          },
+          "innovation.projectAge": {
+            "score": 50,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "项目年龄仅表示时效机会，不直接证明创新"
+          },
+          "innovation.delivery": {
+            "score": 80,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "近期功能交付支持创新已进入工程阶段"
+          },
+          "innovation.ecosystem": {
+            "score": 60,
+            "status": "observed",
+            "evidenceIds": ["github-rest:repository:replay-security"],
+            "note": "主题覆盖只表示潜在生态扩展性"
+          },
+          "innovation.unverifiedNovelty": {
+            "score": 50,
+            "status": "prior",
+            "evidenceIds": [],
+            "note": "尚无可复现实验或独立差异证据，保持中性先验"
+          }
+        },
+        "confidence": 0.807,
+        "confidenceComponents": {
+          "keyCompleteness": 0.8333333333333334,
+          "independentSources": 0.25,
+          "sourceConsistency": 1,
+          "freshness": 1,
+          "observationWindow": 1,
+          "entityMapping": 1,
+          "collectionHealth": 0.8
+        },
+        "riskPenalty": 0,
+        "riskFindings": [],
+        "baseScore": 71.8,
+        "publishedScore": 67.6,
+        "eligibility": "eligible"
+      },
+      "analysis": {
+        "why": "ossf/scorecard 值得关注：当前主要驱动来自组织与维护者 89.0 分、开发活跃 86.5 分；发布分 67.6，置信度 81%。",
+        "suitableFor": "适合负责应用安全、开源治理和软件供应链的团队；仍需结合项目类型和自身约束判断。",
+        "risks": "风险：尚未发现带数值扣分的明确风险；证据缺口：scorecard。高分不能抵消许可证、安全或维护风险。",
+        "nextStep": "下一步：建议在隔离环境中试用，并用真实工作负载验证安装、性能和维护响应。",
+        "evidenceUrls": ["https://github.com/ossf/scorecard"]
+      }
+    }
+  ],
+  "rankings": {
+    "overall": [
+      "openai/codex",
+      "astral-sh/uv",
+      "fastify/fastify",
+      "dlt-hub/dlt",
+      "ossf/scorecard"
+    ],
+    "rising": [
+      "openai/codex",
+      "astral-sh/uv",
+      "fastify/fastify",
+      "dlt-hub/dlt",
+      "ossf/scorecard"
+    ],
+    "newProjects": [],
+    "hiddenGems": ["ossf/scorecard"],
+    "active": [
+      "astral-sh/uv",
+      "openai/codex",
+      "fastify/fastify",
+      "dlt-hub/dlt",
+      "ossf/scorecard"
+    ],
+    "byDirection": {
+      "ai-agent": ["openai/codex"],
+      "data-ml": ["dlt-hub/dlt"],
+      "app-platform": ["fastify/fastify"],
+      "infra-devtools": ["astral-sh/uv"],
+      "security-supply-chain": ["ossf/scorecard"]
+    }
+  }
+}

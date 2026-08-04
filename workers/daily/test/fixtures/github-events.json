@@ -1,0 +1,38 @@
+[
+  {
+    "id": "event-1",
+    "type": "PushEvent",
+    "actor": { "login": "alice" },
+    "created_at": "2026-08-03T13:00:00Z"
+  },
+  {
+    "id": "event-2",
+    "type": "PullRequestEvent",
+    "actor": { "login": "bob" },
+    "created_at": "2026-08-02T12:00:00Z"
+  },
+  {
+    "id": "event-3",
+    "type": "IssuesEvent",
+    "actor": { "login": "carol" },
+    "created_at": "2026-08-01T11:00:00Z"
+  },
+  {
+    "id": "event-4",
+    "type": "ReleaseEvent",
+    "actor": { "login": "dave" },
+    "created_at": "2026-07-31T10:00:00Z"
+  },
+  {
+    "id": "event-5",
+    "type": "PushEvent",
+    "actor": { "login": "dependabot[bot]" },
+    "created_at": "2026-08-03T09:00:00Z"
+  },
+  {
+    "id": "event-old",
+    "type": "PushEvent",
+    "actor": { "login": "eve" },
+    "created_at": "2026-06-01T09:00:00Z"
+  }
+]

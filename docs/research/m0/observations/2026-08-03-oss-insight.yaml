@@ -1,0 +1,42 @@
+date: "2026-08-03"
+product: oss-insight
+directions: [ai-agent, data-ml, app-platform, infra-devtools, security-supply-chain]
+repositories:
+  - openai/codex
+  - microsoft/autogen
+  - langchain-ai/langgraph
+  - continuedev/continue
+  - Aider-AI/aider
+  - modelcontextprotocol/servers
+  - vllm-project/vllm
+  - huggingface/transformers
+  - mlflow/mlflow
+  - ray-project/ray
+  - pytorch/pytorch
+  - dlt-hub/dlt
+  - vercel/next.js
+  - vuejs/core
+  - fastify/fastify
+  - denoland/deno
+  - oven-sh/bun
+  - tauri-apps/tauri
+  - kubernetes/kubernetes
+  - grafana/grafana
+  - open-telemetry/opentelemetry-collector
+  - dagger/dagger
+  - nektos/act
+  - astral-sh/uv
+  - ossf/scorecard
+  - google/osv-scanner
+  - anchore/syft
+  - sigstore/cosign
+  - aquasecurity/trivy
+  - zaproxy/zaproxy
+capabilities:
+  multi_source_evidence: { score: 0, evidenceUrl: "https://ossinsight.io/docs/faq", note: "历史数据来自 GH Archive、实时数据来自 GitHub Events，二者仍属于同一 GitHub 证据组。" }
+  cohort_comparability: { score: 1, evidenceUrl: "https://ossinsight.io/docs/about", note: "提供技术集合、同指标项目比较和历史排名，但没有公开年龄与规模归一化规则。" }
+  activity_and_organization: { score: 1, evidenceUrl: "https://ossinsight.io/analyze/openai/codex", note: "可查看提交、PR、Issue、贡献者和公司分布，也支持排除机器人，但未形成组织信誉公开权重。" }
+  anti_gaming_and_replay: { score: 1, evidenceUrl: "https://ossinsight.io/analyze/openai/codex", note: "提供历史趋势、贡献热图和月度数据回看，但未找到刷星上限、异常隔离或版本化评分公式。" }
+  chinese_decision_analysis: { score: 0, evidenceUrl: "https://ossinsight.io/docs/about", note: "公开分析以指标和英文说明为主，没有中文的适用人群、风险、成本与下一步决策建议。" }
+  obsidian_ownership: { score: 0, evidenceUrl: "https://ossinsight.io/docs/about", note: "未找到标准 Markdown 输出、Obsidian 增量同步或保护用户批注的所有权协议。" }
+  restricted_agent: { score: 1, evidenceUrl: "https://ossinsight.io/docs/api", note: "公开 API 可供外部程序查询趋势和仓库指标，但没有个人方向策略与可审计权限边界。" }

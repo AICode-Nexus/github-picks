@@ -1,0 +1,42 @@
+date: "2026-08-03"
+product: pickgithub
+directions: [ai-agent, data-ml, app-platform, infra-devtools, security-supply-chain]
+repositories:
+  - openai/codex
+  - microsoft/autogen
+  - langchain-ai/langgraph
+  - continuedev/continue
+  - Aider-AI/aider
+  - modelcontextprotocol/servers
+  - vllm-project/vllm
+  - huggingface/transformers
+  - mlflow/mlflow
+  - ray-project/ray
+  - pytorch/pytorch
+  - dlt-hub/dlt
+  - vercel/next.js
+  - vuejs/core
+  - fastify/fastify
+  - denoland/deno
+  - oven-sh/bun
+  - tauri-apps/tauri
+  - kubernetes/kubernetes
+  - grafana/grafana
+  - open-telemetry/opentelemetry-collector
+  - dagger/dagger
+  - nektos/act
+  - astral-sh/uv
+  - ossf/scorecard
+  - google/osv-scanner
+  - anchore/syft
+  - sigstore/cosign
+  - aquasecurity/trivy
+  - zaproxy/zaproxy
+capabilities:
+  multi_source_evidence: { score: 0, evidenceUrl: "https://pickgithub.com/projects/94013", note: "项目页明确说明基于 GitHub API 构建，未展示包、安全、依赖或独立社区证据。" }
+  cohort_comparability: { score: 1, evidenceUrl: "https://pickgithub.com/", note: "支持语言、话题和精选池发现，并展示综合评分，但没有公开年龄、规模或类型校准方法。" }
+  activity_and_organization: { score: 1, evidenceUrl: "https://pickgithub.com/projects/94013", note: "展示今日、近七天和近三十天 Star 增长及 Issue 数，但没有组织与维护者信誉权重。" }
+  anti_gaming_and_replay: { score: 1, evidenceUrl: "https://pickgithub.com/projects/94013", note: "项目页提供 Star 趋势和多周期增长，具备部分回看能力，但未公开反作弊与评分版本。" }
+  chinese_decision_analysis: { score: 1, evidenceUrl: "https://pickgithub.com/projects/94013", note: "AI 中文简介说明核心能力和适用场景，但没有系统覆盖采用成本、风险与下一步行动。" }
+  obsidian_ownership: { score: 0, evidenceUrl: "https://pickgithub.com/", note: "未找到标准 Markdown 导出、Obsidian 增量同步或用户批注所有权保护。" }
+  restricted_agent: { score: 0, evidenceUrl: "https://pickgithub.com/", note: "今日公开页面和文档入口未发现 Agent API、MCP 或可审计的个人方向权限边界。" }

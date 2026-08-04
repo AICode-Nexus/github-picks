@@ -1,0 +1,15 @@
+{
+  "name": "@github-picks/m0-evaluator",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --dir test",
+    "evaluate": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "yaml": "2.9.0",
+    "zod": "4.4.3"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "fullName": "openai/codex",
+      "stars": 50000,
+      "starsToday": 2523,
+      "trendingScore": 718232.7
+    },
+    {
+      "fullName": "astral-sh/uv",
+      "stars": 30000,
+      "starsToday": 412,
+      "trendingScore": 98000.2
+    }
+  ],
+  "pagination": { "page": 1, "limit": 2, "total": 2 }
+}

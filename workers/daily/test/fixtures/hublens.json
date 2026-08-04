@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "slug": "openai-codex",
+      "title_zh": "Codex：云端编程智能体",
+      "summary_zh": "一个用于真实软件工程任务的编程智能体。",
+      "repo_url": "https://github.com/openai/codex",
+      "rank_overall": 3,
+      "score": 91,
+      "trending_score": 800,
+      "updated_at": "2026-05-01T12:00:00.000Z"
+    }
+  ],
+  "meta": { "total": 1, "generated_at": "2026-08-03T15:00:00.000Z" }
+}

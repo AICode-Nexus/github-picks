@@ -2272,6 +2272,12 @@ Agent 到 M5 才开放，分三种入口：
 | Agent | M5，只做显式偏好和受限读取 | 先确保公共情报可信，再做个性化 |
 | 品牌边界 | 显著非官方声明，不使用官方 Logo/Octocat | 降低隶属误解和商标风险 |
 
+### 34.1.1 2026-08-03 用户路线变更
+
+M0 Day 1 已形成一次探索性竞品快照，但七日评估仍然是 `INSUFFICIENT_EVIDENCE`，不能把它改写成机器已经输出 `BUILD`。用户在审阅执行方式后明确终止 Day 2–7 人工竞品观测，并授权直接建设 GitHub Picks。
+
+因此实施路线调整为 **thin-integration vertical MVP**：保留 GitTrend、HubLens、GitHub Trending、Hacker News 等产品或平台作为候选发现与交叉验证信源，把 GitHub REST、OpenSSF 等一手或权威来源作为核心事实依据，先交付可运行的“发现 → 补全 → 八维评分 → 中文榜单 → JSON/Markdown”闭环。该用户决策替代原 M1 的 M0 `BUILD` 入口门槛，但不删除 M0 原始证据，也不把聚合站的数据当成未经核验的核心事实。
+
 ### 34.2 早期评分草案如何汇入最终模型
 
 此前讨论曾形成“开发活跃 22、实用价值 20、工程/安全 15、组织/维护者 15、社区/采用 12、趋势 10、创新 6”的概念性权重。那一版表达了正确优先级，但工程与安全混在一起，活跃与趋势也容易重复计算，合计口径不够适合直接实现。
@@ -2313,9 +2319,9 @@ Agent 到 M5 才开放，分三种入口：
 
 ### 34.5 下一份文档
 
-用户已确认本总规格完整，首轮实施被拆成两个可独立验收的计划：
+用户已确认本总规格完整。最初的 M0/M1 计划仍作为决策历史保留：
 
 1. `docs/superpowers/plans/2026-08-03-github-picks-m0-validation.md`：先连续七天验证八个现有产品，输出 `USE_EXISTING`、`THIN_INTEGRATION`、`BUILD` 或 `INSUFFICIENT_EVIDENCE`。
 2. `docs/superpowers/plans/2026-08-03-github-picks-m1-evidence-foundation.md`：只有 M0 机器生成结果为 `BUILD` 才能执行，建设十三个信源、不可变证据、实体解析、调度、健康与回放。
 
-M2 评分与反作弊、M3 中文分析和网站、M4 Obsidian、M5 Agent 继续按里程碑单独设计和验收，不与 M0/M1 混为一次开发。
+用户路线变更后，当前执行文档改为 `docs/superpowers/plans/2026-08-03-github-picks-daily-mvp.md`，先建设可运行、可回放的每日纵向闭环。网站、Obsidian 和 Agent 继续按独立里程碑设计和验收，不在 Daily MVP 中假装完成。
