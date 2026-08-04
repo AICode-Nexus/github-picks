@@ -46,9 +46,33 @@ describe("period ranking experience", () => {
       screen.getByRole("heading", { name: "近 7 天持续价值榜" }),
     ).toBeTruthy();
     expect(screen.getAllByRole("link", { name: leader.id })).toHaveLength(1);
-    expect(screen.getByText("2 / 7 天")).toBeTruthy();
     expect(screen.getAllByText(/当前历史库尚缺 5 天/)).toHaveLength(1);
+    const leaderRow = screen.getByTestId(
+      `period-row-${leader.id.replace("/", "-")}`,
+    );
+    expect(
+      within(leaderRow).getByRole("link", { name: leader.id }),
+    ).toBeTruthy();
     const coverage = screen.getByRole("region", { name: "周期数据覆盖" });
+    expect(
+      within(coverage).getByText(`${ranking.reportCount} 份`),
+    ).toBeTruthy();
+    expect(
+      within(coverage).getByText(`${Math.round(ranking.coverageRate * 100)}%`),
+    ).toBeTruthy();
+    expect(
+      within(coverage).getByText(`${ranking.uniqueRepositoryCount} 个`),
+    ).toBeTruthy();
+    expect(
+      within(coverage).getByText(`${ranking.reportCount} / ${ranking.days} 天`),
+    ).toBeTruthy();
+    const coverageProgress = within(coverage).getByRole("progressbar", {
+      name: `${ranking.label}历史数据覆盖率`,
+    });
+    expect(coverageProgress.getAttribute("max")).toBe(String(ranking.days));
+    expect(coverageProgress.getAttribute("value")).toBe(
+      String(ranking.reportCount),
+    );
     expect(within(coverage).getByText(/当前历史库尚缺 5 天/)).toBeTruthy();
     expect(
       within(coverage).getByRole("link", { name: "查看历史库" }),
