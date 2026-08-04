@@ -599,7 +599,7 @@ outside version control.
 - Consumes: `apps/web/out` and committed daily reports.
 - Produces: Pages-ready artifact, operator instructions, and a verified feature branch.
 
-- [ ] **Step 1: Write a workflow contract test**
+- [x] **Step 1: Write a workflow contract test**
 
 Create `apps/web/test/pages-workflow.test.ts` that reads `.github/workflows/pages.yml` and asserts:
 
@@ -612,7 +612,7 @@ expect(workflow).toContain("actions/deploy-pages@v4");
 expect(workflow).toContain("path: apps/web/out");
 ```
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
 ```bash
 pnpm --filter @github-picks/web test -- pages-workflow.test.ts
@@ -620,11 +620,11 @@ pnpm --filter @github-picks/web test -- pages-workflow.test.ts
 
 Expected: FAIL because the workflow does not exist.
 
-- [ ] **Step 3: Implement the Pages workflow**
+- [x] **Step 3: Implement the Pages workflow**
 
 Use `actions/checkout@v6`, `actions/setup-node@v6`, Corepack, `pnpm install --frozen-lockfile`, `actions/configure-pages@v5`, `actions/upload-pages-artifact@v4`, and `actions/deploy-pages@v4`. The build job sets `NEXT_PUBLIC_BASE_PATH: "/github-picks"`, runs `pnpm check`, builds `@github-picks/web`, creates `.nojekyll`, and uploads `apps/web/out`. The deploy job grants only `pages: write` and `id-token: write` beyond contents read.
 
-- [ ] **Step 4: Document local and Pages operation**
+- [x] **Step 4: Document local and Pages operation**
 
 The runbook must include:
 
@@ -639,7 +639,7 @@ The runbook must include:
 
 README must link the web app, latest report, data pipeline runbook, and web runbook.
 
-- [ ] **Step 5: Run final uncached verification**
+- [x] **Step 5: Run final uncached verification**
 
 ```bash
 pnpm format
@@ -660,14 +660,21 @@ test -f apps/web/out/sources/index.html
 
 Expected: all existing and website tests pass uncached, all packages build, e2e passes, and static file counts match the live report.
 
-- [ ] **Step 6: Commit**
+Execution note: the uncached gate found a missing SVG title, which was fixed before
+rerunning lint. The first combined Playwright run also showed resource-dependent
+timeouts with six parallel browser workers: the desktop project passed, the mobile
+project passed independently with six workers, and the full 12-test suite passed
+repeatedly after limiting shared dev-server concurrency to two workers. Coverage and
+assertions are unchanged.
+
+- [x] **Step 6: Commit**
 
 ```bash
 git add .github/workflows/pages.yml README.md docs/runbooks/web-static-site.md docs/superpowers/plans/2026-08-04-github-picks-web-mvp.md apps/web/test/pages-workflow.test.ts
 git commit -m "ci: publish GitHub Picks static website"
 ```
 
-- [ ] **Step 7: Push the feature branch**
+- [x] **Step 7: Push the feature branch**
 
 ```bash
 git push -u origin codex/github-picks-web-mvp
