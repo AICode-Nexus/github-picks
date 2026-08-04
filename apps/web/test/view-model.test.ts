@@ -2,7 +2,11 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { type DailyReport, DailyReportSchema } from "@github-picks/core/schema";
 import { beforeAll, describe, expect, it } from "vitest";
-import { DIMENSION_META, DIRECTION_META } from "../src/lib/site-meta";
+import {
+  DIMENSION_META,
+  DIRECTION_META,
+  getSourceName,
+} from "../src/lib/site-meta";
 import {
   buildDirectionSummary,
   buildRankingItems,
@@ -33,6 +37,7 @@ describe("site metadata", () => {
       weight: 18,
     });
     expect(DIMENSION_META.security.label).toBe("安全与合规");
+    expect(getSourceName("ai-hot")).toBe("AI HOT");
     expect(
       Object.values(DIMENSION_META).reduce(
         (total, dimension) => total + dimension.weight,

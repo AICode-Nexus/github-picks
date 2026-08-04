@@ -106,6 +106,7 @@ export const SOURCE_NAMES: Readonly<Record<string, string>> = {
   gittrend: "GitTrend",
   hublens: "HubLens",
   "hacker-news": "Hacker News",
+  "ai-hot": "AI HOT",
   "openssf-scorecard": "OpenSSF Scorecard",
   osv: "OSV",
   "deps-dev": "deps.dev",
