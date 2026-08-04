@@ -1,32 +1,8 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Noto_Sans_SC, Noto_Serif_SC } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 import "../styles/globals.css";
-
-const serif = Noto_Serif_SC({
-  weight: "variable",
-  subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-  preload: false,
-});
-
-const sans = Noto_Sans_SC({
-  weight: "variable",
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-  preload: false,
-});
-
-const mono = IBM_Plex_Mono({
-  weight: ["400", "500", "600"],
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -48,8 +24,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="zh-CN">
-      <body className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang="zh-CN" data-scroll-behavior="smooth">
+      <body>
         <a className="skip-link" href="#main-content">
           跳到主要内容
         </a>

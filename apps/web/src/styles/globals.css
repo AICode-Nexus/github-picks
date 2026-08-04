@@ -6,9 +6,14 @@
   --vermilion: #e34b32;
   --signal: #b8f34a;
   --panel: #20231f;
-  --serif: var(--font-serif), "Songti SC", serif;
-  --sans: var(--font-sans), sans-serif;
-  --mono: var(--font-mono), monospace;
+  --vermilion-on-dark: #f4775e;
+  --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
+  --sans:
+    "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei",
+    sans-serif;
+  --mono:
+    "IBM Plex Mono", "SFMono-Regular", "Cascadia Code", "Liberation Mono",
+    monospace;
   --page-width: 1440px;
   --gutter: clamp(1rem, 3vw, 3.25rem);
 }
@@ -159,7 +164,7 @@ select {
   align-items: start;
   margin: 1rem 0 0;
   padding: 0.9rem 1rem;
-  color: var(--paper);
+  color: var(--ink);
   background: var(--vermilion);
   border: 1px solid var(--ink);
   box-shadow: 4px 4px 0 var(--ink);
@@ -752,6 +757,11 @@ select {
 
 .section-heading--dark {
   border-color: var(--paper);
+}
+
+.section-heading--dark .eyebrow,
+.evidence-boundary .eyebrow {
+  color: var(--vermilion-on-dark);
 }
 
 .section-heading--dark > div > p {

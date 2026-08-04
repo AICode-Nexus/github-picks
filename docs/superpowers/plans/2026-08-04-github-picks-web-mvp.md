@@ -517,14 +517,16 @@ git commit -m "feat: add GitHub Picks intelligence pages"
 - Create: `apps/web/playwright.config.ts`
 - Create: `apps/web/e2e/site.spec.ts`
 - Create: `apps/web/e2e/accessibility.spec.ts`
-- Modify: `apps/web/package.json`
-- Modify: `pnpm-lock.yaml`
+- Create: `apps/web/src/app/icon.svg`
+- Modify: `.gitignore`
+- Modify: `apps/web/src/app/layout.tsx`
+- Modify: `apps/web/src/styles/globals.css`
 
 **Interfaces:**
 - Consumes: complete static website.
 - Produces: reproducible desktop/mobile navigation and accessibility gates.
 
-- [ ] **Step 1: Write browser acceptance journeys**
+- [x] **Step 1: Write browser acceptance journeys**
 
 Configure Playwright with Chromium desktop and a 375×812 mobile project. Use `pnpm --filter @github-picks/web dev` as the web server on port 3100.
 
@@ -542,7 +544,7 @@ await expect(page.locator("body")).not.toHaveCSS("overflow-x", "scroll");
 
 The accessibility test runs `AxeBuilder` on `/`, `/sources/`, one direction, and one detail page with zero serious or critical violations.
 
-- [ ] **Step 2: Run the browser baseline**
+- [x] **Step 2: Run the browser baseline**
 
 ```bash
 pnpm --filter @github-picks/web exec playwright install chromium
@@ -551,11 +553,11 @@ pnpm --filter @github-picks/web test:e2e
 
 Expected: the journeys execute against the real site. A failure is evidence for a narrow UI correction; a clean run authorizes no production change in this task.
 
-- [ ] **Step 3: Fix only observed UI acceptance failures using a red/green regression**
+- [x] **Step 3: Fix only observed UI acceptance failures using a red/green regression**
 
 For each observed failure, first retain the failing browser assertion (or add a smaller failing component test), then adjust only the relevant semantic heading, link name, focus style, responsive grid, table card, or reduced-motion rule. Do not add unrelated animation or new product scope. If the baseline is green, skip this step.
 
-- [ ] **Step 4: Run browser and production checks**
+- [x] **Step 4: Run browser and production checks**
 
 ```bash
 pnpm --filter @github-picks/web test:e2e
@@ -564,16 +566,23 @@ pnpm --filter @github-picks/web build
 
 Expected: desktop, mobile, and axe projects pass; build exports all routes.
 
-- [ ] **Step 5: Manually inspect screenshots**
+- [x] **Step 5: Manually inspect screenshots**
 
 Capture and inspect `/`, `/directions/ai-agent/`, one repository page, and `/sources/` at 1440×1000 and 375×812. Confirm typography, no overlap, no clipped score bars, clear degraded-source treatment, and no horizontal scroll.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add apps/web/playwright.config.ts apps/web/e2e apps/web/package.json pnpm-lock.yaml apps/web/src
 git commit -m "test: verify GitHub Picks web experience"
 ```
+
+Execution note: the first real browser run exposed an offline `next/font/google`
+compile failure, WCAG AA contrast failures in the degraded-source and dark-panel
+accents, and a missing favicon. The fixes use a network-independent Chinese system
+font stack, accessible accent colors, and a static SVG icon. Eight production-export
+screenshots were inspected from `output/playwright/`; generated QA artifacts stay
+outside version control.
 
 ---
 
