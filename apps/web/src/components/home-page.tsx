@@ -1,5 +1,4 @@
 import type { DailyReport } from "@github-picks/core/schema";
-import { AlertTriangle, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { buildDailyRankingItems } from "../lib/daily-ranking";
 import { DIMENSION_IDS, DIMENSION_META, DIRECTION_IDS } from "../lib/site-meta";
@@ -45,15 +44,8 @@ function formatGeneratedAt(generatedAt: string): string {
 
 export function HomePage({ report }: HomePageProps) {
   const items = buildDailyRankingItems(report);
-  const topStory = items[0];
-  if (topStory === undefined) {
-    throw new Error("live DailyReport has no overall ranking");
-  }
 
   const sourceSummary = buildSourceSummary(report);
-  const problemSources = sourceSummary.items.filter(
-    (source) => source.status !== "healthy",
-  );
   const date = formatReportDate(report.date);
   const cover: DailyMastheadModel = {
     ...date,
@@ -70,31 +62,7 @@ export function HomePage({ report }: HomePageProps) {
       <div className="page-shell">
         <PeriodNavigation active="daily" />
 
-        {sourceSummary.hasProblems ? (
-          <aside className="source-warning" data-testid="source-warning">
-            <AlertTriangle aria-hidden="true" size={19} />
-            <div>
-              <strong>本期存在信源降级，榜单仍按可用证据发布</strong>
-              <ul>
-                {problemSources.map((source) => (
-                  <li key={source.id}>
-                    {source.name}：{source.message}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <Link href="/sources/">
-              查看影响范围
-              <ArrowRight aria-hidden="true" size={17} />
-            </Link>
-          </aside>
-        ) : null}
-
-        <DailyMasthead
-          cover={cover}
-          topStory={topStory}
-          sources={sourceSummary}
-        />
+        <DailyMasthead cover={cover} sources={sourceSummary} />
 
         <DailyRanking items={items} />
 
@@ -109,15 +77,18 @@ export function HomePage({ report }: HomePageProps) {
               同时看实用价值、维护活动、组织连续性、工程成熟度、采用、安全、趋势与创新。发布分、置信度和风险扣分始终分开展示。
             </p>
           </div>
-          <ol className="weight-list">
-            {DIMENSION_IDS.map((id, index) => (
-              <li key={id}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{DIMENSION_META[id].label}</strong>
-                <em>{DIMENSION_META[id].weight}%</em>
-              </li>
-            ))}
-          </ol>
+          <details className="method-note__details">
+            <summary>查看八维评分权重</summary>
+            <ol className="weight-list">
+              {DIMENSION_IDS.map((id, index) => (
+                <li key={id}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{DIMENSION_META[id].label}</strong>
+                  <em>{DIMENSION_META[id].weight}%</em>
+                </li>
+              ))}
+            </ol>
+          </details>
           <aside>
             <strong>读榜提示</strong>
             <p>

@@ -10,6 +10,7 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { HomePage } from "../src/components/home-page";
+import { SiteFooter } from "../src/components/site-footer";
 
 let report: DailyReport;
 
@@ -34,7 +35,7 @@ describe("GitHub Picks homepage", () => {
     render(<HomePage report={report} />);
 
     expect(screen.getByRole("heading", { name: /今日开源情报/ })).toBeTruthy();
-    expect(screen.getByText(`${report.counts.discovered} 个候选`)).toBeTruthy();
+    expect(screen.getByText("候选 → 补全 → 发布")).toBeTruthy();
     expect(
       screen.getAllByRole("link", { name: firstRepositoryId }).length,
     ).toBeGreaterThan(0);
@@ -106,6 +107,40 @@ describe("GitHub Picks homepage", () => {
         newProjectIds.has(repositoryId),
       ),
     );
+  });
+
+  it("consolidates the report, source and direction summaries", () => {
+    const firstRepositoryId = report.rankings.overall[0];
+    if (firstRepositoryId === undefined) {
+      throw new Error("missing ranked test repository");
+    }
+
+    const { container } = render(<HomePage report={report} />);
+
+    expect(screen.getByRole("region", { name: /今日开源情报/ })).toBeTruthy();
+    expect(screen.getAllByText(/HubLens/)).toHaveLength(1);
+    expect(
+      screen.getByText(
+        `${report.counts.discovered} → ${report.counts.enriched} → ${report.counts.published}`,
+      ),
+    ).toBeTruthy();
+    expect(screen.queryByTestId("source-warning")).toBeNull();
+    expect(
+      screen.getAllByRole("link", { name: firstRepositoryId }),
+    ).toHaveLength(1);
+
+    const directionIndex = container.querySelector(".direction-index");
+    expect(directionIndex).toBeTruthy();
+    for (const repositoryId of report.rankings.overall) {
+      expect(directionIndex?.textContent).not.toContain(repositoryId);
+    }
+  });
+
+  it("keeps only the external project link in the footer", () => {
+    render(<SiteFooter />);
+
+    expect(screen.queryByRole("navigation", { name: "页脚导航" })).toBeNull();
+    expect(screen.getByRole("link", { name: "访问 GitHub" })).toBeTruthy();
   });
 
   it("does not show a warning strip when every source is healthy", () => {
