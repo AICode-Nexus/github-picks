@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { type DailyReport, DailyReportSchema } from "@github-picks/core/schema";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { HistoryIndexPage } from "../src/components/history-index-page";
 import { HistoryReportPage } from "../src/components/history-report-page";
@@ -34,6 +34,8 @@ afterEach(cleanup);
 describe("period ranking experience", () => {
   it("renders honest coverage and the sustained ranking without local navigation", () => {
     const ranking = buildPeriodRanking(reports, "7d");
+    const leader = ranking.items[0];
+    if (leader === undefined) throw new Error("missing period leader");
 
     render(<PeriodRankingPage ranking={ranking} />);
 
@@ -43,8 +45,14 @@ describe("period ranking experience", () => {
     expect(
       screen.getByRole("heading", { name: "近 7 天持续价值榜" }),
     ).toBeTruthy();
+    expect(screen.getAllByRole("link", { name: leader.id })).toHaveLength(1);
     expect(screen.getByText("2 / 7 天")).toBeTruthy();
-    expect(screen.getByText(/当前历史库尚缺 5 天/)).toBeTruthy();
+    expect(screen.getAllByText(/当前历史库尚缺 5 天/)).toHaveLength(1);
+    const coverage = screen.getByRole("region", { name: "周期数据覆盖" });
+    expect(within(coverage).getByText(/当前历史库尚缺 5 天/)).toBeTruthy();
+    expect(
+      within(coverage).getByRole("link", { name: "查看历史库" }),
+    ).toBeTruthy();
     expect(screen.getAllByTestId(/^period-row-/).length).toBeGreaterThan(0);
   });
 });
