@@ -10,7 +10,7 @@ import {
 import { describe, expect, it } from "vitest";
 import type { RecommendationGenerator } from "../src/ai-analysis.js";
 import { parseGitHubSnapshot } from "../src/github.js";
-import { runDailyPipeline } from "../src/pipeline.js";
+import { createDiscoveryAdapters, runDailyPipeline } from "../src/pipeline.js";
 
 const observedAt = "2026-08-03T15:30:00.000Z";
 const directions: DirectionId[] = [
@@ -42,6 +42,8 @@ async function replaySnapshots() {
   const events = JSON.parse(await fixture("github-events.json"));
   return directions.map((direction, index) => {
     const fullName = `replay-${index}/project-${index}`;
+    const usesAiHot = index === 0;
+    const aiHotRawRef = rawRef("ai-hot", "f");
     const candidate: Candidate = {
       fullName,
       primaryDirection: direction,
@@ -49,23 +51,41 @@ async function replaySnapshots() {
       signals: [
         {
           fullName,
-          sourceId: "gittrend",
-          sourceTier: "B",
-          independenceGroup: "github-public-data",
+          sourceId: usesAiHot ? "ai-hot" : "gittrend",
+          sourceTier: usesAiHot ? "C" : "B",
+          independenceGroup: usesAiHot
+            ? "ai-hot-aggregator"
+            : "github-public-data",
           direction,
-          evidenceUrl: "https://gittrend.io/api/trending?limit=50",
+          evidenceUrl: usesAiHot
+            ? "https://aihot.virxact.com/items/replay-ai-hot"
+            : "https://gittrend.io/api/trending?limit=50",
           observedAt,
-          rank: index + 1,
+          rank: usesAiHot ? null : index + 1,
           sourceScore: 100 - index,
           stale: false,
-          summaryZh: null,
+          summaryZh: usesAiHot ? "AI Hot 回放候选。" : null,
           metrics: {
-            starVelocity: 100 - index,
-            trendingScore: 100 - index,
+            starVelocity: usesAiHot ? null : 100 - index,
+            trendingScore: usesAiHot ? null : 100 - index,
             discussionPoints: null,
             discussionComments: null,
           },
-          rawObjectRef: null,
+          ...(usesAiHot
+            ? {
+                provenance: {
+                  aggregatorItemId: "replay-ai-hot",
+                  aggregatorUrl:
+                    "https://aihot.virxact.com/items/replay-ai-hot",
+                  originalUrl: `https://github.com/${fullName}`,
+                  upstreamSourceName: "独立开发者 RSS",
+                  selected: false,
+                  publishedAt: observedAt,
+                  discoveredAt: observedAt,
+                },
+              }
+            : {}),
+          rawObjectRef: usesAiHot ? aiHotRawRef.objectRef : null,
         },
       ],
     };
@@ -87,6 +107,14 @@ async function replaySnapshots() {
     return RepositorySnapshotSchema.parse(snapshot);
   });
 }
+
+it("registers AI Hot exactly once in live discovery", () => {
+  expect(
+    createDiscoveryAdapters().filter(
+      (adapter) => adapter.sourceId === "ai-hot",
+    ),
+  ).toHaveLength(1);
+});
 
 describe("daily pipeline replay", () => {
   it("generates schema-valid JSON, Markdown and manifest without network", async () => {
@@ -111,6 +139,12 @@ describe("daily pipeline replay", () => {
             status: "degraded",
             observedAt,
             message: "数据超过 48 小时",
+          },
+          {
+            sourceId: "ai-hot",
+            status: "healthy",
+            observedAt,
+            message: null,
           },
         ],
         snapshots: await replaySnapshots(),
@@ -170,15 +204,19 @@ describe("daily pipeline replay", () => {
       JSON.parse(await readFile(join(outputDirectory, "report.json"), "utf8")),
     ).toEqual(report);
     expect(
+      report.repositories[0]?.snapshot.candidateSignals[0]?.provenance
+        ?.aggregatorItemId,
+    ).toBe("replay-ai-hot");
+    expect(
       await readFile(join(outputDirectory, "report.md"), "utf8"),
     ).toContain("GitHub Picks Daily");
-    expect(
-      JSON.parse(
-        await readFile(join(outputDirectory, "manifest.json"), "utf8"),
-      ),
-    ).toMatchObject({
+    const manifest = JSON.parse(
+      await readFile(join(outputDirectory, "manifest.json"), "utf8"),
+    ) as { configHash: string; counts: unknown; rawObjectRefs: string[] };
+    expect(manifest).toMatchObject({
       configHash: report.configHash,
       counts: report.counts,
     });
+    expect(manifest.rawObjectRefs).toContain(`sha256:${"f".repeat(64)}`);
   });
 });

@@ -36,6 +36,17 @@ describe("GitHub Picks config", () => {
   it("registers every source with evidence and independence metadata", async () => {
     const config = await loadPicksConfig("../../config/picks.yaml");
 
+    expect(
+      config.sources.find((source) => source.sourceId === "ai-hot"),
+    ).toEqual({
+      sourceId: "ai-hot",
+      name: "AI HOT",
+      tier: "C",
+      purpose: ["discovery", "cross_validation"],
+      independenceGroup: "ai-hot-aggregator",
+      evidenceUrl: "https://aihot.virxact.com/all",
+    });
+
     expect(config.sources.length).toBeGreaterThanOrEqual(7);
     expect(new Set(config.sources.map((source) => source.sourceId)).size).toBe(
       config.sources.length,

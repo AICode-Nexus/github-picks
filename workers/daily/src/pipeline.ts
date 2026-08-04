@@ -23,9 +23,11 @@ import type {
   RecommendationGenerator,
   RecommendationInput,
 } from "./ai-analysis.js";
-import { discoverCandidates } from "./discovery.js";
+import { FileConditionalArtifactCache } from "./conditional-cache.js";
+import { type DiscoveryAdapter, discoverCandidates } from "./discovery.js";
 import { enrichCandidate } from "./enrichment.js";
 import { FileRawStore } from "./raw-store.js";
+import { AiHotAdapter } from "./sources/ai-hot.js";
 import { ConfiguredSeedAdapter } from "./sources/configured-seed.js";
 import { GitHubSearchAdapter } from "./sources/github-search.js";
 import { GitHubTrendingAdapter } from "./sources/github-trending.js";
@@ -61,6 +63,18 @@ interface SnapshotBatch {
   discoveredCount: number;
   sourceHealth: SourceHealth[];
   observedAt: string;
+}
+
+export function createDiscoveryAdapters(): DiscoveryAdapter[] {
+  return [
+    new ConfiguredSeedAdapter(),
+    new GitHubTrendingAdapter(),
+    new GitHubSearchAdapter(),
+    new GitTrendAdapter(),
+    new HubLensAdapter(),
+    new HackerNewsAdapter(),
+    new AiHotAdapter(),
+  ];
 }
 
 function selectCandidates(
@@ -141,23 +155,17 @@ async function liveBatch(
 ): Promise<SnapshotBatch> {
   const observedAt = new Date().toISOString();
   const rawStore = new FileRawStore(options.rawDirectory);
-  const discovery = await discoverCandidates(
-    [
-      new ConfiguredSeedAdapter(),
-      new GitHubTrendingAdapter(),
-      new GitHubSearchAdapter(),
-      new GitTrendAdapter(),
-      new HubLensAdapter(),
-      new HackerNewsAdapter(),
-    ],
-    {
-      config,
-      observedAt,
-      rawStore,
-      githubToken: options.githubToken,
-      fetchImpl: options.fetchImpl,
-    },
+  const conditionalCache = new FileConditionalArtifactCache(
+    options.rawDirectory,
   );
+  const discovery = await discoverCandidates(createDiscoveryAdapters(), {
+    config,
+    observedAt,
+    rawStore,
+    conditionalCache,
+    githubToken: options.githubToken,
+    fetchImpl: options.fetchImpl,
+  });
   const selected = selectCandidates(
     discovery.candidates,
     config.limits.enrichmentLimit,
