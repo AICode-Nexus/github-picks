@@ -185,6 +185,21 @@ export const CandidateMetricsSchema = z
   })
   .strict();
 
+export const CandidateSignalProvenanceSchema = z
+  .object({
+    aggregatorItemId: z.string().min(1),
+    aggregatorUrl: z.url(),
+    originalUrl: z.url(),
+    upstreamSourceName: z.string().min(1),
+    selected: z.boolean(),
+    publishedAt: z.iso.datetime().nullable(),
+    discoveredAt: z.iso.datetime(),
+  })
+  .strict();
+export type CandidateSignalProvenance = z.infer<
+  typeof CandidateSignalProvenanceSchema
+>;
+
 export const CandidateSignalSchema = z
   .object({
     fullName: z.string().regex(/^[^/\s]+\/[^/\s]+$/),
@@ -199,6 +214,7 @@ export const CandidateSignalSchema = z
     stale: z.boolean(),
     summaryZh: z.string().nullable(),
     metrics: CandidateMetricsSchema,
+    provenance: CandidateSignalProvenanceSchema.optional(),
     rawObjectRef: z.string().nullable(),
   })
   .strict();
