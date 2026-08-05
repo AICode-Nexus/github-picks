@@ -229,8 +229,24 @@ test("period rankings expose honest coverage and lead into exact history queries
   await expect(
     page.getByRole("heading", { name: "近 7 天持续价值榜" }),
   ).toBeVisible();
-  await expect(page.getByText("2 / 7 天")).toBeVisible();
-  await expect(page.getByText(/当前历史库尚缺 5 天/)).toBeVisible();
+  const coverage = page.getByRole("region", { name: "周期数据覆盖" });
+  const coverageProgress = coverage.getByRole("progressbar", {
+    name: "近 7 天历史数据覆盖率",
+  });
+  await expect(coverageProgress).toHaveAttribute("max", "7");
+  const reportCountValue = await coverageProgress.getAttribute("value");
+  if (reportCountValue === null) throw new Error("missing report coverage");
+  const reportCount = Number(reportCountValue);
+  expect(reportCount).toBeGreaterThan(0);
+  expect(reportCount).toBeLessThanOrEqual(7);
+  await expect(coverage).toContainText(`${reportCount} / 7 天`);
+  if (reportCount < 7) {
+    await expect(coverage).toContainText(
+      `当前历史库尚缺 ${7 - reportCount} 天`,
+    );
+  } else {
+    await expect(coverage.getByText(/当前历史库尚缺/)).toHaveCount(0);
+  }
   await expectNoHorizontalOverflow(page);
 
   await page.getByRole("link", { name: "查看历史库" }).click();

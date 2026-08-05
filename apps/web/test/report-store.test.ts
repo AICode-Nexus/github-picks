@@ -6,6 +6,7 @@ import type { DailyReport } from "@github-picks/core/schema";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import {
   getLatestLiveReport,
+  getLatestLiveReportForRepository,
   getLiveReportByDate,
   getLiveReportHistory,
   loadDailyReports,
@@ -184,6 +185,41 @@ describe("report store", () => {
     });
     await expect(
       getLiveReportByDate("2026-08-02", { rootDirectory: root }),
+    ).resolves.toBeNull();
+  });
+
+  it("finds the newest live report that still contains a historical repository", async () => {
+    const root = await makeRoot();
+    const repositoryId = fixture.repositories[0]?.snapshot.fullName;
+    if (repositoryId === undefined) {
+      throw new Error("missing repository fixture");
+    }
+
+    await writeReport(root, "2026-08-03", {
+      date: "2026-08-03",
+      mode: "live",
+      generatedAt: "2026-08-03T17:00:00.000Z",
+    });
+    await writeReport(root, "2026-08-04", {
+      date: "2026-08-04",
+      mode: "live",
+      generatedAt: "2026-08-03T19:00:00.000Z",
+      repositories: fixture.repositories.filter(
+        (repository) =>
+          repository.snapshot.fullName.toLowerCase() !==
+          repositoryId.toLowerCase(),
+      ),
+    });
+
+    await expect(
+      getLatestLiveReportForRepository(repositoryId.toUpperCase(), {
+        rootDirectory: root,
+      }),
+    ).resolves.toMatchObject({ date: "2026-08-03" });
+    await expect(
+      getLatestLiveReportForRepository("missing/repository", {
+        rootDirectory: root,
+      }),
     ).resolves.toBeNull();
   });
 

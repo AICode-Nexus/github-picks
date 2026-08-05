@@ -101,3 +101,25 @@ export async function getLiveReportByDate(
   const history = await getLiveReportHistory(options);
   return history.find((report) => report.date === date) ?? null;
 }
+
+export async function getLatestLiveReportForRepository(
+  repositoryId: string,
+  options: ReportStoreOptions = {},
+): Promise<DailyReport | null> {
+  const normalizedRepositoryId = repositoryId.toLowerCase();
+  const history = await getLiveReportHistory(options);
+
+  for (let index = history.length - 1; index >= 0; index -= 1) {
+    const report = history[index];
+    if (
+      report?.repositories.some(
+        (repository) =>
+          repository.snapshot.fullName.toLowerCase() === normalizedRepositoryId,
+      )
+    ) {
+      return report;
+    }
+  }
+
+  return null;
+}
