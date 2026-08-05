@@ -6,20 +6,33 @@ import {
   type DailyRankingFilter,
   type DailyRankingItemModel,
 } from "../lib/daily-ranking";
+import { buildDailyRankingShareText } from "../lib/ranking-share";
+import { CopyRankingButton } from "./copy-ranking-button";
 import { RepositoryRow } from "./repository-row";
 import { TopStoryCard } from "./top-story-card";
 
 export interface DailyRankingProps {
+  date: string;
   items: DailyRankingItemModel[];
 }
 
-export function DailyRanking({ items }: DailyRankingProps) {
+export function DailyRanking({ date, items }: DailyRankingProps) {
   const [filter, setFilter] = useState<DailyRankingFilter>("all");
   const matches = (item: DailyRankingItemModel) =>
     filter === "all" || item.tags.some((tag) => tag.id === filter);
+  const visibleItems = items.filter(matches);
+  const filterLabel =
+    filter === "all"
+      ? "全部"
+      : (DAILY_RANKING_TAGS.find((tag) => tag.id === filter)?.label ?? filter);
+  const shareText = buildDailyRankingShareText({
+    date,
+    filterLabel,
+    items: visibleItems,
+  });
   const leaders = items.filter((item) => item.rank <= 3);
   const rest = items.filter((item) => item.rank > 3);
-  const hasMatches = items.some(matches);
+  const hasMatches = visibleItems.length > 0;
 
   return (
     <section
@@ -33,7 +46,10 @@ export function DailyRanking({ items }: DailyRankingProps) {
           <h2 id="ranking-title">今日综合价值榜</h2>
           <p>每个项目只出现一次；标签用于切换观察视角，不改变综合名次。</p>
         </div>
-        <span className="section-heading__count">{items.length} PICKS</span>
+        <div className="section-heading__actions">
+          <span className="section-heading__count">{items.length} PICKS</span>
+          <CopyRankingButton text={shareText} />
+        </div>
       </header>
 
       <fieldset className="ranking-filters">
