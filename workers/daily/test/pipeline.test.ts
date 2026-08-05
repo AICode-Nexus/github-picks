@@ -11,6 +11,7 @@ import { describe, expect, it } from "vitest";
 import type { RecommendationGenerator } from "../src/ai-analysis.js";
 import { parseGitHubSnapshot } from "../src/github.js";
 import { createDiscoveryAdapters, runDailyPipeline } from "../src/pipeline.js";
+import { DailyManifestSchema } from "../src/publication-artifacts.js";
 
 const observedAt = "2026-08-03T15:30:00.000Z";
 const directions: DirectionId[] = [
@@ -210,9 +211,11 @@ describe("daily pipeline replay", () => {
     expect(
       await readFile(join(outputDirectory, "report.md"), "utf8"),
     ).toContain("GitHub Picks Daily");
-    const manifest = JSON.parse(
-      await readFile(join(outputDirectory, "manifest.json"), "utf8"),
-    ) as { configHash: string; counts: unknown; rawObjectRefs: string[] };
+    const manifest = DailyManifestSchema.parse(
+      JSON.parse(
+        await readFile(join(outputDirectory, "manifest.json"), "utf8"),
+      ),
+    );
     expect(manifest).toMatchObject({
       configHash: report.configHash,
       counts: report.counts,
