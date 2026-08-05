@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "date": "2026-08-05",
+  "mode": "live",
+  "generatedAt": "2026-08-05T02:57:04.894Z",
+  "scoreVersion": "v0.1.0",
+  "analysisVersion": "v1.1.0",
+  "configHash": "bf8cc79d951c6a4053f1c8c98774c54a9ebb6d8250f868fcc1f555da11ef7c9c",
+  "counts": {
+    "discovered": 60,
+    "enriched": 20,
+    "published": 20
+  },
+  "sourceHealth": [
+    {
+      "sourceId": "configured-seed",
+      "status": "healthy",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": null
+    },
+    {
+      "sourceId": "github-trending",
+      "status": "degraded",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": "TypeError"
+    },
+    {
+      "sourceId": "github-search",
+      "status": "healthy",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": null
+    },
+    {
+      "sourceId": "gittrend",
+      "status": "healthy",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": null
+    },
+    {
+      "sourceId": "hublens",
+      "status": "degraded",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": "全部候选信号超过新鲜度阈值"
+    },
+    {
+      "sourceId": "hacker-news",
+      "status": "healthy",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": null
+    },
+    {
+      "sourceId": "ai-hot",
+      "status": "healthy",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": null
+    },
+    {
+      "sourceId": "github-rest",
+      "status": "healthy",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": null
+    },
+    {
+      "sourceId": "openssf-scorecard",
+      "status": "healthy",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": "16/20 个项目缺少 Scorecard"
+    },
+    {
+      "sourceId": "ai-analysis",
+      "status": "healthy",
+      "observedAt": "2026-08-05T02:57:04.894Z",
+      "message": "20/20 个项目的 AI 推荐理由已通过结构与事实边界校验 · ollama/qwen3-vl:8b"
+    }
+  ],
+  "rawObjectRefs": [
+    "sha256:94009ff3b7cb9d8a4ae15a4e457340f4c32d44e6759ef322e44c6dea54f093ad",
+    "sha256:7af75c913821de63fc2fe1aa6e0ecd2c9639187618f2f451141444e8a2ebf4a3",
+    "sha256:09151a6dcb8e22f98f0ed6ae861fb41cf19f5c50701e07281fd4262c58ce811b",
+    "sha256:7352dbc0ad75bd90cd813e600d796dacaa0a07f4ecc7adeefcd43a004c2572fd",
+    "sha256:4a4b3485e78c32ada88534bb9175d7582a6d5d4bfafd8a421dc6aa4a64c9a589",
+    "sha256:183115cda476beb3b0af772cb75b6652ec921ed5fc44c6db9bba8f018347879c",
+    "sha256:865a7cbfe19a44698d60743057ac66b8db573a4cb90c87456e9afc9f88c99ad4",
+    "sha256:8684bfb3c84d8e7720fc336e8ec47420a6ef65130ab2386f4538e7b8c0e0466b",
+    "sha256:e2c0c9bac54c36b9d55a8700bc95598762478bf3ebb0a700015f1921812db33b",
+    "sha256:92122a3dc6a9b795655ea2531f580ecbdb3af7e944a60af2d9595c6a701a9f2a",
+    "sha256:af8456a71bf7867bd3ee51ee6b4c9a4b6cb1cf9f934e9e526bb294cb8fc86775",
+    "sha256:9fc2c0fb12038bd71516305a8be5355238e12bb51c5eeaf42af2c40e05cb1068",
+    "sha256:e52a89ecfe9fa101a4fdb5630e35522543e64809a554bff95295487f59e489d9",
+    "sha256:bcb9dcfa8e906f9d55dd2a1eb0ab26d0b9e55d9d2fe5a0b9a61ba4612d15b5a9",
+    "sha256:4e7fd07d35eafa764a1c81167f3054367fab6c5a54b71d6af563b43478723d2f",
+    "sha256:83e4f03646ae861f666aca1648a173e433f2eb4595952a119d52d45e989217d9",
+    "sha256:9705efbae0cf17f6c53d5178d50888c6a3477e5eed1d2b8cc227b00f7bd28b3c",
+    "sha256:921885b2053c6c029651da75016361342cb624eb1bf74e1b6fc1544163c8d87e",
+    "sha256:313309f1200bff588683e0f97ad0eedd241e79892c42de6cc0f9f4ef3b154ca6",
+    "sha256:9e3aa4cca329e219a65173b0637a96ff18205be093eb5a5e625c1543358fc975",
+    "sha256:ffea511fc6b4f2cdeede92e1597aff04f59e84b2e04a3d3c161cb97085954e27",
+    "sha256:97df54f9599c2f3c0528083149ced674d59e9487559bcbf301c3a77d78cf7683",
+    "sha256:88a1b76d173f2f9f54225c6a1b4c3772c2857355dfea13a86f503d443e3f9914",
+    "sha256:77d79a1040ca312012ddbc275e96934cdb18f63808769a2aa4f89b8a68929b30",
+    "sha256:40718410cce1b69b7f7c59f8b612d86f3331642e4ceea20496786fd4062cbab4",
+    "sha256:c6ba944bec8323fcda4562dae285c2b50b1a7f267f7e7894da342b008cc5ec07",
+    "sha256:5f3509cbf87663d7757e0700f3a102bc0e3944a334eb596039b4b6877bba5696",
+    "sha256:bc4161d5be090fe0b8e764ffd15a1643279b85eefc69f3d28cb20e94ccb474a1",
+    "sha256:ec0c3f60e465b53454f4a0a616cd4b8459b645f74342d64b3b4dad115dbe9632",
+    "sha256:2f7d88985b03606889a7990bbc9343b9fd34c079c0881e503e44020364f52308",
+    "sha256:a923a727dca5cc93ba379f93a59a8527a8e9e9693ec188c21b8177b4a85017a8",
+    "sha256:f41bd356ac15c9d00c83566c2d7d4db5c52c8afe78882f99fd6b90dae941b78b",
+    "sha256:f6f57a0875dc1d8eef8e0d112a01475c041a4f1b02ce30694dbdbafff2a8ac7f",
+    "sha256:f9bc3257ac351c1a1e930b337f54d7e044610a76f9a6bc287a429b128f82d7fe",
+    "sha256:029357c02ec7e4986a065e047c7c8693f73a88c9ac23d933522f568bcc1ffbc9",
+    "sha256:8458920d0e9a9d0632d71bf1cca608a8592bd405b4f7bcc2f3e0eb194239d4d1",
+    "sha256:ece3ef747116b7ee6eaa7aa7fc1ccacbeb7ae4d6d27584692370b7abc91aef0b",
+    "sha256:179e3f27e0fcf886bce138f370ad8a805ebf1b53b29386f0ea857704bb48b647",
+    "sha256:eead4115e4ec79a9bce9dd8b235776e97aa15f13c60e4c016655851462104c1c",
+    "sha256:90bd7b690a66c8ab098831a8706064d506533281e3710450d5dd6fdea220f532",
+    "sha256:faa6a0eb7e071f1983dd2790e57fac07c931b9599299ab7e2ead6c6f0db88474",
+    "sha256:1193613d97d7438101cc020ed6d743253d56e787b21299a607411bb9aa0d1673",
+    "sha256:38caa910822cf19b7428621f8839e0a3688e3912005273711fbb471b4376bfd9",
+    "sha256:1cbb5e8062a4744242f52e7ae8de738686f8436310b4703342363e5613a3ca95",
+    "sha256:a3c794f59e9c8ed0693edf627e9baaf404ac785ed91e553aa25a34d796a0f73c",
+    "sha256:5a5918e347b83256417329059f2702dac1703ce846a0764b0482fcff292d4254",
+    "sha256:94b03308a56816da62117639c4188620defc059130370c39a8b72b729c4d6832",
+    "sha256:5225c01dfbdcec628591d76a466a83d4f48a45cc377bc53c2862a0e749963233",
+    "sha256:8a523ab8c1547ec676d9e9346139cec0f98ed39e5402d302edc616ec10b04810",
+    "sha256:641dd7a962a2a8f4341d67b95d2015fb11978539b2a7cd99c634bbd219bf96cc",
+    "sha256:fb58cc7d25bb49694bb8240ac92dfd348cde6748440b4da41bee79ad79011e48"
+  ],
+  "repositories": [
+    "midspiral/lemmascript",
+    "kimtth/azure-openai-llm-wiki",
+    "juspay/neurolink",
+    "tensorflow/tensorflow",
+    "openxla/xla",
+    "elastic/ml-cpp",
+    "firecrawl/firecrawl",
+    "comfy-org/comfyui",
+    "brian-armstrong/fec",
+    "kirodotdev/kirocrew",
+    "stablyai/orca",
+    "aeternity/aepp-sdk-js",
+    "asamassekou10/ship-safe",
+    "ramit-mitra/blocklist-ipsets",
+    "microsoft/agent-governance-toolkit",
+    "lebtoki/nucleus",
+    "zhaoxuya520/reverse-skill",
+    "sunny-ng/subwaynow-server",
+    "firecrawl/pdf-inspector",
+    "mruoss/flame_k8s_backend"
+  ]
+}
