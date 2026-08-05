@@ -77,9 +77,9 @@ describe("github-picks Agent Skill", () => {
       })),
     );
     const skill = contents.find((item) => item.file === "SKILL.md")?.text ?? "";
-    const references = [...skill.matchAll(/\((references\/[^)]+)\)/g)].map(
-      (match) => match[1],
-    );
+    const references = [...skill.matchAll(/\((references\/[^)]+)\)/g)]
+      .map((match) => match[1])
+      .filter((reference): reference is string => reference !== undefined);
 
     expect(references.sort()).toEqual([
       "references/api.md",
