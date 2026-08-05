@@ -38,6 +38,11 @@ describe("site navigation", () => {
     expect(within(navigation).getByRole("link", { name: "历史" })).toBeTruthy();
     expect(within(navigation).getByRole("link", { name: "信源" })).toBeTruthy();
     expect(
+      within(navigation)
+        .getByRole("link", { name: "Agent" })
+        .getAttribute("href"),
+    ).toBe("/agent");
+    expect(
       within(navigation).getByRole("link", { name: "今日榜单" }),
     ).toBeTruthy();
   });
@@ -50,6 +55,19 @@ describe("site navigation", () => {
       screen
         .getByRole("link", { name: "近 30 天" })
         .getAttribute("aria-current"),
+    ).toBe("page");
+    expect(
+      screen.getByRole("link", { name: "今日" }).getAttribute("aria-current"),
+    ).toBeNull();
+    expect(screen.queryByRole("link", { name: "今日榜单" })).toBeNull();
+  });
+
+  it("marks the Agent tutorial active without rendering homepage anchors", () => {
+    pathname = "/agent/";
+    render(<SiteNavigation />);
+
+    expect(
+      screen.getByRole("link", { name: "Agent" }).getAttribute("aria-current"),
     ).toBe("page");
     expect(
       screen.getByRole("link", { name: "今日" }).getAttribute("aria-current"),

@@ -1100,6 +1100,334 @@ select {
   font-size: 0.67rem;
 }
 
+.agent-page {
+  min-width: 0;
+}
+
+.agent-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(15rem, 3fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding: 4.5rem 0;
+  border-top: 4px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.agent-hero h1,
+.agent-section h2,
+.agent-boundary h2 {
+  font-family: var(--serif);
+  letter-spacing: 0;
+}
+
+.agent-hero h1 {
+  max-width: 10em;
+  margin: 0.7rem 0 1rem;
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 0.98;
+}
+
+.agent-page .agent-hero__copy > p:last-child {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--serif);
+}
+
+.agent-status-list,
+.agent-steps,
+.agent-example-list,
+.agent-capabilities {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agent-status-list {
+  align-self: end;
+  border-top: 1px solid var(--ink);
+}
+
+.agent-status-list li {
+  display: flex;
+  gap: 0.5rem;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+}
+
+.agent-status-list svg {
+  color: var(--vermilion);
+}
+
+.agent-section {
+  margin-top: clamp(3.25rem, 5.5vw, 5.5rem);
+}
+
+.agent-section__heading {
+  padding-bottom: 1rem;
+  border-bottom: 3px solid var(--ink);
+}
+
+.agent-section h2,
+.agent-boundary h2 {
+  margin: 0.6rem 0 0;
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.agent-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid var(--ink);
+}
+
+.agent-steps > li {
+  min-width: 0;
+  padding: 1.5rem;
+  border-right: 1px solid var(--ink);
+}
+
+.agent-steps > li:first-child {
+  padding-left: 0;
+}
+
+.agent-steps > li:last-child {
+  border-right: 0;
+}
+
+.agent-steps h3,
+.agent-capabilities h3,
+.agent-boundary h3 {
+  margin: 0.35rem 0 0;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+}
+
+.agent-step__number {
+  color: var(--vermilion);
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.agent-command {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  width: 100%;
+  min-width: 0;
+  margin-top: 1rem;
+  overflow: hidden;
+  color: var(--paper);
+  background: var(--panel);
+  border: 1px solid var(--ink);
+}
+
+.agent-command__scroll {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.agent-command__scroll:focus-visible {
+  outline-offset: -4px;
+}
+
+.agent-command pre {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  line-height: 1.55;
+  white-space: pre;
+}
+
+.agent-command code,
+.agent-boundary code {
+  font-family: var(--mono);
+}
+
+.agent-global-install {
+  margin-top: 0.75rem;
+}
+
+.agent-global-install summary {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  cursor: pointer;
+}
+
+.agent-global-install summary::before {
+  width: 1.2rem;
+  color: var(--vermilion);
+  content: "+";
+}
+
+.agent-global-install[open] summary::before {
+  content: "−";
+}
+
+.copy-command button {
+  display: inline-flex;
+  width: 5.3rem;
+  min-height: 36px;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.agent-command > .copy-command {
+  padding: 0.65rem 0.65rem 0.65rem 0;
+}
+
+.copy-command button:hover {
+  color: var(--ink);
+  background: var(--signal);
+}
+
+.agent-prompt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.agent-page .agent-prompt p {
+  margin: 0;
+}
+
+.agent-example-list li,
+.agent-capabilities li {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.agent-example-list li {
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+}
+
+.agent-example-list > li > span {
+  color: var(--vermilion);
+  font-family: var(--mono);
+}
+
+.agent-capabilities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.agent-capabilities li {
+  grid-template-columns: auto minmax(0, 1fr);
+  min-width: 0;
+  padding-right: 1.5rem;
+}
+
+.agent-capabilities li:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+
+.agent-capabilities li:nth-child(even) {
+  padding-left: 1.5rem;
+  padding-right: 0;
+}
+
+.agent-capabilities svg {
+  color: var(--vermilion);
+}
+
+.agent-capabilities h3,
+.agent-page .agent-capabilities p,
+.agent-page .agent-example-list p {
+  margin: 0;
+}
+
+.agent-page .agent-capabilities p,
+.agent-page .agent-steps p,
+.agent-page .agent-boundary p,
+.agent-page .agent-boundary li {
+  color: var(--muted);
+  font-family: var(--serif);
+}
+
+.agent-boundary {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+  gap: 2rem;
+  margin-top: clamp(3.25rem, 5.5vw, 5.5rem);
+  padding: 2.25rem 0;
+  border-top: 4px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.agent-boundary > div > p:last-child {
+  max-width: 48rem;
+}
+
+.agent-boundary aside {
+  align-self: start;
+  padding: 1.2rem;
+  color: var(--ink);
+  background: var(--signal);
+  border: 1px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.agent-boundary aside h3 {
+  margin-top: 0;
+}
+
+.agent-boundary aside ol {
+  margin: 0.75rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.agent-page .agent-boundary aside li {
+  color: var(--ink);
+}
+
+.agent-resources {
+  display: flex;
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+}
+
+.agent-resources a {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
 .site-footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -2768,7 +3096,7 @@ select {
 
   .site-navigation__primary {
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr 1fr;
+    grid-template-columns: 1fr 4fr repeat(3, 1fr);
     width: 100%;
     overflow-x: auto;
     scrollbar-width: none;
@@ -2817,6 +3145,31 @@ select {
 @media (max-width: 1050px) {
   .brand__tag {
     display: none;
+  }
+
+  .agent-hero {
+    gap: 2.5rem;
+    padding: 3.5rem 0;
+  }
+
+  .agent-hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .agent-section h2,
+  .agent-boundary h2 {
+    font-size: 2.75rem;
+  }
+
+  .agent-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .agent-steps > li:first-child {
+    grid-column: 1 / -1;
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
   }
 
   .daily-cover__date {
@@ -2921,6 +3274,78 @@ select {
     background-size: 100% 26px;
   }
 
+  .agent-hero,
+  .agent-steps,
+  .agent-capabilities,
+  .agent-boundary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .agent-hero {
+    gap: 2rem;
+    padding: 2.5rem 0;
+  }
+
+  .agent-hero h1 {
+    font-size: 2.7rem;
+  }
+
+  .agent-section h2,
+  .agent-boundary h2 {
+    font-size: 2.25rem;
+  }
+
+  .agent-steps > li,
+  .agent-steps > li:first-child {
+    grid-column: auto;
+    padding: 1.25rem 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .agent-steps > li:last-child {
+    border-bottom: 0;
+  }
+
+  .agent-command pre {
+    padding-right: 1rem;
+  }
+
+  .agent-command {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .agent-command > .copy-command {
+    padding: 0 1rem 1rem;
+  }
+
+  .agent-prompt {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .agent-example-list li {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .agent-example-list .copy-command {
+    grid-column: 2;
+  }
+
+  .agent-capabilities li,
+  .agent-capabilities li:nth-child(even) {
+    padding-right: 0;
+    padding-left: 0;
+    border-right: 0;
+  }
+
+  .agent-boundary {
+    gap: 1.5rem;
+  }
+
+  .agent-resources {
+    display: grid;
+  }
+
   .site-header__inner {
     min-height: var(--header-height);
   }
@@ -2952,7 +3377,7 @@ select {
 
   .site-navigation__primary {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     width: 100%;
     min-height: 64px;
     padding: 0;

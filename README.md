@@ -102,7 +102,8 @@ pnpm --filter @github-picks/web build
 - `/`：最新实时日报；
 - `/rankings/7d/`、`/rankings/30d/`、`/rankings/90d/`、`/rankings/180d/`：周期持续价值榜；
 - `/history/`：按已存档日期查询；
-- `/history/YYYY-MM-DD/`：指定日期的不可变日报快照。
+- `/history/YYYY-MM-DD/`：指定日期的不可变日报快照；
+- `/agent/`：安装、验证并使用 GitHub Picks Agent Skill。
 
 周期榜不重算每日发布分。它先比较窗口内的上榜覆盖率，再比较平均发布分和平均名次，并明确展示实际日报覆盖天数。历史不足 30/90/180 天时不会把缺失日期当成零分。
 
@@ -115,6 +116,8 @@ pnpm --filter @github-picks/web build
 - `rankings/7d.json`、`30d.json`、`90d.json`、`180d.json`：周期榜；
 - `directions/{direction}.json`：五个技术方向的最新榜；
 - `repositories/{owner}/{repo}.json`：已收录仓库的最近事实和历史观测。
+
+网页教程位于 <https://aicode-nexus.github.io/github-picks/agent/>，包含安装、示例提问、验证和故障排查。
 
 安装兼容 Codex 的项目级 Skill：
 
