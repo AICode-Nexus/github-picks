@@ -88,12 +88,19 @@ jobs:
           ) {
             throw new Error("meta, latest report, and report index are inconsistent");
           }
-          if (!/^[a-z0-9_.-]+\/[a-z0-9_.-]+$/.test(repositoryId ?? "")) {
+          if (
+            !/^[A-Za-z0-9][A-Za-z0-9-]{0,38}\/(?!\.{1,2}$)[A-Za-z0-9_.-]+$/.test(
+              repositoryId ?? "",
+            )
+          ) {
             throw new Error("latest report does not identify a safe repository path");
           }
+          const normalizedRepositoryId = repositoryId.toLowerCase();
 
           await parseApiDocument(join(apiRoot, "reports", `${reportDate}.json`));
-          await parseApiDocument(join(apiRoot, "repositories", `${repositoryId}.json`));
+          await parseApiDocument(
+            join(apiRoot, "repositories", `${normalizedRepositoryId}.json`),
+          );
           NODE
 
       - name: Disable Jekyll processing

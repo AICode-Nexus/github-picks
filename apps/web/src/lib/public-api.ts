@@ -18,12 +18,33 @@ import {
   RANKING_PERIOD_META,
 } from "./site-meta";
 
-export const PublicEvidenceSchema = EvidenceSchema.omit({
+export const PublicCandidateSignalSchema = CandidateSignalSchema.omit({
   rawObjectRef: true,
 });
 
-export const PublicCandidateSignalSchema = CandidateSignalSchema.omit({
+export type PublicJsonValue =
+  | null
+  | boolean
+  | number
+  | string
+  | PublicJsonValue[]
+  | { [key: string]: PublicJsonValue };
+
+export const PublicJsonValueSchema: z.ZodType<PublicJsonValue> = z.lazy(() =>
+  z.union([
+    z.null(),
+    z.boolean(),
+    z.number(),
+    z.string(),
+    z.array(PublicJsonValueSchema),
+    z.record(z.string(), PublicJsonValueSchema),
+  ]),
+);
+
+export const PublicEvidenceSchema = EvidenceSchema.omit({
   rawObjectRef: true,
+}).extend({
+  value: PublicJsonValueSchema,
 });
 
 export const PublicRepositorySnapshotSchema = RepositorySnapshotSchema.extend({
@@ -76,11 +97,56 @@ interface PublicRepositoryRanks {
   direction: number | null;
 }
 
+const RANKING_NAMES = [
+  "overall",
+  "rising",
+  "newProjects",
+  "hiddenGems",
+  "active",
+] as const;
+
 function omitRawObjectRef<T extends { rawObjectRef: unknown }>(
   value: T,
 ): Omit<T, "rawObjectRef"> {
   const { rawObjectRef: _rawObjectRef, ...publicValue } = value;
   return publicValue;
+}
+
+function sanitizePublicJsonValue(
+  value: unknown,
+  ancestors = new WeakSet<object>(),
+): PublicJsonValue {
+  if (
+    value === null ||
+    typeof value === "boolean" ||
+    typeof value === "string"
+  ) {
+    return value;
+  }
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value !== "object") {
+    throw new Error("public evidence values must be JSON-compatible");
+  }
+  if (ancestors.has(value)) {
+    throw new Error("public evidence values must not contain cycles");
+  }
+
+  ancestors.add(value);
+  try {
+    if (Array.isArray(value)) {
+      return value.map((item) => sanitizePublicJsonValue(item, ancestors));
+    }
+
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([key]) => key !== "rawObjectRef")
+        .map(([key, item]) => [key, sanitizePublicJsonValue(item, ancestors)]),
+    );
+  } finally {
+    ancestors.delete(value);
+  }
 }
 
 export function toPublicDailyReport(report: DailyReport): PublicDailyReport {
@@ -95,7 +161,10 @@ export function toPublicDailyReport(report: DailyReport): PublicDailyReport {
       ...repository.snapshot,
       candidateSignals:
         repository.snapshot.candidateSignals.map(omitRawObjectRef),
-      evidence: repository.snapshot.evidence.map(omitRawObjectRef),
+      evidence: repository.snapshot.evidence.map((evidence) => ({
+        ...omitRawObjectRef(evidence),
+        value: sanitizePublicJsonValue(evidence.value),
+      })),
     },
   }));
 
@@ -203,6 +272,71 @@ function healthCounts(report: DailyReport): {
   };
 }
 
+function sourceHealthSummary(report: DailyReport) {
+  return {
+    reportDate: report.date,
+    generatedAt: report.generatedAt,
+    ...healthCounts(report),
+    sources: report.sourceHealth,
+  };
+}
+
+function validateRankingReferences(report: DailyReport): void {
+  const repositories = new Map<string, DailyReport["repositories"][number]>();
+  for (const repository of report.repositories) {
+    const repositoryId = repository.snapshot.fullName.toLowerCase();
+    if (repositories.has(repositoryId)) {
+      throw new Error(
+        `report contains duplicate repository: ${repository.snapshot.fullName} (${report.date})`,
+      );
+    }
+    repositories.set(repositoryId, repository);
+  }
+
+  const validateRanking = (
+    rankingName: string,
+    repositoryIds: readonly string[],
+    expectedDirection?: DirectionId,
+  ) => {
+    const seen = new Set<string>();
+    for (const repositoryId of repositoryIds) {
+      const normalizedId = repositoryId.toLowerCase();
+      if (seen.has(normalizedId)) {
+        throw new Error(
+          `ranking contains duplicate repository: ${repositoryId} (${report.date} ${rankingName})`,
+        );
+      }
+      seen.add(normalizedId);
+
+      const repository = repositories.get(normalizedId);
+      if (repository === undefined) {
+        throw new Error(
+          `ranking references missing repository: ${repositoryId} (${report.date} ${rankingName})`,
+        );
+      }
+      if (
+        expectedDirection !== undefined &&
+        repository.snapshot.direction !== expectedDirection
+      ) {
+        throw new Error(
+          `direction ranking references repository in another direction: ${repositoryId} (${report.date} ${rankingName})`,
+        );
+      }
+    }
+  };
+
+  for (const rankingName of RANKING_NAMES) {
+    validateRanking(rankingName, report.rankings[rankingName]);
+  }
+  for (const directionId of DIRECTION_IDS) {
+    validateRanking(
+      `byDirection.${directionId}`,
+      report.rankings.byDirection[directionId],
+      directionId,
+    );
+  }
+}
+
 function rankOf(items: readonly string[], repositoryId: string): number | null {
   const normalizedRepositoryId = repositoryId.toLowerCase();
   const index = items.findIndex(
@@ -288,6 +422,7 @@ export function buildPublicApiDocuments(
 ): PublicApiDocument[] {
   const publicBaseUrl = normalizePublicBaseUrl(options.publicBaseUrl);
   const history = selectLatestLiveReports(reports);
+  for (const report of history) validateRankingReferences(report);
   const latest = history.at(-1) as DailyReport;
   const documents: PublicApiDocument[] = [];
   const metaPath = "api/v1/meta.json";
@@ -409,6 +544,13 @@ export function buildPublicApiDocuments(
 
   for (const periodId of RANKING_PERIOD_IDS) {
     const ranking = buildPeriodRanking(history, periodId);
+    const periodReports = history.filter(
+      (report) =>
+        report.date >= ranking.fromDate && report.date <= ranking.toDate,
+    );
+    if (periodReports.length !== ranking.reportCount) {
+      throw new Error(`period ranking report coverage mismatch: ${periodId}`);
+    }
     const rankingPath = `api/v1/rankings/${periodId}.json`;
     documents.push(
       document(
@@ -422,6 +564,7 @@ export function buildPublicApiDocuments(
               href: publicUrl(publicBaseUrl, item.href),
             })),
           },
+          sourceHealth: periodReports.map(sourceHealthSummary),
         },
         {
           self: apiUrl(publicBaseUrl, rankingPath),
@@ -456,6 +599,7 @@ export function buildPublicApiDocuments(
         {
           direction: { id: directionId, ...DIRECTION_META[directionId] },
           reportDate: latest.date,
+          sourceHealth: sourceHealthSummary(latest),
           items,
         },
         {
@@ -518,6 +662,7 @@ export function buildPublicApiDocuments(
         {
           latestReportDate: latestOccurrence.report.date,
           repository: latestRepository,
+          sourceHealth: sourceHealthSummary(latestOccurrence.report),
           observations,
         },
         {

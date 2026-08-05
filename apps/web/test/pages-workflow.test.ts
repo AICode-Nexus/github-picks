@@ -44,5 +44,11 @@ describe("GitHub Pages workflow", () => {
       "apps/web/out/api/v1/directions/security-supply-chain.json",
     );
     expect(workflow).toContain("document.schemaVersion !== 1");
+    expect(workflow).toContain(
+      "const normalizedRepositoryId = repositoryId.toLowerCase();",
+    );
+    expect(workflow).toMatch(
+      /join\(apiRoot,\s+"repositories",\s+`\$\{normalizedRepositoryId\}\.json`\s*\),/,
+    );
   });
 });

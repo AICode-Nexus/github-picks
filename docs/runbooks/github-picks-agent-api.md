@@ -53,7 +53,7 @@ pnpm --filter @github-picks/web api:generate
 /repositories/{owner}/{repo}.json
 ```
 
-每份文档都有 `schemaVersion`、`generatedAt`、`data`、`links` 和 `attribution`。当前 `schemaVersion` 固定为 `1`。v1 可以增加字段，客户端应忽略未知字段；版本不为 `1` 时应停止解析，不能猜测字段映射。数组顺序属于契约，客户端不得按 Star 或模型判断重新排序。
+每份文档都有 `schemaVersion`、`generatedAt`、`data`、`links` 和 `attribution`。当前 `schemaVersion` 固定为 `1`。v1 可以增加字段，客户端应忽略未知字段；版本不为 `1` 时应停止解析，不能猜测字段映射。数组顺序属于契约，客户端不得按 Star 或模型判断重新排序。周期、方向和仓库详情同时携带对应日报的 `sourceHealth` 摘要，Agent 必须把降级、离线和证据覆盖限制告诉用户。
 
 日报索引和周期榜只消费 live 报告。同一天有多次实时运行时，使用 `generatedAt` 最新的一份。周期覆盖不足时，`reportCount` 和 `missingDayCount` 必须原样披露，缺失日不能补零。
 
@@ -133,7 +133,7 @@ curl --fail --silent --show-error https://aicode-nexus.github.io/github-picks/ap
 ## 失败恢复
 
 - 没有 live 报告：先完成正式采集与发布检查；不要把 replay 改名发布。
-- Public base URL 无效：只允许 HTTPS；本地测试例外允许 `http://localhost` 或 `http://127.0.0.1`。不得包含凭据、查询串或片段。
+- Public base URL 无效：只允许 HTTPS；本地生成链接时例外允许 `http://localhost`。静态服务器仍可绑定 `127.0.0.1`。不得包含凭据、查询串或片段。
 - 生成中断：修复报告 Schema、路径或序列化错误后重新构建；不要手工补单个 JSON。
 - Pages 门禁失败：按日志中的精确路径复现本地构建，修复后重新推送或重跑工作流。
 - 公网返回旧日期：先核对对应 `master` 提交的 Pages run，再比较 meta、latest 和报告索引；不要在 Agent 中猜测缓存内容。

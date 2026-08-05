@@ -86,6 +86,8 @@ GET /rankings/180d.json
 
 item 包含 `rank`、`id`、方向、语言、站内/GitHub 链接、上榜次数与覆盖率、最佳/平均/最新名次、平均/最新公共分、分数与 Star 变化、置信度和风险扣分。
 
+`data.sourceHealth` 按窗口内实际日报升序列出信源摘要。每项包含报告日期、生成时间、正常/降级/离线计数和当日 `sources`；解释周期结果时同时检查覆盖率与这些信源限制。
+
 排序语义固定为：上榜覆盖率、平均公共分、平均名次、仓库名。`scoreDelta` 或 `starDelta` 为 `null` 表示只有一次观测，不能显示成零变化。
 
 周期与方向组合时，先取用户指定的周期端点，再按 item 的 `directionId` 保序筛选。不要改用最新方向榜，因为它不代表跨周期排名。
@@ -100,7 +102,7 @@ GET /directions/infra-devtools.json
 GET /directions/security-supply-chain.json
 ```
 
-`data` 包含 `direction`、`reportDate` 和 `items`。每项包含该方向内的 `rank`、公开仓库对象以及站内/GitHub 链接。
+`data` 包含 `direction`、`reportDate`、当日 `sourceHealth` 和 `items`。每项包含该方向内的 `rank`、公开仓库对象以及站内/GitHub 链接。
 
 方向榜只代表最新 live 日报，不是跨周期方向榜。使用以下中文映射：
 
@@ -120,6 +122,7 @@ owner 和 repo 使用规范化的小写路径。`data` 包含：
 
 - `latestReportDate`；
 - `repository`：最近一次收录时的公开事实、公共评分和中文分析；
+- `sourceHealth`：最近一次收录日报的信源健康摘要；
 - `observations`：该仓库实际出现日期的紧凑历史。
 
 每条 observation 包含日期、生成时间、公共分、置信度、风险扣分、Star、方向，以及 `overall`、`rising`、`newProjects`、`hiddenGems`、`active`、`direction` 六种名次。未进入某榜时名次为 `null`。
@@ -137,4 +140,3 @@ API 没有服务端自由搜索。用户要求语言、风险、许可证、工�
 5. 空集就停止，不从其他来源补项目。
 
 公开分、置信度与风险扣分是不同概念。不要把高分写成低风险，也不要把缺失证据写成负面事实。
-

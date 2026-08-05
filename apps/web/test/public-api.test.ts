@@ -14,6 +14,13 @@ import {
 
 let fixture: DailyReport;
 const temporaryRoots: string[] = [];
+const RANKING_NAMES_FOR_TEST = [
+  "overall",
+  "rising",
+  "newProjects",
+  "hiddenGems",
+  "active",
+] as const;
 
 beforeAll(async () => {
   const reportPath = resolve(
@@ -51,6 +58,28 @@ describe("public report projection", () => {
     expect(
       projected.repositories[0]?.snapshot.evidence[0]?.evidenceUrl,
     ).toMatch(/^https:/);
+  });
+
+  it("removes raw object references nested inside evidence values", () => {
+    const report = structuredClone(fixture);
+    const evidence = report.repositories[0]?.snapshot.evidence[0];
+    if (evidence === undefined) throw new Error("fixture evidence is required");
+    evidence.value = {
+      rawObjectRef: `sha256:${"a".repeat(64)}`,
+      nested: [
+        {
+          label: "public",
+          rawObjectRef: `sha256:${"b".repeat(64)}`,
+        },
+      ],
+    };
+
+    const projected = toPublicDailyReport(report);
+
+    expect(projected.repositories[0]?.snapshot.evidence[0]?.value).toEqual({
+      nested: [{ label: "public" }],
+    });
+    expect(JSON.stringify(projected)).not.toContain("rawObjectRef");
   });
 
   it("rejects replay reports", () => {
@@ -192,9 +221,16 @@ describe("public API documents", () => {
         reportCount: number;
         items: Array<{ id: string; rank: number; href: string }>;
       };
+      sourceHealth: Array<{
+        reportDate: string;
+        healthy: number;
+        degraded: number;
+        offline: number;
+      }>;
     }>(documents, "api/v1/rankings/30d.json");
     const direction = jsonDocument<{
       reportDate: string;
+      sourceHealth: { reportDate: string; degraded: number };
       items: Array<{
         rank: number;
         repository: { snapshot: { fullName: string } };
@@ -202,6 +238,7 @@ describe("public API documents", () => {
     }>(documents, "api/v1/directions/security-supply-chain.json");
     const repository = jsonDocument<{
       latestReportDate: string;
+      sourceHealth: { reportDate: string; degraded: number };
       observations: Array<{
         date: string;
         ranks: Record<string, number | null>;
@@ -230,14 +267,28 @@ describe("public API documents", () => {
     expect(ranking.data.ranking.items[0]?.href).toMatch(
       /^https:\/\/example\.test\/github-picks\/repositories\//,
     );
+    expect(ranking.data.sourceHealth).toEqual([
+      expect.objectContaining({ reportDate: "2026-08-04" }),
+      expect.objectContaining({ reportDate: "2026-08-05", degraded: 2 }),
+    ]);
 
     expect(direction.data.reportDate).toBe("2026-08-05");
+    expect(direction.data.sourceHealth).toMatchObject({
+      reportDate: "2026-08-05",
+      healthy: 8,
+      degraded: 2,
+      offline: 0,
+    });
     expect(
       direction.data.items.map((item) => item.repository.snapshot.fullName),
     ).toEqual(fixture.rankings.byDirection["security-supply-chain"]);
     expect(direction.data.items.map((item) => item.rank)).toEqual([1, 2, 3]);
 
     expect(repository.data.latestReportDate).toBe("2026-08-05");
+    expect(repository.data.sourceHealth).toMatchObject({
+      reportDate: "2026-08-05",
+      degraded: 2,
+    });
     expect(repository.data.observations.map((item) => item.date)).toEqual([
       "2026-08-04",
       "2026-08-05",
@@ -269,5 +320,110 @@ describe("public API documents", () => {
       date: "2026-08-04",
       publishedCount: fixture.counts.published,
     });
+  });
+
+  it.each(RANKING_NAMES_FOR_TEST)(
+    "rejects missing repository references in %s",
+    (rankingName) => {
+      const reports = reportsForApi().map((report) => structuredClone(report));
+      const older = reports.find(
+        (report) =>
+          report.date === "2026-08-04" &&
+          report.generatedAt === "2026-08-04T12:00:00.000Z",
+      );
+      if (older === undefined) throw new Error("older fixture is required");
+      older.rankings[rankingName] = ["missing/repository"];
+
+      expect(() =>
+        buildPublicApiDocuments(reports, {
+          publicBaseUrl: "https://example.test/github-picks",
+        }),
+      ).toThrow("ranking references missing repository");
+    },
+  );
+
+  it("rejects missing, duplicate, and direction-mismatched direction rankings", () => {
+    const missingReports = reportsForApi().map((report) =>
+      structuredClone(report),
+    );
+    const missing = missingReports.find(
+      (report) =>
+        report.date === "2026-08-04" &&
+        report.generatedAt === "2026-08-04T12:00:00.000Z",
+    );
+    if (missing === undefined) throw new Error("older fixture is required");
+    missing.rankings.byDirection["ai-agent"] = ["missing/repository"];
+    expect(() =>
+      buildPublicApiDocuments(missingReports, {
+        publicBaseUrl: "https://example.test/github-picks",
+      }),
+    ).toThrow("ranking references missing repository");
+
+    const duplicate = structuredClone(fixture);
+    const repositoryId = duplicate.rankings.overall[0];
+    if (repositoryId === undefined) {
+      throw new Error("ranked fixture repository is required");
+    }
+    duplicate.rankings.rising = [repositoryId, repositoryId.toUpperCase()];
+    expect(() =>
+      buildPublicApiDocuments([duplicate], {
+        publicBaseUrl: "https://example.test/github-picks",
+      }),
+    ).toThrow("ranking contains duplicate repository");
+
+    const directionMismatch = structuredClone(fixture);
+    const mismatchedRepository = directionMismatch.repositories.find(
+      (repository) => repository.snapshot.direction !== "ai-agent",
+    );
+    if (mismatchedRepository === undefined) {
+      throw new Error("mismatched fixture repository is required");
+    }
+    directionMismatch.rankings.byDirection["ai-agent"] = [
+      mismatchedRepository.snapshot.fullName,
+    ];
+    expect(() =>
+      buildPublicApiDocuments([directionMismatch], {
+        publicBaseUrl: "https://example.test/github-picks",
+      }),
+    ).toThrow("direction ranking references repository in another direction");
+  });
+
+  it("normalizes mixed-case repository API paths", () => {
+    const report = structuredClone(fixture);
+    const originalId = report.rankings.overall[0];
+    if (originalId === undefined) {
+      throw new Error("ranked fixture repository is required");
+    }
+    const repository = report.repositories.find(
+      (item) => item.snapshot.fullName === originalId,
+    );
+    if (repository === undefined) {
+      throw new Error("ranked fixture repository must exist");
+    }
+    const mixedCaseId = originalId
+      .split("/")
+      .map((segment) => `${segment[0]?.toUpperCase()}${segment.slice(1)}`)
+      .join("/");
+    repository.snapshot.fullName = mixedCaseId;
+    for (const rankingName of RANKING_NAMES_FOR_TEST) {
+      report.rankings[rankingName] = report.rankings[rankingName].map((id) =>
+        id === originalId ? mixedCaseId : id,
+      );
+    }
+    for (const directionId of Object.keys(report.rankings.byDirection) as Array<
+      keyof typeof report.rankings.byDirection
+    >) {
+      report.rankings.byDirection[directionId] = report.rankings.byDirection[
+        directionId
+      ].map((id) => (id === originalId ? mixedCaseId : id));
+    }
+
+    const paths = buildPublicApiDocuments([report], {
+      publicBaseUrl: "https://example.test/github-picks",
+    }).map((document) => document.path);
+
+    expect(paths).toContain(
+      `api/v1/repositories/${mixedCaseId.toLowerCase()}.json`,
+    );
   });
 });
