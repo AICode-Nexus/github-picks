@@ -8,9 +8,9 @@
       "files": [],
       "expectations": [
         "读取 reports/latest.json，而不是其他新闻或 GitHub 搜索来源",
-        "按 microsoft/agent-governance-toolkit、comfy-org/comfyui、kirodotdev/kirocrew、firecrawl/firecrawl、stablyai/orca 的公共综合榜顺序输出 5 项",
-        "明确报告日期 2026-08-05，并包含公共分、置信度与风险或证据缺口",
-        "说明信源健康为 8 个正常、2 个降级，不把降级隐藏"
+        "严格按 API 返回的前 5 项综合榜原顺序输出，不按 Star 或模型判断重排",
+        "明确 API 返回的实际报告日期，并包含公共分、置信度与风险或证据缺口",
+        "说明 API 返回的信源健康计数，不把降级或离线状态隐藏"
       ]
     },
     {
@@ -20,8 +20,8 @@
       "files": [],
       "expectations": [
         "读取 rankings/30d.json，并按 security-supply-chain 在本地保序筛选",
-        "结果以前三项 ramit-mitra/blocklist-ipsets、microsoft/agent-governance-toolkit、maester365/maester 的相对顺序开头",
-        "明确实际覆盖 3/30 份日报并缺失 27 天",
+        "严格保持 API 返回的安全方向项目相对顺序，不按工程判断或 Star 重排",
+        "明确 API 返回的 reportCount、days 和 missingDayCount，并披露相关信源健康限制",
         "不按 Star 重排、不生成新分数，并说明工程成熟度与风险证据"
       ]
     },
@@ -33,7 +33,7 @@
       "expectations": [
         "先请求 reports/2099-01-01.json 并识别 404，再只请求一次 reports/index.json",
         "明确 2099-01-01 不存在，不用另一日报替代",
-        "按索引列出 2026-08-05、2026-08-04、2026-08-03",
+        "按 API 索引实际返回的日期顺序列出最近可用日期",
         "不猜日期、不查询 GitHub 或其他外部来源"
       ]
     }

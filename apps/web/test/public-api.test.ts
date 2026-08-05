@@ -181,6 +181,14 @@ function reportsForApi(): DailyReport[] {
   return [replay, duplicate, fixture, older];
 }
 
+function fixtureRepositoryApiPath(): string {
+  const repositoryId = fixture.repositories[0]?.snapshot.fullName;
+  if (repositoryId === undefined) {
+    throw new Error("fixture repository is required");
+  }
+  return `api/v1/repositories/${repositoryId.toLowerCase()}.json`;
+}
+
 describe("public API documents", () => {
   it("builds the complete deterministic v1 document set from live reports", () => {
     const reports = reportsForApi();
@@ -199,7 +207,7 @@ describe("public API documents", () => {
     expect(paths).toContain("api/v1/reports/2026-08-05.json");
     expect(paths).toContain("api/v1/rankings/30d.json");
     expect(paths).toContain("api/v1/directions/security-supply-chain.json");
-    expect(paths).toContain("api/v1/repositories/midspiral/lemmascript.json");
+    expect(paths).toContain(fixtureRepositoryApiPath());
     expect(paths.some((path) => path.includes("2026-08-06"))).toBe(false);
     expect(buildPublicApiDocuments(reports, options)).toEqual(documents);
   });
@@ -243,7 +251,7 @@ describe("public API documents", () => {
         date: string;
         ranks: Record<string, number | null>;
       }>;
-    }>(documents, "api/v1/repositories/midspiral/lemmascript.json");
+    }>(documents, fixtureRepositoryApiPath());
 
     expect(meta.schemaVersion).toBe(1);
     expect(meta.data).toEqual({
@@ -275,19 +283,29 @@ describe("public API documents", () => {
     expect(direction.data.reportDate).toBe("2026-08-05");
     expect(direction.data.sourceHealth).toMatchObject({
       reportDate: "2026-08-05",
-      healthy: 8,
-      degraded: 2,
-      offline: 0,
+      healthy: fixture.sourceHealth.filter((item) => item.status === "healthy")
+        .length,
+      degraded: fixture.sourceHealth.filter(
+        (item) => item.status === "degraded",
+      ).length,
+      offline: fixture.sourceHealth.filter((item) => item.status === "offline")
+        .length,
     });
     expect(
       direction.data.items.map((item) => item.repository.snapshot.fullName),
     ).toEqual(fixture.rankings.byDirection["security-supply-chain"]);
-    expect(direction.data.items.map((item) => item.rank)).toEqual([1, 2, 3]);
+    expect(direction.data.items.map((item) => item.rank)).toEqual(
+      fixture.rankings.byDirection["security-supply-chain"].map(
+        (_repositoryId, index) => index + 1,
+      ),
+    );
 
     expect(repository.data.latestReportDate).toBe("2026-08-05");
     expect(repository.data.sourceHealth).toMatchObject({
       reportDate: "2026-08-05",
-      degraded: 2,
+      degraded: fixture.sourceHealth.filter(
+        (item) => item.status === "degraded",
+      ).length,
     });
     expect(repository.data.observations.map((item) => item.date)).toEqual([
       "2026-08-04",

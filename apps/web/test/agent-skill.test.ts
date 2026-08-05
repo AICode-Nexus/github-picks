@@ -52,7 +52,11 @@ describe("github-picks Agent Skill", () => {
       await readFile(join(skillRoot, "evals/evals.json"), "utf8"),
     ) as {
       skill_name: string;
-      evals: Array<{ prompt: string; expected_output: string }>;
+      evals: Array<{
+        prompt: string;
+        expected_output: string;
+        expectations: string[];
+      }>;
     };
 
     expect(openai).toContain('display_name: "GitHub Picks"');
@@ -65,6 +69,15 @@ describe("github-picks Agent Skill", () => {
     );
     expect(evals.evals.map((item) => item.prompt).join("\n")).toContain(
       "2099-01-01",
+    );
+    expect(evals.evals[0]?.expectations.join("\n")).toContain(
+      "API 返回的前 5 项",
+    );
+    expect(evals.evals[1]?.expectations.join("\n")).toContain(
+      "API 返回的安全方向项目",
+    );
+    expect(evals.evals[2]?.expectations.join("\n")).toContain(
+      "API 索引实际返回的日期",
     );
   });
 
