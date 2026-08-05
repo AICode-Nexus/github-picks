@@ -237,12 +237,46 @@ test("Agent commands scroll inside their own surface on narrow screens", async (
           surfaceLeft: surface.getBoundingClientRect().left,
           surfaceRight: surface.getBoundingClientRect().right,
           viewportRight: document.documentElement.clientWidth,
-          preOverflowX: getComputedStyle(command).overflowX,
+          commandOverflowX: getComputedStyle(command).overflowX,
         };
       });
 
     expect(boundary.surfaceLeft).toBeGreaterThanOrEqual(0);
     expect(boundary.surfaceRight).toBeLessThanOrEqual(boundary.viewportRight);
-    expect(boundary.preOverflowX).toMatch(/auto|scroll/);
+    expect(boundary.commandOverflowX).toMatch(/auto|scroll/);
+  }
+});
+
+test("Agent copy control never covers the install command", async ({
+  page,
+}) => {
+  for (const width of [1440, 1024, 390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto("/agent/");
+
+    const boundary = await page
+      .locator(".agent-command")
+      .first()
+      .evaluate((surface) => {
+        const command = surface.querySelector(".agent-command__scroll");
+        const copy = surface.querySelector(".copy-command");
+        if (command === null || copy === null) {
+          throw new Error("missing Agent command controls");
+        }
+        const commandRect = command.getBoundingClientRect();
+        const copyRect = copy.getBoundingClientRect();
+        return {
+          commandRight: commandRect.right,
+          commandBottom: commandRect.bottom,
+          copyLeft: copyRect.left,
+          copyTop: copyRect.top,
+        };
+      });
+
+    if (width > 760) {
+      expect(boundary.commandRight).toBeLessThanOrEqual(boundary.copyLeft);
+    } else {
+      expect(boundary.commandBottom).toBeLessThanOrEqual(boundary.copyTop);
+    }
   }
 });
