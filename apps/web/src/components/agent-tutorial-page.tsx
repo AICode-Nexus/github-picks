@@ -7,6 +7,7 @@ import {
   GitCompareArrows,
 } from "lucide-react";
 import Link from "next/link";
+import { CopyCommandButton } from "./copy-command-button";
 
 export const PROJECT_INSTALL_COMMAND =
   "DISABLE_TELEMETRY=1 npx -y skills@1.5.21 add AICode-Nexus/github-picks --skill github-picks --agent codex --yes --copy";
@@ -107,12 +108,22 @@ export function AgentTutorialPage() {
                 <pre>
                   <code>{PROJECT_INSTALL_COMMAND}</code>
                 </pre>
+                <CopyCommandButton
+                  value={PROJECT_INSTALL_COMMAND}
+                  label="复制项目级安装命令"
+                />
               </div>
               <details className="agent-global-install">
                 <summary>改为用户级安装</summary>
-                <pre>
-                  <code>{GLOBAL_INSTALL_COMMAND}</code>
-                </pre>
+                <div className="agent-command agent-command--secondary">
+                  <pre>
+                    <code>{GLOBAL_INSTALL_COMMAND}</code>
+                  </pre>
+                  <CopyCommandButton
+                    value={GLOBAL_INSTALL_COMMAND}
+                    label="复制用户级安装命令"
+                  />
+                </div>
               </details>
             </li>
             <li>
@@ -126,7 +137,10 @@ export function AgentTutorialPage() {
             <li>
               <span className="agent-step__number">03</span>
               <h3>开始提问</h3>
-              <p>{VERIFY_PROMPT}</p>
+              <div className="agent-prompt">
+                <p>{VERIFY_PROMPT}</p>
+                <CopyCommandButton value={VERIFY_PROMPT} label="复制验证问题" />
+              </div>
             </li>
           </ol>
         </section>
@@ -144,6 +158,10 @@ export function AgentTutorialPage() {
               <li key={prompt}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <p>{prompt}</p>
+                <CopyCommandButton
+                  value={prompt}
+                  label={`复制示例问题 ${index + 1}`}
+                />
               </li>
             ))}
           </ol>
