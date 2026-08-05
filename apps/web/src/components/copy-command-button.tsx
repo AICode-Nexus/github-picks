@@ -2,6 +2,7 @@
 
 import { Check, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { copyTextToClipboard } from "../lib/clipboard";
 
 export interface CopyCommandButtonProps {
   value: string;
@@ -25,10 +26,7 @@ export function CopyCommandButton({ value, label }: CopyCommandButtonProps) {
 
   const copy = async () => {
     try {
-      if (navigator.clipboard?.writeText === undefined) {
-        throw new Error("clipboard unavailable");
-      }
-      await navigator.clipboard.writeText(value);
+      await copyTextToClipboard(value);
       setState("copied");
       if (resetTimer.current !== undefined) {
         window.clearTimeout(resetTimer.current);
