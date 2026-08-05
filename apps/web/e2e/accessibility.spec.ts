@@ -8,6 +8,7 @@ const routes = [
   "/history/",
   "/history/2026-08-03/",
   "/directions/ai-agent/",
+  "/agent/",
 ] as const;
 
 for (const route of routes) {

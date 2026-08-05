@@ -219,3 +219,30 @@ test("ranking and primary navigation controls retain the minimum readable font s
     expect(size).toBeGreaterThanOrEqual(minimumControlFontSize);
   }
 });
+
+test("Agent commands scroll inside their own surface on narrow screens", async ({
+  page,
+}) => {
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto("/agent/");
+
+    const boundary = await page
+      .locator(".agent-command")
+      .first()
+      .evaluate((surface) => {
+        const command = surface.querySelector(".agent-command__scroll");
+        if (command === null) throw new Error("missing Agent command");
+        return {
+          surfaceLeft: surface.getBoundingClientRect().left,
+          surfaceRight: surface.getBoundingClientRect().right,
+          viewportRight: document.documentElement.clientWidth,
+          preOverflowX: getComputedStyle(command).overflowX,
+        };
+      });
+
+    expect(boundary.surfaceLeft).toBeGreaterThanOrEqual(0);
+    expect(boundary.surfaceRight).toBeLessThanOrEqual(boundary.viewportRight);
+    expect(boundary.preOverflowX).toMatch(/auto|scroll/);
+  }
+});

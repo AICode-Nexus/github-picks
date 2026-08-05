@@ -46,6 +46,58 @@ test("one navigation tree adapts to wide, medium and mobile viewports", async ({
   }
 });
 
+test("Agent tutorial is discoverable, usable and contained at every viewport", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    let copiedText = "";
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        readText: async () => copiedText,
+        writeText: async (value: string) => {
+          copiedText = value;
+        },
+      },
+    });
+  });
+
+  for (const viewport of [
+    { width: 1440, height: 1000 },
+    { width: 1024, height: 900 },
+    { width: 390, height: 844 },
+    { width: 320, height: 700 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    const agentNavigationLink = page
+      .locator('nav[aria-label="主导航"]')
+      .getByRole("link", { name: "Agent", exact: true });
+    await agentNavigationLink.click();
+
+    await expect(page).toHaveURL(/\/agent\/$/);
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: "让 Agent 直接使用 GitHub Picks",
+      }),
+    ).toBeVisible();
+    await expect(agentNavigationLink).toHaveAttribute("aria-current", "page");
+    await expectNoHorizontalOverflow(page);
+  }
+
+  const copyButton = page.getByRole("button", {
+    name: "复制项目级安装命令",
+  });
+  await copyButton.click();
+  await expect(copyButton).toContainText("已复制");
+  await expect
+    .poll(() => page.evaluate(() => navigator.clipboard.readText()))
+    .toBe(
+      "DISABLE_TELEMETRY=1 npx -y skills@1.5.21 add AICode-Nexus/github-picks --skill github-picks --agent codex --yes --copy",
+    );
+});
+
 test("non-home routes hydrate without a navigation mismatch", async ({
   page,
 }) => {

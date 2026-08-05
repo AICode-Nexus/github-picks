@@ -105,9 +105,16 @@ export function AgentTutorialPage() {
               <h3>安装 Skill</h3>
               <p>在项目目录执行命令。安装前可以先审阅公开 Skill 文件。</p>
               <div className="agent-command">
-                <pre>
-                  <code>{PROJECT_INSTALL_COMMAND}</code>
-                </pre>
+                <section
+                  className="agent-command__scroll"
+                  aria-label="项目级安装命令"
+                  // biome-ignore lint/a11y/noNoninteractiveTabindex: Horizontal command scrolling must be keyboard accessible.
+                  tabIndex={0}
+                >
+                  <pre>
+                    <code>{PROJECT_INSTALL_COMMAND}</code>
+                  </pre>
+                </section>
                 <CopyCommandButton
                   value={PROJECT_INSTALL_COMMAND}
                   label="复制项目级安装命令"
@@ -116,9 +123,16 @@ export function AgentTutorialPage() {
               <details className="agent-global-install">
                 <summary>改为用户级安装</summary>
                 <div className="agent-command agent-command--secondary">
-                  <pre>
-                    <code>{GLOBAL_INSTALL_COMMAND}</code>
-                  </pre>
+                  <section
+                    className="agent-command__scroll"
+                    aria-label="用户级安装命令"
+                    // biome-ignore lint/a11y/noNoninteractiveTabindex: Horizontal command scrolling must be keyboard accessible.
+                    tabIndex={0}
+                  >
+                    <pre>
+                      <code>{GLOBAL_INSTALL_COMMAND}</code>
+                    </pre>
+                  </section>
                   <CopyCommandButton
                     value={GLOBAL_INSTALL_COMMAND}
                     label="复制用户级安装命令"
