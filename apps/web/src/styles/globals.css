@@ -1189,6 +1189,10 @@ select {
   overflow-x: auto;
 }
 
+.agent-command__scroll:focus-visible {
+  outline-offset: -4px;
+}
+
 .agent-command pre {
   width: max-content;
   min-width: 100%;

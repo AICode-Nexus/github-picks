@@ -244,6 +244,13 @@ test("Agent commands scroll inside their own surface on narrow screens", async (
     expect(boundary.surfaceLeft).toBeGreaterThanOrEqual(0);
     expect(boundary.surfaceRight).toBeLessThanOrEqual(boundary.viewportRight);
     expect(boundary.commandOverflowX).toMatch(/auto|scroll/);
+
+    const command = page.getByRole("region", {
+      name: "项目级安装命令",
+    });
+    await command.focus();
+    await expect(command).toBeFocused();
+    await expect(command).toHaveCSS("outline-offset", "-4px");
   }
 });
 
