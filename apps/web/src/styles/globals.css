@@ -2722,7 +2722,7 @@ select {
 
   .site-navigation__primary {
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr 1fr;
+    grid-template-columns: 1fr 4fr repeat(3, 1fr);
     width: 100%;
     overflow-x: auto;
     scrollbar-width: none;
@@ -2906,7 +2906,7 @@ select {
 
   .site-navigation__primary {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     width: 100%;
     min-height: 64px;
     padding: 0;

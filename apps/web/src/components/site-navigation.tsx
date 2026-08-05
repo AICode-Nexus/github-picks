@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Bot,
   CalendarRange,
   ChevronDown,
   History,
@@ -119,6 +120,16 @@ export function SiteNavigation() {
         >
           <RadioTower aria-hidden="true" size={18} />
           <span>信源</span>
+        </Link>
+
+        <p className="site-navigation__section-label">接入</p>
+        <Link
+          className="site-navigation__item"
+          href="/agent/"
+          aria-current={isActive("/agent/") ? "page" : undefined}
+        >
+          <Bot aria-hidden="true" size={18} />
+          <span>Agent</span>
         </Link>
       </div>
 
