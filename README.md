@@ -5,7 +5,7 @@ GitHub Picks 是一个中文开源项目情报引擎：从多个发现源持续�
 > GitHub Picks 是独立、非官方项目，与 GitHub, Inc. 不存在隶属或合作关系。当前 `v0.1.0` 评分仍是实验版本，不能替代正式的技术选型、安全审查或许可证审查。
 
 - 网站：<https://aicode-nexus.github.io/github-picks/>（合并并启用 Pages 后生效）
-- 最新实时榜单：[`artifacts/daily/2026-08-04/report.md`](artifacts/daily/2026-08-04/report.md)
+- 日报历史：[`artifacts/daily/`](artifacts/daily/)
 - 运行手册：[`每日数据流水线`](docs/runbooks/daily-pipeline.md) · [`静态网站与 Pages`](docs/runbooks/web-static-site.md)
 
 ## 当前完成范围
@@ -126,7 +126,7 @@ Star 存量对总分的最大直接贡献为 `1.5` 分，Star 速度最大直接
 
 事实层当前使用 GitHub REST 和 OpenSSF Scorecard。AI 推荐理由只消费这份已结构化事实包，不参与打分或改变名次；网站会区分“AI 推荐理由”和降级后的“规则事实摘要”。
 
-更完整的端点、额度、降级和恢复说明见 [`docs/runbooks/daily-pipeline.md`](docs/runbooks/daily-pipeline.md)。首次实时运行与修复后的对照见 [`docs/research/daily/2026-08-03-first-live-run.md`](docs/research/daily/2026-08-03-first-live-run.md)。最新已提交实时榜单见 [`artifacts/daily/2026-08-04/report.md`](artifacts/daily/2026-08-04/report.md)。
+更完整的端点、额度、降级和恢复说明见 [`docs/runbooks/daily-pipeline.md`](docs/runbooks/daily-pipeline.md)。首次实时运行与修复后的对照见 [`docs/research/daily/2026-08-03-first-live-run.md`](docs/research/daily/2026-08-03-first-live-run.md)。已提交实时日报历史见 [`artifacts/daily/`](artifacts/daily/)。
 
 ## 工程结构
 
