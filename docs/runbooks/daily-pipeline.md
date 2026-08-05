@@ -91,6 +91,54 @@ pnpm picks:daily
 
 回放模式始终不调用模型，保证离线可复现。
 
+## 正式发布门禁
+
+正式日报不直接生成到公开历史目录。先运行代码门禁，再把 live 结果写入任务专用暂存目录：
+
+```bash
+nvm use
+TURBO_FORCE=true pnpm check
+
+report_date="$(TZ=Asia/Shanghai date +%F)"
+daily_stage_dir="$(mktemp -d)"
+GITHUB_TOKEN="$(gh auth token)" \
+GITHUB_PICKS_AI_PROVIDER=ollama \
+GITHUB_PICKS_AI_BASE_URL=http://127.0.0.1:11434 \
+GITHUB_PICKS_AI_MODEL=qwen3-vl:8b \
+GITHUB_PICKS_AI_REQUIRED=true \
+pnpm picks:daily --date "$report_date" --mode live --output "$daily_stage_dir"
+
+pnpm picks:publish-check -- "$daily_stage_dir" "$report_date"
+```
+
+`picks:publish-check` 会确定性验证 live 模式、日期、真实网络发现源、GitHub REST 事实、五个方向榜、归档排除、证据完整性、降级说明、AI verified 状态、计数，以及 JSON、Markdown、manifest 三份产物的一致性。失败时不得把暂存结果复制到 `artifacts/daily/`。
+
+候选产物通过后，只提升三份公开文件，再重复验证并构建网站：
+
+```bash
+mkdir -p "artifacts/daily/$report_date"
+cp "$daily_stage_dir/report.json" "artifacts/daily/$report_date/report.json"
+cp "$daily_stage_dir/report.md" "artifacts/daily/$report_date/report.md"
+cp "$daily_stage_dir/manifest.json" "artifacts/daily/$report_date/manifest.json"
+
+pnpm picks:publish-check -- "artifacts/daily/$report_date" "$report_date"
+pnpm --filter @github-picks/web build
+git diff --check
+```
+
+提交时只暂存当天的 `report.json`、`report.md` 和 `manifest.json`。提交进入 `master` 后，现有 Pages 工作流负责再次运行仓库门禁、构建静态网站和部署。
+
+## 每日三次自动运行
+
+当前维护实例使用一个附着于 GitHub Picks 任务的本地 Codex heartbeat，在北京时间每天 `10:00`、`14:00`、`20:00` 执行正式发布链路。自动任务运行在独立 Git worktree 中；开始前要求工作区干净、`origin/master` 可快进同步、GitHub CLI 已认证、Ollama 可访问且存在 `qwen3-vl:8b`。
+
+自动运行遵循以下失败边界：
+
+- 本机休眠、Codex 未运行、网络不可用或模型不可用时，本档失败，不补造历史快照；
+- 采集、发布门禁、测试或网站构建任一步失败时，不提交、不推送；
+- 远端 `master` 在运行期间前进且无法快进时停止，不 rebase、不强推；
+- 推送成功后等待对应 Pages Actions 运行，并把 Actions 成功与页面实际可访问性分开报告。
+
 ## 当前执行信源
 
 | 信源 | 用途 | 独立性处理 | 失败行为 |

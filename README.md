@@ -65,6 +65,21 @@ pnpm picks:daily
 
 默认结果写入 `artifacts/daily/YYYY-MM-DD/`。可用 `--output`、`--config`、`--raw` 和 `--replay-manifest` 显式指定路径。
 
+正式发布先写入隔离目录并执行确定性门禁，避免失败运行覆盖已发布日报：
+
+```bash
+report_date="$(TZ=Asia/Shanghai date +%F)"
+daily_stage_dir="$(mktemp -d)"
+GITHUB_TOKEN="$(gh auth token)" \
+GITHUB_PICKS_AI_PROVIDER=ollama \
+GITHUB_PICKS_AI_MODEL=qwen3-vl:8b \
+GITHUB_PICKS_AI_REQUIRED=true \
+pnpm picks:daily --date "$report_date" --mode live --output "$daily_stage_dir"
+pnpm picks:publish-check -- "$daily_stage_dir" "$report_date"
+```
+
+当前维护实例通过本地 Codex 自动化在北京时间每天 `10:00`、`14:00`、`20:00` 执行上述正式发布链路。本机、Codex 或 Ollama 不可用时会明确失败且不补造错过的历史观测；产物提升、Git 提交和 Pages 验证步骤见[每日数据流水线](docs/runbooks/daily-pipeline.md)。
+
 启动中文网站：
 
 ```bash

@@ -49,5 +49,8 @@ describe("resolveCliPaths", () => {
     expect(packageJson.scripts["picks:daily"]).toBe(
       "tsx workers/daily/src/cli.ts",
     );
+    expect(packageJson.scripts["picks:publish-check"]).toBe(
+      "tsx workers/daily/src/publish-check.ts",
+    );
   });
 });
