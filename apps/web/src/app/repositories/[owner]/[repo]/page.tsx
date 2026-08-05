@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { RepositoryDetail } from "../../../../components/repository-detail";
-import { getLatestLiveReport } from "../../../../lib/report-store";
+import {
+  getLatestLiveReportForRepository,
+  getLiveReportHistory,
+} from "../../../../lib/report-store";
 
 interface RepositoryRouteProps {
   params: Promise<{ owner: string; repo: string }>;
@@ -16,10 +19,19 @@ function splitRepositoryId(fullName: string): { owner: string; repo: string } {
 }
 
 export async function generateStaticParams() {
-  const report = await getLatestLiveReport();
-  return report.repositories.map((repository) =>
-    splitRepositoryId(repository.snapshot.fullName),
-  );
+  const history = await getLiveReportHistory();
+  const repositories = new Map<string, string>();
+
+  for (const report of history) {
+    for (const repository of report.repositories) {
+      repositories.set(
+        repository.snapshot.fullName.toLowerCase(),
+        repository.snapshot.fullName,
+      );
+    }
+  }
+
+  return [...repositories.values()].map(splitRepositoryId);
 }
 
 export const dynamicParams = false;
@@ -28,8 +40,9 @@ export async function generateMetadata({
   params,
 }: RepositoryRouteProps): Promise<Metadata> {
   const { owner, repo } = await params;
-  const report = await getLatestLiveReport();
   const repositoryId = `${owner}/${repo}`;
+  const report = await getLatestLiveReportForRepository(repositoryId);
+  if (report === null) return {};
   const repository = report.repositories.find(
     (item) =>
       item.snapshot.fullName.toLowerCase() === repositoryId.toLowerCase(),
@@ -46,13 +59,9 @@ export async function generateMetadata({
 
 export default async function Page({ params }: RepositoryRouteProps) {
   const { owner, repo } = await params;
-  const report = await getLatestLiveReport();
   const repositoryId = `${owner}/${repo}`;
-  const exists = report.repositories.some(
-    (item) =>
-      item.snapshot.fullName.toLowerCase() === repositoryId.toLowerCase(),
-  );
-  if (!exists) notFound();
+  const report = await getLatestLiveReportForRepository(repositoryId);
+  if (report === null) notFound();
 
   return <RepositoryDetail report={report} repositoryId={repositoryId} />;
 }

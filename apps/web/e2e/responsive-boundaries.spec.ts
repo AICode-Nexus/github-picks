@@ -1,6 +1,87 @@
 import { expect, test } from "@playwright/test";
 
 const minimumControlFontSize = 0.78 * 16;
+const minimumEditorialGap = 12;
+
+test("top ranking numbers keep clear of their story content", async ({
+  page,
+}) => {
+  for (const width of [1638, 1920, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+
+    const boundaries = await page.locator(".top-story").evaluateAll((cards) =>
+      cards.map((card) => {
+        const number = card.querySelector<HTMLElement>(
+          '.top-story__number span[aria-hidden="true"]',
+        );
+        const body = card.querySelector<HTMLElement>(".top-story__body");
+        if (number === null || body === null) {
+          throw new Error("missing top ranking card content");
+        }
+
+        const numberRange = document.createRange();
+        numberRange.selectNodeContents(number);
+        const numberRect = numberRange.getBoundingClientRect();
+        const bodyRect = body.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+        return {
+          cardLeft: cardRect.left,
+          cardRight: cardRect.right,
+          numberLeft: numberRect.left,
+          numberRight: numberRect.right,
+          bodyLeft: bodyRect.left,
+          bodyRight: bodyRect.right,
+        };
+      }),
+    );
+
+    expect(boundaries).toHaveLength(3);
+    for (const boundary of boundaries) {
+      expect(boundary.numberLeft).toBeGreaterThanOrEqual(boundary.cardLeft);
+      expect(boundary.numberRight + minimumEditorialGap).toBeLessThanOrEqual(
+        boundary.bodyLeft,
+      );
+      expect(boundary.bodyRight).toBeLessThanOrEqual(boundary.cardRight);
+    }
+  }
+});
+
+test("mobile source status cards preserve a readable value column", async ({
+  page,
+}) => {
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto("/sources/");
+
+    const dimensions = await page
+      .locator(".source-health-table tbody tr")
+      .first()
+      .evaluate((row) => {
+        const source = row.querySelector("th");
+        const sourceName = source?.querySelector("strong");
+        const sourceId = source?.querySelector("small");
+        if (source === null || sourceName === null || sourceId === null) {
+          throw new Error("missing source status card content");
+        }
+
+        const rowRect = row.getBoundingClientRect();
+        const sourceRect = source.getBoundingClientRect();
+        const sourceNameRect = sourceName.getBoundingClientRect();
+        const sourceIdRect = sourceId.getBoundingClientRect();
+        return {
+          rowWidth: rowRect.width,
+          sourceWidth: sourceRect.width,
+          sourceNameWidth: sourceNameRect.width,
+          sourceIdWidth: sourceIdRect.width,
+        };
+      });
+
+    expect(dimensions.sourceWidth).toBeGreaterThan(dimensions.rowWidth * 0.8);
+    expect(dimensions.sourceNameWidth).toBeGreaterThan(80);
+    expect(dimensions.sourceIdWidth).toBeGreaterThan(80);
+  }
+});
 
 test("opened mobile period menu stays entirely within each narrow viewport", async ({
   page,

@@ -559,6 +559,7 @@ select {
 .top-story {
   display: grid;
   grid-template-columns: 3.25rem minmax(0, 1fr);
+  column-gap: 0.75rem;
   height: 100%;
   padding: 1.5rem;
 }
@@ -570,10 +571,11 @@ select {
 .top-story__number {
   color: var(--vermilion);
   font-family: var(--serif);
-  font-size: clamp(2.2rem, 4.5vw, 5.5rem);
+  font-size: 3.25rem;
   font-weight: 300;
+  font-variant-numeric: tabular-nums;
   line-height: 0.85;
-  letter-spacing: -0.08em;
+  letter-spacing: 0;
 }
 
 .top-story__meta,
@@ -3059,7 +3061,7 @@ select {
 
   .top-story,
   .top-story--featured {
-    grid-template-columns: 3.25rem 1fr;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
     padding: 1.6rem 0;
     border-right: 0;
     border-bottom: 0;
@@ -3565,9 +3567,19 @@ select {
   .source-health-table th,
   .source-health-table td {
     display: grid;
-    grid-template-columns: 6.5rem 1fr;
+    grid-template-columns: 5rem minmax(0, 1fr);
     padding: 0.45rem 0;
     border-bottom: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
+  }
+
+  .source-health-table tbody th {
+    width: 100%;
+  }
+
+  .source-health-table tbody th strong,
+  .source-health-table tbody th small {
+    grid-column: 2;
+    overflow-wrap: anywhere;
   }
 
   .source-health-table th::before,
