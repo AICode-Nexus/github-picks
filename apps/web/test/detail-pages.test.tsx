@@ -40,6 +40,7 @@ describe("direction intelligence", () => {
     expect(
       screen.getAllByRole("link", { name: firstRepositoryId }).length,
     ).toBeGreaterThan(0);
+    expect(screen.queryByRole("button", { name: "复制榜单" })).toBeNull();
   });
 
   it("uses an honest explanation when a direction is empty", () => {

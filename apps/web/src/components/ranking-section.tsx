@@ -1,4 +1,5 @@
 import type { RepositoryCardModel } from "../lib/view-model";
+import { CopyRankingButton } from "./copy-ranking-button";
 import { RepositoryRow } from "./repository-row";
 
 export interface RankingSectionProps {
@@ -9,6 +10,7 @@ export interface RankingSectionProps {
   items: RepositoryCardModel[];
   compact?: boolean;
   testIdPrefix?: string;
+  shareText?: string;
 }
 
 export function RankingSection({
@@ -19,6 +21,7 @@ export function RankingSection({
   items,
   compact = false,
   testIdPrefix,
+  shareText,
 }: RankingSectionProps) {
   return (
     <section className="ranking-section" id={id}>
@@ -28,7 +31,14 @@ export function RankingSection({
           <h2>{title}</h2>
           <p>{description}</p>
         </div>
-        <span className="section-heading__count">{items.length} PICKS</span>
+        {shareText ? (
+          <div className="section-heading__actions">
+            <span className="section-heading__count">{items.length} PICKS</span>
+            <CopyRankingButton text={shareText} />
+          </div>
+        ) : (
+          <span className="section-heading__count">{items.length} PICKS</span>
+        )}
       </header>
       <div className="ranking-list">
         {items.map((item) => (
