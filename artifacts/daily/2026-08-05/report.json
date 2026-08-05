@@ -201,9 +201,7 @@
             "rawObjectRef": "sha256:9039309758e7e3f289c2dd03b920b94492606d6a57bbd58bea49b7538eb5ce16"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -704,9 +702,7 @@
             "rawObjectRef": "sha256:4c45aa460a7510f08c19b40702f0fc675404d0fe42bbe9c89e1dd1e2961556c1"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -1440,9 +1436,7 @@
           "organization.governance": {
             "score": 100,
             "status": "observed",
-            "evidenceIds": [
-              "openssf-scorecard:score:ba32accbf8e7"
-            ],
+            "evidenceIds": ["openssf-scorecard:score:ba32accbf8e7"],
             "note": "OpenSSF Maintained 检查作为治理证据"
           },
           "engineering.license": {
@@ -1457,9 +1451,7 @@
           "engineering.scorecard": {
             "score": 54,
             "status": "observed",
-            "evidenceIds": [
-              "openssf-scorecard:score:ba32accbf8e7"
-            ],
+            "evidenceIds": ["openssf-scorecard:score:ba32accbf8e7"],
             "note": "OpenSSF 综合工程实践分"
           },
           "engineering.review": {
@@ -1582,9 +1574,7 @@
           "security.scorecard": {
             "score": 54,
             "status": "observed",
-            "evidenceIds": [
-              "openssf-scorecard:score:ba32accbf8e7"
-            ],
+            "evidenceIds": ["openssf-scorecard:score:ba32accbf8e7"],
             "note": "OpenSSF 安全工程实践证据"
           },
           "security.lifecycle": {
@@ -1599,9 +1589,7 @@
           "security.policy": {
             "score": 100,
             "status": "observed",
-            "evidenceIds": [
-              "openssf-scorecard:score:ba32accbf8e7"
-            ],
+            "evidenceIds": ["openssf-scorecard:score:ba32accbf8e7"],
             "note": "OpenSSF Security-Policy 检查"
           },
           "innovation.projectAge": {
@@ -1778,9 +1766,7 @@
             "rawObjectRef": "sha256:195414244055ab938ece8dfd12e5cd1525b417955671087a31070e0d3befde3c"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -1834,9 +1820,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:sciml/reservoircomputing.jl"
-            ],
+            "evidenceIds": ["signal:github-search:sciml/reservoircomputing.jl"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -2013,9 +1997,7 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:sciml/reservoircomputing.jl"
-            ],
+            "evidenceIds": ["signal:github-search:sciml/reservoircomputing.jl"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -2027,9 +2009,7 @@
           "momentum.sourceRank": {
             "score": 100,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:sciml/reservoircomputing.jl"
-            ],
+            "evidenceIds": ["signal:github-search:sciml/reservoircomputing.jl"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -2041,9 +2021,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:sciml/reservoircomputing.jl"
-            ],
+            "evidenceIds": ["signal:github-search:sciml/reservoircomputing.jl"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -2261,9 +2239,7 @@
             "rawObjectRef": "sha256:03033295a22159421c363ef74571e29133b8a8b00a546cdc61a4ada6a25ffc39"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -2317,9 +2293,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:sciml/modelingtoolkit.jl"
-            ],
+            "evidenceIds": ["signal:github-search:sciml/modelingtoolkit.jl"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -2496,9 +2470,7 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:sciml/modelingtoolkit.jl"
-            ],
+            "evidenceIds": ["signal:github-search:sciml/modelingtoolkit.jl"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -2510,9 +2482,7 @@
           "momentum.sourceRank": {
             "score": 96,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:sciml/modelingtoolkit.jl"
-            ],
+            "evidenceIds": ["signal:github-search:sciml/modelingtoolkit.jl"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -2524,9 +2494,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:sciml/modelingtoolkit.jl"
-            ],
+            "evidenceIds": ["signal:github-search:sciml/modelingtoolkit.jl"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -2734,9 +2702,7 @@
             "rawObjectRef": "sha256:0a0908e79fbbd40e4553ba2bba9675ca83be97e9a72784dd19af0f396d171f8c"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -2790,9 +2756,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:datus-ai/datus-agent"
-            ],
+            "evidenceIds": ["signal:github-search:datus-ai/datus-agent"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -2969,9 +2933,7 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:datus-ai/datus-agent"
-            ],
+            "evidenceIds": ["signal:github-search:datus-ai/datus-agent"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -2983,9 +2945,7 @@
           "momentum.sourceRank": {
             "score": 92,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:datus-ai/datus-agent"
-            ],
+            "evidenceIds": ["signal:github-search:datus-ai/datus-agent"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -2997,9 +2957,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:datus-ai/datus-agent"
-            ],
+            "evidenceIds": ["signal:github-search:datus-ai/datus-agent"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -3463,9 +3421,7 @@
           "organization.governance": {
             "score": 100,
             "status": "observed",
-            "evidenceIds": [
-              "openssf-scorecard:score:111e2689e696"
-            ],
+            "evidenceIds": ["openssf-scorecard:score:111e2689e696"],
             "note": "OpenSSF Maintained 检查作为治理证据"
           },
           "engineering.license": {
@@ -3480,9 +3436,7 @@
           "engineering.scorecard": {
             "score": 56,
             "status": "observed",
-            "evidenceIds": [
-              "openssf-scorecard:score:111e2689e696"
-            ],
+            "evidenceIds": ["openssf-scorecard:score:111e2689e696"],
             "note": "OpenSSF 综合工程实践分"
           },
           "engineering.review": {
@@ -3605,9 +3559,7 @@
           "security.scorecard": {
             "score": 56,
             "status": "observed",
-            "evidenceIds": [
-              "openssf-scorecard:score:111e2689e696"
-            ],
+            "evidenceIds": ["openssf-scorecard:score:111e2689e696"],
             "note": "OpenSSF 安全工程实践证据"
           },
           "security.lifecycle": {
@@ -3622,9 +3574,7 @@
           "security.policy": {
             "score": 90,
             "status": "observed",
-            "evidenceIds": [
-              "openssf-scorecard:score:111e2689e696"
-            ],
+            "evidenceIds": ["openssf-scorecard:score:111e2689e696"],
             "note": "OpenSSF Security-Policy 检查"
           },
           "innovation.projectAge": {
@@ -3792,9 +3742,7 @@
             "rawObjectRef": "sha256:03d1444d5a86ce7bccb0ef551bbae1a8a3ad67669aac1c787a4095dc462e5a59"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -3848,9 +3796,7 @@
           "utility.discovery": {
             "score": 66.7,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:nicholascarroll/emil"
-            ],
+            "evidenceIds": ["signal:hacker-news:nicholascarroll/emil"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -4021,17 +3967,13 @@
           "adoption.discussion": {
             "score": 15,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:nicholascarroll/emil"
-            ],
+            "evidenceIds": ["signal:hacker-news:nicholascarroll/emil"],
             "note": "存在独立 Hacker News 讨论"
           },
           "adoption.coverage": {
             "score": 50,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:nicholascarroll/emil"
-            ],
+            "evidenceIds": ["signal:hacker-news:nicholascarroll/emil"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -4043,25 +3985,19 @@
           "momentum.sourceRank": {
             "score": 100,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:nicholascarroll/emil"
-            ],
+            "evidenceIds": ["signal:hacker-news:nicholascarroll/emil"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
             "score": 15,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:nicholascarroll/emil"
-            ],
+            "evidenceIds": ["signal:hacker-news:nicholascarroll/emil"],
             "note": "非 GitHub 社区讨论提供独立趋势验证"
           },
           "momentum.crossSource": {
             "score": 66.7,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:nicholascarroll/emil"
-            ],
+            "evidenceIds": ["signal:hacker-news:nicholascarroll/emil"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -4279,9 +4215,7 @@
             "rawObjectRef": "sha256:3475e2626e6c087afbc26df95d2a6ed7bc396ba4c2230f1a0068fa8671c4079f"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -4335,9 +4269,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:firecrawl/firecrawl"
-            ],
+            "evidenceIds": ["signal:gittrend:firecrawl/firecrawl"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -4514,25 +4446,19 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:firecrawl/firecrawl"
-            ],
+            "evidenceIds": ["signal:gittrend:firecrawl/firecrawl"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
             "score": 31.8,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:firecrawl/firecrawl"
-            ],
+            "evidenceIds": ["signal:gittrend:firecrawl/firecrawl"],
             "note": "Star 速度只占 Momentum 的 30%"
           },
           "momentum.sourceRank": {
             "score": 100,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:firecrawl/firecrawl"
-            ],
+            "evidenceIds": ["signal:gittrend:firecrawl/firecrawl"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -4544,9 +4470,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:firecrawl/firecrawl"
-            ],
+            "evidenceIds": ["signal:gittrend:firecrawl/firecrawl"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -4774,9 +4698,7 @@
             "rawObjectRef": "sha256:040de8e300c7719b451b3e8f80d926270758808cabbb529e6a3fc9726018993a"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -5004,9 +4926,7 @@
           "adoption.discussion": {
             "score": 47.6,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:kirodotdev/kirocrew"
-            ],
+            "evidenceIds": ["signal:hacker-news:kirodotdev/kirocrew"],
             "note": "存在独立 Hacker News 讨论"
           },
           "adoption.coverage": {
@@ -5036,9 +4956,7 @@
           "momentum.discussion": {
             "score": 47.6,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:kirodotdev/kirocrew"
-            ],
+            "evidenceIds": ["signal:hacker-news:kirodotdev/kirocrew"],
             "note": "非 GitHub 社区讨论提供独立趋势验证"
           },
           "momentum.crossSource": {
@@ -5264,9 +5182,7 @@
             "rawObjectRef": "sha256:3086afa28112b95cac5e3f4c992ab1753e4a2561b5054d13a351fef77c47a5d4"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -5320,9 +5236,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:stablyai/orca"
-            ],
+            "evidenceIds": ["signal:github-search:stablyai/orca"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -5499,9 +5413,7 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:stablyai/orca"
-            ],
+            "evidenceIds": ["signal:github-search:stablyai/orca"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -5513,9 +5425,7 @@
           "momentum.sourceRank": {
             "score": 100,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:stablyai/orca"
-            ],
+            "evidenceIds": ["signal:github-search:stablyai/orca"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -5527,9 +5437,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:stablyai/orca"
-            ],
+            "evidenceIds": ["signal:github-search:stablyai/orca"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -5739,9 +5647,7 @@
             "rawObjectRef": "sha256:d7a968069e1eba546d5c2e5ae0837b705ef0a9bc4a19e110fce2ddb7a5cd69f9"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -5795,9 +5701,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:konflux-ci/konflux-ci"
-            ],
+            "evidenceIds": ["signal:github-search:konflux-ci/konflux-ci"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -5974,9 +5878,7 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:konflux-ci/konflux-ci"
-            ],
+            "evidenceIds": ["signal:github-search:konflux-ci/konflux-ci"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -5988,9 +5890,7 @@
           "momentum.sourceRank": {
             "score": 92,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:konflux-ci/konflux-ci"
-            ],
+            "evidenceIds": ["signal:github-search:konflux-ci/konflux-ci"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -6002,9 +5902,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:konflux-ci/konflux-ci"
-            ],
+            "evidenceIds": ["signal:github-search:konflux-ci/konflux-ci"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -6208,9 +6106,7 @@
             "rawObjectRef": "sha256:5156f7363a77dfd701bb2685cd51ebca7c299cb5563786d4b0420742dd1e0edd"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -6264,9 +6160,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:cipherstash/proxy"
-            ],
+            "evidenceIds": ["signal:github-search:cipherstash/proxy"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -6443,9 +6337,7 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:cipherstash/proxy"
-            ],
+            "evidenceIds": ["signal:github-search:cipherstash/proxy"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -6457,9 +6349,7 @@
           "momentum.sourceRank": {
             "score": 96,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:cipherstash/proxy"
-            ],
+            "evidenceIds": ["signal:github-search:cipherstash/proxy"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -6471,9 +6361,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:cipherstash/proxy"
-            ],
+            "evidenceIds": ["signal:github-search:cipherstash/proxy"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -6699,9 +6587,7 @@
             "rawObjectRef": "sha256:a17bbdc67c871f8232fcacbf068beed111f9019e43f3b38c8d2d713db7f5e8c7"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -7169,9 +7055,7 @@
             "rawObjectRef": "sha256:1e7e236891f60352a27c80a88c5b12b4fd5915937bd2dfc8f01f355d3c1644ac"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -7549,11 +7433,7 @@
         "description": "voipbin backend monorepo",
         "homepage": "https://voipbin.net",
         "language": "HTML",
-        "topics": [
-          "asterisk",
-          "cpaas",
-          "voip"
-        ],
+        "topics": ["asterisk", "cpaas", "voip"],
         "createdAt": "2024-04-17T02:00:01Z",
         "updatedAt": "2026-08-05T06:03:11Z",
         "pushedAt": "2026-08-05T06:02:07Z",
@@ -7635,9 +7515,7 @@
             "rawObjectRef": "sha256:d4f88694b4a73807403fb88c5ff8b45db9d0719b54d728948cec6d95225673bd"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -7691,9 +7569,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:voipbin/monorepo"
-            ],
+            "evidenceIds": ["signal:github-search:voipbin/monorepo"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -7870,9 +7746,7 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:voipbin/monorepo"
-            ],
+            "evidenceIds": ["signal:github-search:voipbin/monorepo"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -7884,9 +7758,7 @@
           "momentum.sourceRank": {
             "score": 100,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:voipbin/monorepo"
-            ],
+            "evidenceIds": ["signal:github-search:voipbin/monorepo"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -7898,9 +7770,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:voipbin/monorepo"
-            ],
+            "evidenceIds": ["signal:github-search:voipbin/monorepo"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -8097,9 +7967,7 @@
             "rawObjectRef": "sha256:319d4754f828ad4788d0971f3ddb03640d4247eb5c3c3a03d9d7a9e8974b1f57"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -8153,9 +8021,7 @@
           "utility.discovery": {
             "score": 66.7,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:greekr4/rever-browser"
-            ],
+            "evidenceIds": ["signal:hacker-news:greekr4/rever-browser"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -8326,17 +8192,13 @@
           "adoption.discussion": {
             "score": 15,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:greekr4/rever-browser"
-            ],
+            "evidenceIds": ["signal:hacker-news:greekr4/rever-browser"],
             "note": "存在独立 Hacker News 讨论"
           },
           "adoption.coverage": {
             "score": 50,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:greekr4/rever-browser"
-            ],
+            "evidenceIds": ["signal:hacker-news:greekr4/rever-browser"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -8348,25 +8210,19 @@
           "momentum.sourceRank": {
             "score": 96,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:greekr4/rever-browser"
-            ],
+            "evidenceIds": ["signal:hacker-news:greekr4/rever-browser"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
             "score": 15,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:greekr4/rever-browser"
-            ],
+            "evidenceIds": ["signal:hacker-news:greekr4/rever-browser"],
             "note": "非 GitHub 社区讨论提供独立趋势验证"
           },
           "momentum.crossSource": {
             "score": 66.7,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:greekr4/rever-browser"
-            ],
+            "evidenceIds": ["signal:hacker-news:greekr4/rever-browser"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -8564,9 +8420,7 @@
             "rawObjectRef": "sha256:f7aafccb180796d85bac06993b308a446c55efca332277fa41d485e8fdac78bb"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -8620,9 +8474,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:zhaoxuya520/reverse-skill"
-            ],
+            "evidenceIds": ["signal:gittrend:zhaoxuya520/reverse-skill"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -8799,25 +8651,19 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:zhaoxuya520/reverse-skill"
-            ],
+            "evidenceIds": ["signal:gittrend:zhaoxuya520/reverse-skill"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
             "score": 30.1,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:zhaoxuya520/reverse-skill"
-            ],
+            "evidenceIds": ["signal:gittrend:zhaoxuya520/reverse-skill"],
             "note": "Star 速度只占 Momentum 的 30%"
           },
           "momentum.sourceRank": {
             "score": 96,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:zhaoxuya520/reverse-skill"
-            ],
+            "evidenceIds": ["signal:gittrend:zhaoxuya520/reverse-skill"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -8829,9 +8675,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:gittrend:zhaoxuya520/reverse-skill"
-            ],
+            "evidenceIds": ["signal:gittrend:zhaoxuya520/reverse-skill"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -9049,9 +8893,7 @@
             "rawObjectRef": "sha256:a1c563f2aadf1d1ef5df8131c1bb97e19e540185044259e1c29ea7ef466d96fb"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -9105,9 +8947,7 @@
           "utility.discovery": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:raullenchai/rapid-mlx"
-            ],
+            "evidenceIds": ["signal:github-search:raullenchai/rapid-mlx"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -9284,9 +9124,7 @@
           "adoption.coverage": {
             "score": 25,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:raullenchai/rapid-mlx"
-            ],
+            "evidenceIds": ["signal:github-search:raullenchai/rapid-mlx"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -9298,9 +9136,7 @@
           "momentum.sourceRank": {
             "score": 96,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:raullenchai/rapid-mlx"
-            ],
+            "evidenceIds": ["signal:github-search:raullenchai/rapid-mlx"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
@@ -9312,9 +9148,7 @@
           "momentum.crossSource": {
             "score": 33.3,
             "status": "observed",
-            "evidenceIds": [
-              "signal:github-search:raullenchai/rapid-mlx"
-            ],
+            "evidenceIds": ["signal:github-search:raullenchai/rapid-mlx"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -9511,9 +9345,7 @@
             "rawObjectRef": "sha256:d037ecfb669f9d416c19c7e1358ad0205ecc93f4cf68f1b69fefe580cd63720f"
           }
         ],
-        "missingFields": [
-          "scorecard"
-        ]
+        "missingFields": ["scorecard"]
       },
       "score": {
         "version": "v0.1.0",
@@ -9567,9 +9399,7 @@
           "utility.discovery": {
             "score": 66.7,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:zachpmanson/pi-msg"
-            ],
+            "evidenceIds": ["signal:hacker-news:zachpmanson/pi-msg"],
             "note": "独立信源覆盖用于交叉验证真实使用场景"
           },
           "activity.activeDays": {
@@ -9740,17 +9570,13 @@
           "adoption.discussion": {
             "score": 15,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:zachpmanson/pi-msg"
-            ],
+            "evidenceIds": ["signal:hacker-news:zachpmanson/pi-msg"],
             "note": "存在独立 Hacker News 讨论"
           },
           "adoption.coverage": {
             "score": 50,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:zachpmanson/pi-msg"
-            ],
+            "evidenceIds": ["signal:hacker-news:zachpmanson/pi-msg"],
             "note": "采用判断由独立信源组覆盖度约束"
           },
           "momentum.starVelocity": {
@@ -9762,25 +9588,19 @@
           "momentum.sourceRank": {
             "score": 92,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:zachpmanson/pi-msg"
-            ],
+            "evidenceIds": ["signal:hacker-news:zachpmanson/pi-msg"],
             "note": "多个发现源中的近期名次"
           },
           "momentum.discussion": {
             "score": 15,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:zachpmanson/pi-msg"
-            ],
+            "evidenceIds": ["signal:hacker-news:zachpmanson/pi-msg"],
             "note": "非 GitHub 社区讨论提供独立趋势验证"
           },
           "momentum.crossSource": {
             "score": 66.7,
             "status": "observed",
-            "evidenceIds": [
-              "signal:hacker-news:zachpmanson/pi-msg"
-            ],
+            "evidenceIds": ["signal:hacker-news:zachpmanson/pi-msg"],
             "note": "趋势必须由多个独立信源组支持"
           },
           "security.license": {
@@ -9952,10 +9772,7 @@
       "greekr4/rever-browser",
       "zhaoxuya520/reverse-skill"
     ],
-    "hiddenGems": [
-      "sciml/reservoircomputing.jl",
-      "raullenchai/rapid-mlx"
-    ],
+    "hiddenGems": ["sciml/reservoircomputing.jl", "raullenchai/rapid-mlx"],
     "active": [
       "sciml/modelingtoolkit.jl",
       "zachpmanson/pi-msg",
