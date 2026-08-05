@@ -2,6 +2,7 @@ import type { DailyReport } from "@github-picks/core/schema";
 import { ArrowLeft, ArrowRight, Database, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import type { ReportArchiveEntryModel } from "../lib/period-ranking";
+import { buildHistoryRankingShareText } from "../lib/ranking-share";
 import { getSourceName } from "../lib/site-meta";
 import { buildRankingItems } from "../lib/view-model";
 import { HistoryDatePicker } from "./history-date-picker";
@@ -43,6 +44,10 @@ export function HistoryReportPage({
   const problemSources = report.sourceHealth.filter(
     (source) => source.status !== "healthy",
   );
+  const shareText = buildHistoryRankingShareText({
+    date: report.date,
+    items: overall,
+  });
 
   return (
     <main id="main-content">
@@ -141,6 +146,7 @@ export function HistoryReportPage({
           title="当日综合价值榜"
           description="以下顺序完整保留该日发布结果；项目详情链接展示最新公开档案，本页数值仍是历史快照。"
           items={overall}
+          shareText={shareText}
           testIdPrefix="history-row"
         />
 

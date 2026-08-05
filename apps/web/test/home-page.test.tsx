@@ -6,13 +6,18 @@ import {
   fireEvent,
   render,
   screen,
+  waitFor,
   within,
 } from "@testing-library/react";
-import { afterEach, beforeAll, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { HomePage } from "../src/components/home-page";
 import { SiteFooter } from "../src/components/site-footer";
 
 let report: DailyReport;
+const originalClipboard = Object.getOwnPropertyDescriptor(
+  navigator,
+  "clipboard",
+);
 
 beforeAll(async () => {
   const reportPath = resolve(
@@ -24,7 +29,15 @@ beforeAll(async () => {
   );
 });
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+  if (originalClipboard) {
+    Object.defineProperty(navigator, "clipboard", originalClipboard);
+  } else {
+    Reflect.deleteProperty(navigator, "clipboard");
+  }
+});
 
 describe("GitHub Picks homepage", () => {
   it("renders the live intelligence cover, rankings and direction index", () => {
@@ -107,6 +120,33 @@ describe("GitHub Picks homepage", () => {
         newProjectIds.has(repositoryId),
       ),
     );
+  });
+
+  it("copies only the active specialty filter with every GitHub URL", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText },
+    });
+    render(<HomePage report={report} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "新项目" }));
+    fireEvent.click(screen.getByRole("button", { name: "复制榜单" }));
+
+    await waitFor(() => expect(writeText).toHaveBeenCalledTimes(1));
+    const copied = writeText.mock.calls[0]?.[0];
+    if (typeof copied !== "string") throw new Error("missing copied ranking");
+    const expectedIds = new Set(report.rankings.newProjects);
+    for (const repository of report.repositories) {
+      const projectLine = `项目地址：${repository.snapshot.url}`;
+      if (expectedIds.has(repository.snapshot.fullName)) {
+        expect(copied).toContain(projectLine);
+      } else {
+        expect(copied).not.toContain(projectLine);
+      }
+    }
+    expect(copied).toContain(`筛选：新项目｜共 ${expectedIds.size} 项`);
+    expect(copied.trimEnd().endsWith(window.location.href)).toBe(true);
   });
 
   it("consolidates the report, source and direction summaries", () => {

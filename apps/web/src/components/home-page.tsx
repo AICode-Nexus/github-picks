@@ -61,7 +61,7 @@ export function HomePage({ report }: HomePageProps) {
       <div className="page-shell">
         <DailyMasthead cover={cover} sources={sourceSummary} />
 
-        <DailyRanking items={items} />
+        <DailyRanking date={report.date} items={items} />
 
         <DirectionIndex directions={directionSummaries} />
 
