@@ -13,7 +13,8 @@
     "lint": "biome check .",
     "check": "biome check . && turbo typecheck test",
     "m0:evaluate": "pnpm --filter @github-picks/m0-evaluator evaluate",
-    "picks:daily": "tsx workers/daily/src/cli.ts"
+    "picks:daily": "tsx workers/daily/src/cli.ts",
+    "picks:publish-check": "tsx workers/daily/src/publish-check.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.6",

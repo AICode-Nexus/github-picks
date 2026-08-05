@@ -26,6 +26,7 @@ import type {
 import { FileConditionalArtifactCache } from "./conditional-cache.js";
 import { type DiscoveryAdapter, discoverCandidates } from "./discovery.js";
 import { enrichCandidate } from "./enrichment.js";
+import { buildDailyManifest } from "./publication-artifacts.js";
 import { FileRawStore } from "./raw-store.js";
 import { AiHotAdapter } from "./sources/ai-hot.js";
 import { ConfiguredSeedAdapter } from "./sources/configured-seed.js";
@@ -357,34 +358,6 @@ async function atomicWrite(path: string, contents: string): Promise<void> {
   }
 }
 
-function manifestFor(report: DailyReport) {
-  const rawObjectRefs = [
-    ...report.repositories.flatMap((item) =>
-      item.snapshot.evidence.flatMap((evidence) =>
-        evidence.rawObjectRef === null ? [] : [evidence.rawObjectRef],
-      ),
-    ),
-    ...report.repositories.flatMap((item) =>
-      item.snapshot.candidateSignals.flatMap((signal) =>
-        signal.rawObjectRef === null ? [] : [signal.rawObjectRef],
-      ),
-    ),
-  ].filter((value, index, values) => values.indexOf(value) === index);
-  return {
-    version: 1,
-    date: report.date,
-    mode: report.mode,
-    generatedAt: report.generatedAt,
-    scoreVersion: report.scoreVersion,
-    analysisVersion: report.analysisVersion,
-    configHash: report.configHash,
-    counts: report.counts,
-    sourceHealth: report.sourceHealth,
-    rawObjectRefs,
-    repositories: report.repositories.map((item) => item.snapshot.fullName),
-  };
-}
-
 export async function runDailyPipeline(
   options: PipelineOptions,
 ): Promise<DailyReport> {
@@ -436,7 +409,7 @@ export async function runDailyPipeline(
   );
   await atomicWrite(
     join(options.outputDirectory, "manifest.json"),
-    `${JSON.stringify(manifestFor(report), null, 2)}\n`,
+    `${JSON.stringify(buildDailyManifest(report), null, 2)}\n`,
   );
   return report;
 }
