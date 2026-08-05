@@ -1,8 +1,15 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { type DailyReport, DailyReportSchema } from "@github-picks/core/schema";
-import { cleanup, render, screen, within } from "@testing-library/react";
-import { afterEach, beforeAll, describe, expect, it } from "vitest";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { HistoryIndexPage } from "../src/components/history-index-page";
 import { HistoryReportPage } from "../src/components/history-report-page";
 import { PeriodRankingPage } from "../src/components/period-ranking-page";
@@ -12,6 +19,10 @@ import {
 } from "../src/lib/period-ranking";
 
 let reports: DailyReport[];
+const originalClipboard = Object.getOwnPropertyDescriptor(
+  navigator,
+  "clipboard",
+);
 
 beforeAll(async () => {
   const reportPaths = [
@@ -29,7 +40,15 @@ beforeAll(async () => {
   );
 });
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+  if (originalClipboard) {
+    Object.defineProperty(navigator, "clipboard", originalClipboard);
+  } else {
+    Reflect.deleteProperty(navigator, "clipboard");
+  }
+});
 
 describe("period ranking experience", () => {
   it("renders honest coverage and the sustained ranking without local navigation", () => {
@@ -79,6 +98,27 @@ describe("period ranking experience", () => {
     ).toBeTruthy();
     expect(screen.getAllByTestId(/^period-row-/).length).toBeGreaterThan(0);
   });
+
+  it("copies every period project URL and its period performance", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText },
+    });
+    const ranking = buildPeriodRanking(reports, "30d");
+    render(<PeriodRankingPage ranking={ranking} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "复制榜单" }));
+
+    await waitFor(() => expect(writeText).toHaveBeenCalledTimes(1));
+    const copied = writeText.mock.calls[0]?.[0];
+    if (typeof copied !== "string") throw new Error("missing copied ranking");
+    for (const item of ranking.items) {
+      expect(copied).toContain(`项目地址：${item.githubUrl}`);
+    }
+    expect(copied).toContain("周期表现：");
+    expect(copied.trimEnd().endsWith(window.location.href)).toBe(true);
+  });
 });
 
 describe("history query experience", () => {
@@ -119,5 +159,40 @@ describe("history query experience", () => {
     expect(
       screen.getByRole("heading", { name: "当日综合价值榜" }),
     ).toBeTruthy();
+  });
+
+  it("copies the selected history snapshot with every project URL", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText },
+    });
+    const archive = buildReportArchive(reports);
+    const report = reports[0];
+    if (report === undefined) throw new Error("missing history test report");
+    render(
+      <HistoryReportPage
+        report={report}
+        archive={archive}
+        previousDate={null}
+        nextDate="2026-08-04"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "复制榜单" }));
+
+    await waitFor(() => expect(writeText).toHaveBeenCalledTimes(1));
+    const copied = writeText.mock.calls[0]?.[0];
+    if (typeof copied !== "string") throw new Error("missing copied ranking");
+    expect(copied).toContain("2026年08月03日综合价值榜");
+    for (const repositoryId of report.rankings.overall) {
+      const repository = report.repositories.find(
+        (item) => item.snapshot.fullName === repositoryId,
+      );
+      if (repository === undefined)
+        throw new Error("missing ranked repository");
+      expect(copied).toContain(`项目地址：${repository.snapshot.url}`);
+    }
+    expect(copied.trimEnd().endsWith(window.location.href)).toBe(true);
   });
 });

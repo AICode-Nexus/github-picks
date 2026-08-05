@@ -1,6 +1,8 @@
 import { ArrowRight, CalendarRange, Database } from "lucide-react";
 import Link from "next/link";
 import type { PeriodRankingModel } from "../lib/period-ranking";
+import { buildPeriodRankingShareText } from "../lib/ranking-share";
+import { CopyRankingButton } from "./copy-ranking-button";
 import { PeriodRepositoryRow } from "./period-repository-row";
 
 export interface PeriodRankingPageProps {
@@ -13,6 +15,7 @@ function formatRangeDate(date: string): string {
 
 export function PeriodRankingPage({ ranking }: PeriodRankingPageProps) {
   const coveragePercent = Math.round(ranking.coverageRate * 100);
+  const shareText = buildPeriodRankingShareText(ranking);
 
   return (
     <main id="main-content">
@@ -88,9 +91,12 @@ export function PeriodRankingPage({ ranking }: PeriodRankingPageProps) {
                 优先比较上榜覆盖率，再比较平均发布分与平均名次；不改写任何一日的原始发布分。
               </p>
             </div>
-            <span className="section-heading__count">
-              {ranking.items.length} PICKS
-            </span>
+            <div className="section-heading__actions">
+              <span className="section-heading__count">
+                {ranking.items.length} PICKS
+              </span>
+              <CopyRankingButton text={shareText} />
+            </div>
           </header>
           <div className="period-ranking__list">
             {ranking.items.map((item) => (
