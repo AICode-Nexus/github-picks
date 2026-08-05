@@ -6,7 +6,8 @@ GitHub Picks 是一个中文开源项目情报引擎：从多个发现源持续�
 
 - 网站：<https://aicode-nexus.github.io/github-picks/>（合并并启用 Pages 后生效）
 - 日报历史：[`artifacts/daily/`](artifacts/daily/)
-- 运行手册：[`每日数据流水线`](docs/runbooks/daily-pipeline.md) · [`静态网站与 Pages`](docs/runbooks/web-static-site.md)
+- 公开 API：<https://aicode-nexus.github.io/github-picks/api/v1/meta.json>
+- 运行手册：[`每日数据流水线`](docs/runbooks/daily-pipeline.md) · [`静态网站与 Pages`](docs/runbooks/web-static-site.md) · [`Agent 与公开 API`](docs/runbooks/github-picks-agent-api.md)
 
 ## 当前完成范围
 
@@ -21,9 +22,11 @@ GitHub Picks 是一个中文开源项目情报引擎：从多个发现源持续�
 7. 用本地 AI 模型基于事实包生成逐项目推荐理由，并记录模型、Prompt 版本、分析版本和证据哈希；
 8. 从实时日报历史静态生成今日榜、近 7/30/90/180 天持续价值榜和逐日历史查询；
 9. 生成五个方向榜、仓库分析页和信源状态页；
-10. 通过桌面/移动端导航、WCAG AA 自动扫描和 GitHub Pages 构建门禁。
+10. 通过桌面/移动端导航、WCAG AA 自动扫描和 GitHub Pages 构建门禁；
+11. 从同一批 live 日报生成匿名只读的静态 `v1` API；
+12. 提供可安装的 `github-picks` Agent Skill，用中文查询最新、周期、方向、历史和仓库证据。
 
-Obsidian 接入和个性化 Agent 仍是下一阶段，尚未在本版本中假装完成。当前网站和后续消费者都以稳定的 `report.json` 契约为唯一数据入口，不在界面层重复计算分数。
+网站、公开 API 和 Agent 都以稳定的 `report.json` 契约为唯一事实入口，不重复计算分数。Agent 个性化只做可解释的保序筛选，不生成新的排行榜。Obsidian 接入、定时推送和其他外部投递仍是独立的后续能力。
 
 ## 快速开始
 
@@ -103,6 +106,31 @@ pnpm --filter @github-picks/web build
 
 周期榜不重算每日发布分。它先比较窗口内的上榜覆盖率，再比较平均发布分和平均名次，并明确展示实际日报覆盖天数。历史不足 30/90/180 天时不会把缺失日期当成零分。
 
+## Agent 与公开 API
+
+公开 API 基址为 <https://aicode-nexus.github.io/github-picks/api/v1>，由 Pages 构建从已校验的 live 日报确定性生成。常用入口包括：
+
+- `reports/latest.json`：最新日报；
+- `reports/index.json` 与 `reports/YYYY-MM-DD.json`：历史索引和指定日期；
+- `rankings/7d.json`、`30d.json`、`90d.json`、`180d.json`：周期榜；
+- `directions/{direction}.json`：五个技术方向的最新榜；
+- `repositories/{owner}/{repo}.json`：已收录仓库的最近事实和历史观测。
+
+安装兼容 Codex 的项目级 Skill：
+
+```bash
+DISABLE_TELEMETRY=1 npx -y skills@1.5.21 add AICode-Nexus/github-picks \
+  --skill github-picks --agent codex --yes --copy
+```
+
+把 `--global` 加到命令中可安装为用户级 Skill。安装后可直接提问：
+
+- “今天最值得关注的 5 个 GitHub 开源项目是什么？说明理由和风险。”
+- “近 30 天安全与软件供应链方向有哪些持续值得看的项目？不要按 Star 重排。”
+- “比较 `owner/repo-a` 和 `owner/repo-b` 的工程成熟度和公开风险证据。”
+
+Skill 只访问固定域名下的匿名只读 API，不需要 GitHub Token、API Key、Cookie、账号、私有仓库或本地文件。公共排名由日报决定；方向、语言和场景偏好只产生原榜的保序子集。完整端点、Schema 版本、发布校验与恢复步骤见 [Agent 与公开 API 运行手册](docs/runbooks/github-picks-agent-api.md)。
+
 ## 评分框架
 
 总分由八个维度构成，权重固定在 [`config/picks.yaml`](config/picks.yaml)：
@@ -135,6 +163,7 @@ config/picks.yaml                 方向、信源、权重和限额
 packages/picks-core/              数据契约、评分、分析和榜单
 workers/daily/                    采集、原始快照、补全和日报流水线
 apps/web/                         Next.js 中文静态情报网站
+.agents/skills/github-picks/      可安装的 GitHub Picks Agent Skill
 artifacts/daily/                  可提交的 JSON/Markdown 日报
 artifacts/raw/                    不提交的内容寻址原始响应
 .github/workflows/pages.yml       GitHub Pages 验证与部署

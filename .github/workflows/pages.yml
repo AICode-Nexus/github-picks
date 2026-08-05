@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_BASE_PATH: "/github-picks"
+      GITHUB_PICKS_PUBLIC_BASE_URL: "https://aicode-nexus.github.io/github-picks"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -40,6 +41,67 @@ jobs:
 
       - name: Build static website
         run: pnpm --filter @github-picks/web build
+
+      - name: Verify public API artifacts
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from "node:fs/promises";
+          import { join } from "node:path";
+
+          const apiRoot = "apps/web/out/api/v1";
+          const requiredPaths = [
+            "apps/web/out/api/v1/meta.json",
+            "apps/web/out/api/v1/reports/latest.json",
+            "apps/web/out/api/v1/reports/index.json",
+            "apps/web/out/api/v1/rankings/7d.json",
+            "apps/web/out/api/v1/rankings/30d.json",
+            "apps/web/out/api/v1/rankings/90d.json",
+            "apps/web/out/api/v1/rankings/180d.json",
+            "apps/web/out/api/v1/directions/ai-agent.json",
+            "apps/web/out/api/v1/directions/data-ml.json",
+            "apps/web/out/api/v1/directions/app-platform.json",
+            "apps/web/out/api/v1/directions/infra-devtools.json",
+            "apps/web/out/api/v1/directions/security-supply-chain.json",
+          ];
+
+          async function parseApiDocument(path) {
+            const document = JSON.parse(await readFile(path, "utf8"));
+            if (document.schemaVersion !== 1) {
+              throw new Error(`${path} does not use public API schemaVersion 1`);
+            }
+            return document;
+          }
+
+          const documents = await Promise.all(
+            requiredPaths.map((path) => parseApiDocument(path)),
+          );
+          const meta = documents[0];
+          const latest = documents[1];
+          const reportIndex = documents[2];
+          const reportDate = latest.data?.report?.date;
+          const repositoryId = latest.data?.report?.rankings?.overall?.[0];
+
+          if (
+            !reportDate ||
+            meta.data?.latestReportDate !== reportDate ||
+            reportIndex.data?.items?.[0]?.date !== reportDate
+          ) {
+            throw new Error("meta, latest report, and report index are inconsistent");
+          }
+          if (
+            !/^[A-Za-z0-9][A-Za-z0-9-]{0,38}\/(?!\.{1,2}$)[A-Za-z0-9_.-]+$/.test(
+              repositoryId ?? "",
+            )
+          ) {
+            throw new Error("latest report does not identify a safe repository path");
+          }
+          const normalizedRepositoryId = repositoryId.toLowerCase();
+
+          await parseApiDocument(join(apiRoot, "reports", `${reportDate}.json`));
+          await parseApiDocument(
+            join(apiRoot, "repositories", `${normalizedRepositoryId}.json`),
+          );
+          NODE
 
       - name: Disable Jekyll processing
         run: touch apps/web/out/.nojekyll
