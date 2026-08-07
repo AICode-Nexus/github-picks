@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "date": "2026-08-07",
+  "mode": "live",
+  "generatedAt": "2026-08-07T02:03:24.258Z",
+  "scoreVersion": "v0.1.0",
+  "analysisVersion": "v1.1.0",
+  "configHash": "bf8cc79d951c6a4053f1c8c98774c54a9ebb6d8250f868fcc1f555da11ef7c9c",
+  "counts": {
+    "discovered": 60,
+    "enriched": 20,
+    "published": 20
+  },
+  "sourceHealth": [
+    {
+      "sourceId": "configured-seed",
+      "status": "healthy",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": null
+    },
+    {
+      "sourceId": "github-trending",
+      "status": "degraded",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": "TypeError"
+    },
+    {
+      "sourceId": "github-search",
+      "status": "healthy",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": null
+    },
+    {
+      "sourceId": "gittrend",
+      "status": "healthy",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": null
+    },
+    {
+      "sourceId": "hublens",
+      "status": "degraded",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": "全部候选信号超过新鲜度阈值"
+    },
+    {
+      "sourceId": "hacker-news",
+      "status": "healthy",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": null
+    },
+    {
+      "sourceId": "ai-hot",
+      "status": "degraded",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": "未发现可解析仓库"
+    },
+    {
+      "sourceId": "github-rest",
+      "status": "healthy",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": null
+    },
+    {
+      "sourceId": "openssf-scorecard",
+      "status": "healthy",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": "19/20 个项目缺少 Scorecard"
+    },
+    {
+      "sourceId": "ai-analysis",
+      "status": "healthy",
+      "observedAt": "2026-08-07T02:03:24.258Z",
+      "message": "20/20 个项目的 AI 推荐理由已通过结构与事实边界校验 · ollama/qwen3-vl:8b"
+    }
+  ],
+  "rawObjectRefs": [
+    "sha256:347faa8ce83daafb5822de8a347473c711ff7d156c09445ba34fc6fbf3b37ee2",
+    "sha256:987dca9a3d3295c5c03372f096a57c4fa1e847d385f764fcc7cbfdeb20681743",
+    "sha256:27fe8fab1e3028e67d601776cd72ec6653ce4ea6dc8148c6a5758c929a87de5f",
+    "sha256:f979a15ed51b09d6cf307bd3dbf8791926edadc522036f3ded0ad04808cf8313",
+    "sha256:a8adee385d57fd9e246c28e98a000ed5fac2e3aace8b9c4e77f37ed04482d660",
+    "sha256:2bc001d6d3cc7f817e2b5ecfc43ad7311efc92892c20f21211cc5d41a16d2532",
+    "sha256:56543a459d160a60608966888bac9c19dd164c058bd35bde5973d3373e1f5414",
+    "sha256:30a44f65084b79a9fd2c8f26f9e2514168252c6d48b7e7cc6390685952d14b40",
+    "sha256:87d11da268715c441ef5547aac1f6f136dfbdddf66dc548e08a822ef1b16812b",
+    "sha256:5cee35ff4e13a2c40e784fd9fba391c3a5d0108f11514bf17a89be6bf52183a0",
+    "sha256:6544bc6c1cdbba9a95825c9344372ee410d7b9ff0f4368bdcfd4e2a0cf1dae9b",
+    "sha256:88152146986143e7181493eedfb072990469d2fcb471e9b036182bf8bf9ab6d2",
+    "sha256:7c38f16b842ccdb17a092c165623db36cbf864cf2604c8336fac2f1e17fe04f5",
+    "sha256:fb1e9d7d763593d2490bc615adc45309cc3d22a630f8a0cbfaac7ce3dd1659de",
+    "sha256:b7d75a5213790cb1ce3d589f5b48a8fd36953164a6f698653354830d7d590c2b",
+    "sha256:5378669794a11f83a4ef715e1cfa9712bc28b3a70fd646a386a5ad4f49dff44c",
+    "sha256:011178d51c6583a65b1f1339e9e1a04d341d9ff5a02f5ed049eb4413d2ee66a3",
+    "sha256:a039dd8d4fd8cc5415e70d74e9a4608d01036af6b96948529f34261b108324cd",
+    "sha256:a3f20c333c30cebca857708746172d1d26e1faa4862a9e24391e4070fa36f50f",
+    "sha256:552859afa1f0dd4d6d7325f15bdcf46634bb0b99534605b0d98dc22f0c94f1b7",
+    "sha256:fdf00a654035ce27b2fad17b981381c4539d470af1a0a0c6926438785fb5bfae",
+    "sha256:7c0fc2ee2912a932c5d7c0b7a7cd6428d849b7f2f7e0f9e67d3bd1dfa31d660c",
+    "sha256:78362a5b1e1d34465fe1093b140efb2ec005a17d747b1b4d3f3e78f9696cd6b8",
+    "sha256:f87230d5921d9e64662ffdfb0562e6531aacc1f796acbb57d79737b05186f149",
+    "sha256:89322fa8f27c205f2d98858c4d91d17a629e52bf8e183397b31356d3db211841",
+    "sha256:ff7fa7e0249d74b6c9ac866d95ceb8b80bb3c5a95a9301417ef38960a950af44",
+    "sha256:6f8e7aabd3920571c3eba7655bdf25e17de07df88ba433be60cbea3a5e294870",
+    "sha256:7102a2577f537afc3a6559a7f11944b20a308c2b5f414a0258c93829c73aa645",
+    "sha256:2a5105434f257a642d3c93e1eac7d72adc5275a8cdcca2eda00d5d897e3370e3",
+    "sha256:cd69d8ecd5f45366df82398b0ae312ad57ae60ef42bf8e87719e48650dfb202f",
+    "sha256:63d7366004bb8302303abd290c8a6372e5615ff67b62b31bc1342bd2b72c89ac",
+    "sha256:3e9e29ab1a4c9d9b3eb9eca7ceb3e68064e3dbb5e01734ce241f68d738d33097",
+    "sha256:1843bd47c969d183ec1fb2a3ef15849ab96f2418911b4fb59533ead62c89552d",
+    "sha256:7a90c0a80aca328c8c5d0ca509e68c7f9c92152b828fc7cb27046695cd9a1572",
+    "sha256:9034d7929e4c38761ed3dd6b281bf1f0c7eba1b9ea1862767d6642afb766d33d",
+    "sha256:20534bb1fb136b5f0eb5cf49c7f20206cddc0374320bc765b410077bca311d7f",
+    "sha256:1928256096c65a2cda0ece6d07767a192b61a196b7989408ead24ba0cdb419eb",
+    "sha256:85ed89cd8fa66e85d796838e802b5f26358354cc0f4a45fb8bfa3a966612d74a",
+    "sha256:eb8280c62566f6b23aaf922f44025bf460a5862fba1de1caf90965f3bff0d026",
+    "sha256:e018e28ffed85febecf530d0a46256634781ecf062b30ea5e66d1bf1e1c6b289",
+    "sha256:2dcd348a3ae4ce3486047b182c22ae5b518cc626309ba42775d4270d872fe7ff",
+    "sha256:364b475bcc80f898dcf09161f86ae58af5ef7bde4ae04fdff6afd2ba737a2c46",
+    "sha256:38051093d79667f369c3b03130e288074df70de9ac610251acf2c333c67a6117",
+    "sha256:510a81b5f1b6ca32dfdfcda48712102cd4a8306eb130b1d5a9a8ef0e311d194a",
+    "sha256:1330443118162082645ff5ecb75e6019685ddef4cb721406355c8c6695f47527",
+    "sha256:3907d57565e1561d70afb086c579ad17a62449e6adda6ec0202952f7312ec05a",
+    "sha256:5b8f7ce8993b8df8aac928422e6965187200188acd55d38100b1839cf594b49b",
+    "sha256:efaea4768b57b351794ba511538e9c44c0f64b4d801338a86aaeff53b5dbebef"
+  ],
+  "repositories": [
+    "marcusquinn/aidevops",
+    "primeintellect-ai/prime-agent",
+    "willbass65/seai-identity-standard",
+    "datus-ai/datus-agent",
+    "m3dev/gokart",
+    "rtemis-org/rtemis",
+    "comfy-org/comfyui",
+    "masondelan/selvedge",
+    "firecrawl/anydoc",
+    "stablyai/orca",
+    "kirodotdev/kirocrew",
+    "cloudflare/cloudflare-os",
+    "muke-coder/grit",
+    "openbkn-ai/bkn-foundry",
+    "fosres/seceng-exercises",
+    "cdxiaodong/cain-agent",
+    "eclipse-zenoh/zenoh-backend-s3",
+    "oomol-lab/open-connector",
+    "eclipse-zenoh/zenoh-backend-influxdb",
+    "openjiuwen-ai/jiuwenswarm"
+  ]
+}
